@@ -1,0 +1,12 @@
+.root {
+    @apply flex justify-center mb-[30px];
+    &__body {
+        @apply flex;
+        &__item {
+            @apply cursor-pointer py-[10px] px-[20px] text-[#c4c7cc];
+            &_active {
+                @apply font-bold bg-[#a8acb4] text-[#202329];
+            }
+        }
+    }
+}

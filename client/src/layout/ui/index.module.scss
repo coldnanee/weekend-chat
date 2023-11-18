@@ -1,0 +1,10 @@
+.root {
+    @apply flex justify-between min-h-full;
+    &__body {
+        @apply w-full bg-[#131313];
+        &__children {
+            @apply bg-[#202329] w-full h-full;
+            border-radius: 20px 0 0 20px;
+        }
+    }
+}

@@ -1,0 +1,9 @@
+.root {
+    @apply flex flex-col items-center justify-center;
+    &__text {
+        @apply text-[#a6abb7] text-[12px] mt-[7px] font-bold;
+    }
+    &_click {
+        @apply cursor-pointer;
+    }
+}

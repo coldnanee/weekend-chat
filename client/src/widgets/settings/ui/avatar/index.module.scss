@@ -1,0 +1,12 @@
+.root {
+    @apply flex flex-col items-center;
+    &__avatar {
+        @apply cursor-pointer rounded-[50%] w-[100px] h-[100px];
+    }
+    &__input {
+        @apply hidden;
+    }
+    &__buttons {
+        @apply flex justify-between gap-x-[10px] mt-[10px] mb-[20px];
+    }
+}

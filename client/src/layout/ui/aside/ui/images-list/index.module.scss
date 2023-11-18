@@ -1,0 +1,6 @@
+.root {
+    @apply flex flex-col items-center h-full justify-between;
+    &__list {
+        @apply flex flex-col gap-y-[30px];
+    }
+}

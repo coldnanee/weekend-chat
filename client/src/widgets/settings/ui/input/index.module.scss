@@ -1,0 +1,9 @@
+.root {
+    @apply bg-transparent border-b border-[#a9aeba] border-solid p-[5px] w-[250px] block text-[#a9aeba] uppercase;
+    &::placeholder {
+        @apply uppercase opacity-40;
+    }
+    &:not(:last-child) {
+        @apply mb-[10px];
+    }
+}

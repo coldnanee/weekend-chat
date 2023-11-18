@@ -1,0 +1,16 @@
+.root {
+    @apply flex flex-col items-center;
+    &__input {
+        @apply bg-transparent border-b border-[#a9aeba] border-solid p-[5px] w-[200px];
+
+        &::placeholder {
+            @apply uppercase opacity-40;
+        }
+    }
+    &__error {
+        @apply p-[5px] text-[#c94444];
+        &:first-letter {
+            @apply uppercase;
+        }
+    }
+}

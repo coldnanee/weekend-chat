@@ -1,0 +1,7 @@
+.root {
+    @apply fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center min-h-full;
+    background: rgba(0, 0, 0, 0.8);
+    &__body {
+        @apply bg-[#202329] p-[30px];
+    }
+}
