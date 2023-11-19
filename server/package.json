@@ -24,6 +24,8 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
+    "@socket.io/cluster-adapter": "^0.2.2",
+    "@socket.io/sticky": "^1.0.4",
     "bcrypt": "^5.1.1",
     "cloudinary": "^1.41.0",
     "cookie-parser": "^1.4.6",

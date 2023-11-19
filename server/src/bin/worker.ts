@@ -2,16 +2,22 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
-import { errorsMiddleware } from "../errors";
-import { router } from "../router";
-import { connectDB } from "../db";
 import { Server } from "socket.io";
+
+import { connectDB } from "../db";
 
 import http from "http";
 
+import { errorsMiddleware } from "../errors";
+import { router } from "../router";
+
 import { v2 as cloudinary } from "cloudinary";
 
-const { PORT, CLIENT_URL, CLOUD_NAME, CLOUD_API_KEY, CLOUD_API_SECRET_KEY } =
+import { createAdapter } from "@socket.io/cluster-adapter";
+
+import { setupWorker } from "@socket.io/sticky";
+
+const { CLIENT_URL, CLOUD_NAME, CLOUD_API_KEY, CLOUD_API_SECRET_KEY } =
 	process.env as {
 		PORT: string;
 		CLIENT_URL: string;
@@ -29,7 +35,6 @@ cloudinary.config({
 
 export const worker = () => {
 	const app = express();
-	const server = http.createServer(app);
 
 	app.use(
 		cors({
@@ -39,12 +44,6 @@ export const worker = () => {
 		})
 	);
 
-	const io = new Server(server, {
-		cors: {
-			origin: CLIENT_URL
-		}
-	});
-
 	app.use(cookieParser());
 	app.use(express.json({ limit: "25mb" }));
 	app.use(express.urlencoded({ limit: "25mb", extended: true }));
@@ -53,11 +52,19 @@ export const worker = () => {
 
 	const start = async () => {
 		try {
-			server.listen(PORT, () => {});
+			const server = http.createServer(app);
 
-			io.on("connection", () => {
-				console.log("connection!");
+			const io = new Server(server, {
+				cors: {
+					origin: CLIENT_URL
+				}
 			});
+
+			io.adapter(createAdapter());
+
+			setupWorker(io);
+
+			io.on("connection", (socket) => {});
 
 			await connectDB();
 		} catch (e) {
