@@ -1,8 +1,8 @@
-import { generateMetadata } from "@/shared";
+import { createMetadata } from "@/shared";
 
 import SettingsPage from "@/pages/settings-page";
 
-export const metadata = generateMetadata("Settings");
+export const metadata = createMetadata("Settings");
 
 export default function Settings() {
 	return <SettingsPage />;

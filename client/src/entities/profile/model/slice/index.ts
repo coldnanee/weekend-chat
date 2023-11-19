@@ -49,7 +49,13 @@ const initialState: TUserState = {
 const slice = createSlice({
 	name: "profile",
 	initialState,
-	reducers: {},
+	reducers: {
+		removeProfileAvatarAction: (state) => {
+			if (state.profile) {
+				state.profile.avatar = "";
+			}
+		}
+	},
 	extraReducers: (builder) => {
 		builder
 			.addCase(fetchMyProfile.pending, (state) => {
@@ -85,8 +91,6 @@ const slice = createSlice({
 			.addCase(updateMyProfile.fulfilled, (state, action) => {
 				state.profile = action.payload;
 				UserResponseHandlers.resolved(state);
-
-				action.meta.arg.router.replace("/");
 			})
 			.addCase(updateMyProfile.rejected, (state, action) => {
 				UserResponseHandlers.rejected(state, action.error.message);
@@ -97,6 +101,7 @@ const slice = createSlice({
 			})
 			.addCase(registrationUser.fulfilled, (state, action) => {
 				UserResponseHandlers.resolved(state);
+				action.meta.arg.router.replace("/login");
 			})
 			.addCase(registrationUser.rejected, (state, action) => {
 				UserResponseHandlers.rejected(state, action.error.message);
@@ -116,5 +121,7 @@ const slice = createSlice({
 			});
 	}
 });
+
+export const { removeProfileAvatarAction } = slice.actions;
 
 export const profileSlice = slice.reducer;

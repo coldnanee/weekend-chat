@@ -7,18 +7,22 @@ import Image from "next/image";
 import DefaultAvatar from "../../images/default-avatar.svg";
 
 import { useAppSelector } from "@/app/store/hooks/useAppSelector";
+import { useAppDispatch } from "@/app/store/hooks/useAppDispatch";
 
 import type { TSettingsForm } from "../..";
+
+import { removeProfileAvatarAction } from "@/entities/profile";
 
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 
-import { RxUpdate } from "react-icons/rx";
 import { AiFillDelete } from "react-icons/ai";
 
 import { SettingsButton } from "../button";
 
 export const SettingsAvatar = () => {
+	const dispatch = useAppDispatch();
+
 	const [previewAvatarPath, setPreviewAvatarPath] = useState<string>("");
 
 	const { watch, register, reset } = useFormContext<TSettingsForm>();
@@ -27,18 +31,21 @@ export const SettingsAvatar = () => {
 
 	const avatar = useAppSelector((state) => state.profile.profile?.avatar);
 
+	const removeAvatar = () => {
+		setPreviewAvatarPath("");
+		dispatch(removeProfileAvatarAction());
+		reset({ avatar: null });
+	};
+
 	useEffect(() => {
 		try {
 			const accessedImagesExt = "png, webp, jpg, jpeg";
 
 			if (watchedImage && watchedImage[0]) {
-				console.log(watchedImage);
 				const imageExt = watchedImage[0].name.split(".")[1];
 
-				console.log(imageExt);
-
 				if (!accessedImagesExt.includes(imageExt)) {
-					reset({ avatar: undefined });
+					reset({ avatar: [] });
 					throw Error(`You can only use ${accessedImagesExt} files`);
 				}
 
@@ -63,18 +70,19 @@ export const SettingsAvatar = () => {
 				/>
 			</label>
 			<input
-				{...register("avatar")}
+				{...register("avatar", { minLength: 8 })}
 				className={cl.root__input}
 				type="file"
 				id="#settings-avatar"
 			/>
 			<div className={cl.root__buttons}>
-				<SettingsButton border={false}>
-					<RxUpdate size="20px" />
-				</SettingsButton>
-				<SettingsButton border={false}>
-					<AiFillDelete size="20px" />
-				</SettingsButton>
+				{(avatar || previewAvatarPath) && (
+					<SettingsButton
+						onClick={removeAvatar}
+						border={false}>
+						<AiFillDelete size="20px" />
+					</SettingsButton>
+				)}
 			</div>
 		</div>
 	);

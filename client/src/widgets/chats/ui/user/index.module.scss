@@ -1,0 +1,14 @@
+.root {
+    &:hover {
+        @apply bg-[#32363f] rounded-[10px];
+    }
+    &__body {
+        @apply flex p-[10px] items-center gap-x-[10px];
+        &__avatar {
+            @apply rounded-[10px];
+        }
+        &__login {
+            @apply text-[#a9aeba];
+        }
+    }
+}

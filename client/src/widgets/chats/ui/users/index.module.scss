@@ -1,0 +1,9 @@
+.root {
+    @apply py-[10px];
+    &__title {
+        @apply text-[#a9aeba] text-[16px] font-bold;
+    }
+    &__body {
+        @apply w-full py-[10px] flex flex-col gap-y-[15px];
+    }
+}

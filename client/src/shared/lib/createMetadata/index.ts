@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-export const generateMetadata = (
+export const createMetadata = (
 	title: string,
 	description?: string
 ): Metadata => {

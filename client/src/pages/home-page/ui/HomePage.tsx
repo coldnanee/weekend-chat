@@ -1,13 +1,11 @@
-import Link from "next/link";
-
 import { Layout } from "@/layout";
+
+import { Chats } from "@/widgets/chats";
 
 const HomePage = () => {
 	return (
 		<Layout>
-			<div>
-				<h1>Home!</h1>
-			</div>
+			<Chats />
 		</Layout>
 	);
 };

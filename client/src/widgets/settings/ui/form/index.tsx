@@ -26,8 +26,12 @@ export const SettingsForm = () => {
 	const { handleSubmit } = useFormContext<TSettingsForm>();
 
 	const onSubmit = async (data: TSettingsForm) => {
-		const avatar = await convertToBase64(data.avatar[0]);
-		dispatch(updateMyProfile({ user: { ...data, avatar }, router }));
+		const avatar = data.avatar
+			? data.avatar.length > 0
+				? await convertToBase64(data.avatar[0])
+				: ""
+			: "null";
+		dispatch(updateMyProfile({ user: { ...data, avatar } }));
 	};
 
 	return (

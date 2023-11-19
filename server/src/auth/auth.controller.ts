@@ -7,14 +7,17 @@ import { getValidationError } from "../libs";
 class AuthController {
 	async login(req: Request, res: Response, next: NextFunction) {
 		try {
-			getValidationError(req);
-
 			const { login, password } = req.body as {
 				login: string;
 				password: string;
 			};
 
-			const { tokens, profile } = await AuthService.login(login, password);
+			getValidationError(req);
+
+			const { tokens, profile } = await AuthService.login(
+				login.toUpperCase(),
+				password
+			);
 
 			res.cookie("accessJwt", tokens.accessToken, {
 				httpOnly: true,
@@ -40,7 +43,7 @@ class AuthController {
 				password: string;
 			};
 
-			await AuthService.registration(login, password);
+			await AuthService.registration(login.toUpperCase(), password);
 
 			return res.json({ message: true });
 		} catch (e) {

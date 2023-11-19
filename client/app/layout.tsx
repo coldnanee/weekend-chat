@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-import { generateMetadata } from "@/shared";
+import { createMetadata } from "@/shared";
 
 import { Titillium_Web } from "next/font/google";
 
@@ -8,7 +8,7 @@ import { Providers } from "@/app/providers";
 
 import "@/app/styles/index.scss";
 
-export const metadata = generateMetadata("Weekend-Chat", "Weekend Project");
+export const metadata = createMetadata("Weekend-Chat", "Weekend Project");
 
 const inter = Titillium_Web({
 	subsets: ["latin"],

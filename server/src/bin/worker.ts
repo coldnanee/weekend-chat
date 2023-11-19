@@ -5,6 +5,9 @@ import cors from "cors";
 import { errorsMiddleware } from "../errors";
 import { router } from "../router";
 import { connectDB } from "../db";
+import { Server } from "socket.io";
+
+import http from "http";
 
 import { v2 as cloudinary } from "cloudinary";
 
@@ -26,6 +29,7 @@ cloudinary.config({
 
 export const worker = () => {
 	const app = express();
+	const server = http.createServer(app);
 
 	app.use(
 		cors({
@@ -34,6 +38,13 @@ export const worker = () => {
 			allowedHeaders: "Content-Type"
 		})
 	);
+
+	const io = new Server(server, {
+		cors: {
+			origin: CLIENT_URL
+		}
+	});
+
 	app.use(cookieParser());
 	app.use(express.json({ limit: "25mb" }));
 	app.use(express.urlencoded({ limit: "25mb", extended: true }));
@@ -42,8 +53,10 @@ export const worker = () => {
 
 	const start = async () => {
 		try {
-			app.listen(PORT, () => {
-				// console.log(`Api is starting on port ${PORT}`);
+			server.listen(PORT, () => {});
+
+			io.on("connection", () => {
+				console.log("connection!");
 			});
 
 			await connectDB();

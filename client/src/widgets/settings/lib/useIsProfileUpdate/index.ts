@@ -1,36 +1,43 @@
 import { useMemo } from "react";
 
 import { useAppSelector } from "@/app/store/hooks/useAppSelector";
-import type { TAuthForm } from "@/features/auth";
+
+import type { TSettingsForm } from "../..";
 
 import { useFormContext } from "react-hook-form";
 
 export const useIsProfileUpdate = (): { isUpdated: boolean } => {
-	const { watch } = useFormContext<TAuthForm>();
-
-	const watchingForm: { [key: string]: string } & TAuthForm = {
-		login: watch("login"),
-		password: watch("password")
-	};
-
+	const { watch } = useFormContext<TSettingsForm>();
 	const { profile } = useAppSelector((state) => state.profile);
+
+	const watchingForm: TSettingsForm = {
+		login: watch("login"),
+		password: watch("password"),
+		avatar: watch("avatar")
+	};
 
 	const isUpdated = useMemo(() => {
 		if (!profile) {
 			return false;
 		}
 
-		for (let key in watchingForm) {
-			if (!watchingForm[key]) {
-				return false;
-			}
+		if (watchingForm.avatar === null) {
+			return true;
+		}
 
-			if (
-				watchingForm.password.length > 0 ||
-				watchingForm.login !== profile.login
-			) {
-				return true;
-			}
+		const formValuesArray = Object.values(watchingForm);
+		const hasEmptyValues = formValuesArray.some((value) => value === undefined);
+
+		if (hasEmptyValues) return false;
+
+		const { password, login, avatar } = watchingForm;
+
+		const isPasswordChanged = password.length > 0;
+		const isLoginChanged = login !== profile.login;
+		const isAvatarChanged = avatar && avatar.length > 0;
+
+		if (isPasswordChanged || isLoginChanged || isAvatarChanged) {
+			return true;
 		}
 
 		return false;

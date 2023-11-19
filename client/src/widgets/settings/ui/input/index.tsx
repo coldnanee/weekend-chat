@@ -1,6 +1,8 @@
 import cl from "./index.module.scss";
 
-import type { TSettingsForm, TSettingFormField } from "../../model/types";
+import type { RegisterOptions } from "react-hook-form";
+
+import type { TSettingsForm, TSettingsFormField } from "../../model/types";
 
 import { useAppSelector } from "@/app/store/hooks/useAppSelector";
 
@@ -8,22 +10,35 @@ import { useFormContext } from "react-hook-form";
 
 export const SettingsInput = ({
 	type,
-	name
+	name,
+	validation,
+	required
 }: {
 	type: string;
-	name: TSettingFormField;
+	name: TSettingsFormField;
+	validation: RegisterOptions<TSettingsForm, TSettingsFormField>;
+	required: boolean;
 }) => {
-	const { register } = useFormContext<TSettingsForm>();
+	const {
+		register,
+		formState: { errors }
+	} = useFormContext<TSettingsForm>();
 
 	const { profile } = useAppSelector((store) => store.profile);
 
+	const error = errors[name];
+
 	return (
-		<input
-			className={cl.root}
-			type={type}
-			placeholder={name}
-			{...register(name)}
-			defaultValue={name === "login" ? profile?.login : ""}
-		/>
+		<div className={cl.root}>
+			<input
+				className={cl.root__input}
+				type={type}
+				placeholder={name}
+				required={required}
+				{...register(name, validation)}
+				defaultValue={name === "login" ? profile?.login : ""}
+			/>
+			{error && <p className={cl.root__error}>{error.message}</p>}
+		</div>
 	);
 };

@@ -1,8 +1,8 @@
 import LoginPage from "@/pages/login-page";
 
-import { generateMetadata } from "@/shared";
+import { createMetadata } from "@/shared";
 
-export const metadata = generateMetadata("Login", "Login");
+export const metadata = createMetadata("Login", "Login");
 
 export default function Login() {
 	return <LoginPage />;

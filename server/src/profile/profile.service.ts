@@ -18,12 +18,26 @@ class ProfileService {
 			throw ApiError.unAuthorizedError();
 		}
 
-		const hashPassword = await bcrypt.hash(password, 7);
+		if (password) {
+			const hashPassword = await bcrypt.hash(password, 7);
+			candidate.password = hashPassword;
+		}
 
 		candidate.login = login;
-		candidate.password = hashPassword;
 
-		if (avatar) {
+		if (avatar === "null") {
+			await cloudinary.uploader.destroy(
+				`weekend-chat/users/${login}_avatar`,
+				(error, result) => {
+					if (error) {
+						throw ApiError.badRequestError(error);
+					}
+					if (result.result === "ok") {
+						candidate.avatar = "";
+					}
+				}
+			);
+		} else if (avatar) {
 			await cloudinary.uploader.upload(
 				avatar,
 				{
@@ -31,6 +45,10 @@ class ProfileService {
 					folder: process.env.CLOUD_FOLDER_IMAGES || ""
 				},
 				(error, result) => {
+					if (error) {
+						throw ApiError.badRequestError(error?.message);
+					}
+
 					const imageUrl = result?.secure_url;
 
 					if (imageUrl) {
@@ -40,8 +58,6 @@ class ProfileService {
 					}
 				}
 			);
-		} else if (avatar == null) {
-			candidate.avatar = "";
 		}
 
 		const result = await candidate.save();

@@ -1,3 +1,6 @@
+export { SocketProvider } from "./ui/socket/index";
+export { ReactQueryProvider } from "./lib/react-query";
+
 export { Loader } from "./ui/loader";
-export { generateMetadata } from "./lib/generateMetadata";
+export { createMetadata } from "./lib/createMetadata";
 export { default } from "./lib/axios";
