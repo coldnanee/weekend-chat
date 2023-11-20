@@ -1,7 +1,7 @@
 import { config } from "dotenv";
 config({ path: "./config/.env" });
 
-import { sendMessageHandler, disconnectHandler, joinHandler } from "./socket";
+import { sendMessageHandler, disconnectHandler } from "./socket";
 
 import express from "express";
 import cookieParser from "cookie-parser";
@@ -68,8 +68,6 @@ const start = async () => {
 
 		io.on("connection", (socket) => {
 			if (!onlineUsers.has(socket.id)) {
-				console.log(connectionQueryWrapper(socket.handshake.query.user));
-
 				onlineUsers.set(
 					socket.id,
 					connectionQueryWrapper(socket.handshake.query.user)
@@ -77,7 +75,6 @@ const start = async () => {
 				io.emit("new-online-user", Array.from(onlineUsers.values()));
 			}
 
-			joinHandler(io, socket, onlineUsers);
 			sendMessageHandler(io, socket, onlineUsers);
 			disconnectHandler(io, socket, onlineUsers);
 		});

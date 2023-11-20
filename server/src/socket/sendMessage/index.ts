@@ -25,8 +25,6 @@ export const sendMessageHandler = (
 
 				const user = connectionQueryWrapper(socket.handshake.query.user);
 
-				console.log(user);
-
 				io.to(recipientSocketId).emit("get-message", {
 					user,
 					message
