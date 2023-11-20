@@ -9,6 +9,8 @@ import cors from "cors";
 
 import { Server } from "socket.io";
 
+import { connectionQueryWrapper } from "./libs";
+
 import { connectDB } from "./db";
 
 import http from "http";
@@ -50,10 +52,6 @@ app.use(express.urlencoded({ limit: "25mb", extended: true }));
 app.use("/api", router);
 app.use(errorsMiddleware);
 
-interface HandshakeQuery {
-	user: string;
-}
-
 const start = async () => {
 	try {
 		const server = http.createServer(app);
@@ -69,13 +67,18 @@ const start = async () => {
 		let onlineUsers = new Map<string, string>();
 
 		io.on("connection", (socket) => {
-			// joinHandler(io, socket, onlineUsers, (user) => {
+			if (!onlineUsers.has(socket.id)) {
+				console.log(connectionQueryWrapper(socket.handshake.query.user));
 
-			// });
+				onlineUsers.set(
+					socket.id,
+					connectionQueryWrapper(socket.handshake.query.user)
+				);
+				io.emit("new-online-user", Array.from(onlineUsers.values()));
+			}
 
-			console.log(socket.handshake.query.user);
-
-			sendMessageHandler(io, socket, onlineUsers, "");
+			joinHandler(io, socket, onlineUsers);
+			sendMessageHandler(io, socket, onlineUsers);
 			disconnectHandler(io, socket, onlineUsers);
 		});
 

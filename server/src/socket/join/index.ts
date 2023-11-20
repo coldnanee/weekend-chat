@@ -1,15 +1,20 @@
 import type { Socket, Server } from "socket.io";
 
+import { connectionQueryWrapper } from "../../libs";
+
 export const joinHandler = (
 	io: Server,
 	socket: Socket,
-	onlineUsers: Map<string, string>,
-	cb: (user: string) => void
+	onlineUsers: Map<string, string>
 ) => {
-	socket.on("join", (user: string) => {
+	socket.on("join", () => {
 		if (!onlineUsers.has(socket.id)) {
-			cb(user);
-			onlineUsers.set(socket.id, user);
+			console.log(connectionQueryWrapper(socket.handshake.query.user));
+
+			onlineUsers.set(
+				socket.id,
+				connectionQueryWrapper(socket.handshake.query.user)
+			);
 			io.emit("new-online-user", Array.from(onlineUsers.values()));
 		}
 	});

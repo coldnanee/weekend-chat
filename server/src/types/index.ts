@@ -7,6 +7,7 @@ declare global {
 		}
 	}
 }
+
 export type TUser = {
 	_id: string;
 	login: string;

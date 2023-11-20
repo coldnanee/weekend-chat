@@ -1,10 +1,6 @@
 import type { Socket, Server } from "socket.io";
 
-import { getSocketIdByUserId } from "../../libs";
-
-import UserModel from "../../db/models/UserModel";
-
-import { UserDto } from "../../dtos/user.dto";
+import { connectionQueryWrapper, getSocketIdByUserId } from "../../libs";
 
 import { ApiError } from "../../errors";
 import ChatModel from "../../db/models/ChatModel";
@@ -15,8 +11,7 @@ import { getDateForMessage } from "../../libs";
 export const sendMessageHandler = (
 	io: Server,
 	socket: Socket,
-	users: Map<string, string>,
-	user: string
+	users: Map<string, string>
 ) => {
 	socket.on(
 		"send-message",
@@ -27,6 +22,10 @@ export const sendMessageHandler = (
 
 			if (recipientSocketId) {
 				// пользователь онлайн - отправить сообщение и сохранить в бд
+
+				const user = connectionQueryWrapper(socket.handshake.query.user);
+
+				console.log(user);
 
 				io.to(recipientSocketId).emit("get-message", {
 					user,
@@ -40,6 +39,8 @@ export const sendMessageHandler = (
 					text: message,
 					date
 				});
+
+				console.log(newMessage);
 
 				// await newMessage.save();
 
