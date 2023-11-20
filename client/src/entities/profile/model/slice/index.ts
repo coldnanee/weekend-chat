@@ -66,10 +66,11 @@ const slice = createSlice({
 				state.profile = action.payload;
 			})
 			.addCase(fetchMyProfile.rejected, (state) => {
-				UserResponseHandlers.rejected(
-					state,
-					"Auth error. Please reload the page!"
-				);
+				state.status = STATUSES.ERROR;
+				state.error = "Fetch profile error";
+				if (window) {
+					location.href = "/login";
+				}
 			})
 
 			.addCase(loginUser.pending, (state) => {
@@ -114,7 +115,9 @@ const slice = createSlice({
 			.addCase(logoutUser.fulfilled, (state, action) => {
 				UserResponseHandlers.resolved(state);
 				state.profile = null;
-				action.meta.arg.router.replace("/");
+				if (window) {
+					location.href = "/";
+				}
 			})
 			.addCase(logoutUser.rejected, (state) => {
 				UserResponseHandlers.rejected(state);

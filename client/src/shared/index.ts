@@ -1,3 +1,4 @@
+export { useSocket } from "./lib/useSocket";
 export { SocketProvider } from "./ui/socket/index";
 export { ReactQueryProvider } from "./lib/react-query";
 

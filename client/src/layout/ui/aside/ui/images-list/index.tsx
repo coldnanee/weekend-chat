@@ -1,5 +1,3 @@
-import { useRouter } from "next/navigation";
-
 import { useLogoutUser } from "../../lib/useLogoutUser";
 
 import { asideImagesDataArr } from "../../model/images";
@@ -15,11 +13,9 @@ import cl from "./index.module.scss";
 import { MdLogout } from "react-icons/md";
 
 export const ImagesList = () => {
-	const router = useRouter();
-
 	const { goToSettings } = useSettingsNavigate();
 
-	const logoutUser = useLogoutUser(router);
+	const logoutUser = useLogoutUser();
 
 	return (
 		<nav className={cl.root}>

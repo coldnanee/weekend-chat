@@ -33,6 +33,10 @@ $axios.interceptors.response.use(
 			if (isRefresh) {
 				return $axios(origin);
 			}
+
+			if (window) {
+				location.href = "/login";
+			}
 		}
 
 		throw err;
