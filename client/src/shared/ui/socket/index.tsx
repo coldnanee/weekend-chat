@@ -8,6 +8,8 @@ import { useSocket } from "@/shared";
 
 import type { ReactNode } from "react";
 
+import type { TMessage } from "@/entities/message";
+
 export const SocketProvider = ({ children }: { children: ReactNode }) => {
 	const { profile } = useAppSelector((state) => state.profile);
 
@@ -24,16 +26,16 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 		console.log(data);
 	});
 
-	useEffect(() => {
-		if (profile && profile._id !== "655bafaf2ad9164eaeab8017") {
-			socket.emit("send-message", {
-				recipientId: "655bafaf2ad9164eaeab8017",
-				message: "Привет, пользователь!"
-			});
-		}
-	}, [profile]);
+	// useEffect(() => {
+	// 	if (profile && profile._id !== "") {
+	// 		socket.emit("send-message", {
+	// 			recipientId: "",
+	// 			message: "Привет, пользователь!"
+	// 		});
+	// 	}
+	// }, [profile]);
 
-	socket.on("get-message", (data: { user: string; message: string }) => {
+	socket.on("get-message", (data: TMessage) => {
 		console.log(data);
 	});
 

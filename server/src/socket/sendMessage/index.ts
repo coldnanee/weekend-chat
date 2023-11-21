@@ -2,11 +2,7 @@ import type { Socket, Server } from "socket.io";
 
 import { connectionQueryWrapper, getSocketIdByUserId } from "../../libs";
 
-import { ApiError } from "../../errors";
-import ChatModel from "../../db/models/ChatModel";
-import MessageModel from "../../db/models/MessageModel";
-
-import { getDateForMessage } from "../../libs";
+import ChatsService from "../../chats/chats.service";
 
 export const sendMessageHandler = (
 	io: Server,
@@ -23,35 +19,15 @@ export const sendMessageHandler = (
 			if (recipientSocketId) {
 				// пользователь онлайн - отправить сообщение и сохранить в бд
 
-				const user = connectionQueryWrapper(socket.handshake.query.user);
+				const userId = connectionQueryWrapper(socket.handshake.query.user);
 
-				io.to(recipientSocketId).emit("get-message", {
-					user,
+				const newMessage = await ChatsService.saveMessageToDb(
+					userId,
+					recipientId,
 					message
-				});
+				);
 
-				const date = getDateForMessage();
-
-				const newMessage = new MessageModel({
-					user,
-					text: message,
-					date
-				});
-
-				console.log(newMessage);
-
-				// await newMessage.save();
-
-				// const chat = await ChatModel.findOne({
-				// 	membersList: { $all: [user, recipientId] }
-				// });
-
-				// if (!chat){
-				//     const newChat = new ChatModel({
-				//         members: [user, recipientId],
-				//         messages: [newMessage]
-				//     })
-				// }
+				io.to(recipientSocketId).emit("get-message", newMessage);
 			}
 		}
 	);

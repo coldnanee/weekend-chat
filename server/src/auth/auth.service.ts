@@ -46,7 +46,10 @@ class AuthService {
 
 		const hashPassword = await bcrypt.hash(password, 7);
 
-		const user = new UserModel({ login, password: hashPassword });
+		const user = new UserModel({
+			login,
+			password: hashPassword
+		});
 
 		return user.save();
 	}

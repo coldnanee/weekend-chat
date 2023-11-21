@@ -10,6 +10,8 @@ class ChatsController {
 			const { userId } = req;
 
 			const chats = await ChatsService.getChats(chat, userId);
+
+			return res.json({ chats });
 		} catch (e) {
 			next(e);
 		}

@@ -17,7 +17,7 @@ export type TUser = {
 };
 
 export type TProfilePayload = Omit<TUser, "password">;
-export type TUserPayload = Omit<TUser, "password" | "chatList">;
+export type TUserPayload = Omit<TUser, "password" | "chats">;
 
 export type TMessage = {
 	_id: string;
@@ -30,10 +30,5 @@ export type TChat = {
 	_id: string;
 	members: string[];
 	messages: string[];
-};
-
-export type TChats = {
-	_id: string;
-	chats: string[];
-	pinnedChats: string[];
+	isPinned: boolean;
 };
