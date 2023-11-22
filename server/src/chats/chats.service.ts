@@ -137,7 +137,11 @@ class ChatsService {
 			return newMessage;
 		}
 
-		return null;
+		chat.messages.push(newMessage._id);
+
+		await chat.save();
+
+		return newMessage;
 	}
 }
 

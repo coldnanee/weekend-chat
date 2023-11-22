@@ -5,22 +5,21 @@ import cl from "./index.module.scss";
 
 import { HiOutlinePaperAirplane } from "react-icons/hi2";
 
-import { useSocket } from "@/shared";
-import { useAppSelector } from "@/app/store/hooks/useAppSelector";
+import { useSocketContext } from "@/shared";
 
 export const ChatInput = () => {
-	const { profile } = useAppSelector((state) => state.profile);
+	const { socket } = useSocketContext();
 
 	const [message, setMessage] = useState<string>("");
 
-	const { socket } = useSocket();
-
 	const sendMessage = () => {
-		socket.emit("send-message", {
-			recipientId: "655cdf5bb3ae82a16a820de1",
-			message
-		});
-		setMessage("");
+		if (socket) {
+			socket.emit("send-message", {
+				recipientId: "655e20a77251d686a7d7f79f",
+				message
+			});
+			setMessage("");
+		}
 	};
 
 	const handlePressEnter = (e: KeyboardEvent<HTMLInputElement>) => {

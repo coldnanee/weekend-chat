@@ -67,13 +67,12 @@ const start = async () => {
 		let onlineUsers = new Map<string, string>();
 
 		io.on("connection", (socket) => {
-			if (!onlineUsers.has(socket.id)) {
-				onlineUsers.set(
-					socket.id,
-					connectionQueryWrapper(socket.handshake.query.user)
-				);
-				io.emit("new-online-user", Array.from(onlineUsers.values()));
-			}
+			onlineUsers.set(
+				socket.id,
+				connectionQueryWrapper(socket.handshake.query.user)
+			);
+
+			io.emit("new-online-user", Array.from(onlineUsers.values()));
 
 			sendMessageHandler(io, socket, onlineUsers);
 			disconnectHandler(io, socket, onlineUsers);

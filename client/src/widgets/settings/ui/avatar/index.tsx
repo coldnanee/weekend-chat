@@ -4,7 +4,7 @@ import cl from "./index.module.scss";
 
 import Image from "next/image";
 
-import DefaultAvatar from "../../images/default-avatar.svg";
+import { DefaultAvatar } from "@/shared";
 
 import { useAppSelector } from "@/app/store/hooks/useAppSelector";
 import { useAppDispatch } from "@/app/store/hooks/useAppDispatch";
@@ -60,13 +60,12 @@ export const SettingsAvatar = () => {
 	return (
 		<div className={cl.root}>
 			<label htmlFor="#settings-avatar">
-				<Image
-					src={previewAvatarPath || avatar || DefaultAvatar}
+				<DefaultAvatar
+					src={previewAvatarPath || avatar}
 					className={cl.root__avatar}
 					alt="avatar"
 					width={100}
 					height={100}
-					priority
 				/>
 			</label>
 			<input
