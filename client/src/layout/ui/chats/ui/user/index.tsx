@@ -12,7 +12,7 @@ export const ChatsUser = ({ user }: { user: TUser }) => {
 	return (
 		<li className={cl.root}>
 			<Link
-				href=""
+				href={`/chat/${user.login}`}
 				className={cl.root__body}>
 				<Image
 					className={cl.root__body__avatar}

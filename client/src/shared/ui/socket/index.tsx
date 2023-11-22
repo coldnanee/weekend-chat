@@ -17,23 +17,13 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 
 	useEffect(() => {
 		if (profile) {
-			console.log(profile);
 			socket.connect();
 		}
 	}, [profile]);
 
 	socket.on("new-online-user", (data) => {
-		console.log(data);
+		// console.log(data);
 	});
-
-	// useEffect(() => {
-	// 	if (profile && profile._id !== "") {
-	// 		socket.emit("send-message", {
-	// 			recipientId: "",
-	// 			message: "Привет, пользователь!"
-	// 		});
-	// 	}
-	// }, [profile]);
 
 	socket.on("get-message", (data: TMessage) => {
 		console.log(data);

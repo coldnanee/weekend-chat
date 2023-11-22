@@ -24,6 +24,7 @@ export type TMessage = {
 	user: Schema.Types.ObjectId;
 	text: string;
 	date: string;
+	isRead: boolean;
 };
 
 export type TChat = {
@@ -31,4 +32,9 @@ export type TChat = {
 	members: string[];
 	messages: string[];
 	isPinned: boolean;
+};
+
+export type TChatPayload = Pick<TChat, "_id" | "isPinned"> & {
+	user: TUser;
+	message: TMessage[];
 };

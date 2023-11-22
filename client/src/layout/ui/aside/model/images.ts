@@ -1,4 +1,6 @@
-import { BsChatLeftTextFill, BsSearch } from "react-icons/bs";
+import { BsChatLeftTextFill } from "react-icons/bs";
+
+import { FaQuestion } from "react-icons/fa";
 
 import type { TAsideImage } from "./types";
 
@@ -9,8 +11,8 @@ export const asideImagesDataArr: TAsideImage[] = [
 		link: "/chats"
 	},
 	{
-		text: "Search",
-		Image: BsSearch,
-		link: "/search"
+		text: "Support",
+		Image: FaQuestion,
+		link: "/support"
 	}
 ];

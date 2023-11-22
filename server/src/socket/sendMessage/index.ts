@@ -14,6 +14,8 @@ export const sendMessageHandler = (
 		async (data: { recipientId: string; message: string }) => {
 			const { recipientId, message } = data;
 
+			console.log(data);
+
 			const recipientSocketId = getSocketIdByUserId(users, recipientId);
 
 			if (recipientSocketId) {

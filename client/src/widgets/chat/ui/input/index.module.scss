@@ -1,0 +1,12 @@
+.root {
+    @apply relative;
+    &__input {
+        @apply w-full bg-[#202329] p-[10px] text-[#a9aeba];
+        &::placeholder {
+            opacity: 0.5;
+        }
+        &__send {
+            @apply absolute bottom-[50%] right-[10px] translate-y-[50%] cursor-pointer;
+        }
+    }
+}

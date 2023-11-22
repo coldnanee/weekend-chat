@@ -1,13 +1,7 @@
 import { Layout } from "@/layout";
 
-import { Chats } from "@/widgets/chats";
-
 const HomePage = () => {
-	return (
-		<Layout>
-			<Chats />
-		</Layout>
-	);
+	return <Layout>Home</Layout>;
 };
 
 export default HomePage;
