@@ -5,7 +5,7 @@ import cl from "./index.module.scss";
 
 import { HiOutlinePaperAirplane } from "react-icons/hi2";
 
-import { useSocketContext } from "@/shared";
+import { useSocketContext } from "@/widgets/socket";
 
 export const ChatInput = ({ recipientId }: { recipientId?: string }) => {
 	const { socket } = useSocketContext();

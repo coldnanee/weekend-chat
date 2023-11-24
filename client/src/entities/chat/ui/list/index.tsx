@@ -4,11 +4,11 @@ import cl from "./index.module.scss";
 
 import { useQuery } from "@tanstack/react-query";
 
-import { ChatBySearchChat } from "../chat";
+import { Chat } from "..";
 
-import { fetchChatsByLogin } from "../../model/fetchChatsByLogin";
+import { fetchChatsByLogin } from "../../../../layout/ui/chats/model/fetchChatsByLogin";
 
-export const ChatBySearchChats = ({ login }: { login: string }) => {
+export const ChatList = ({ login }: { login: string }) => {
 	const { data } = useQuery({
 		queryKey: ["chats", { login }],
 		queryFn: () => fetchChatsByLogin(login)
@@ -17,7 +17,7 @@ export const ChatBySearchChats = ({ login }: { login: string }) => {
 	return (
 		<ul className={cl.root}>
 			{(data || []).map((chat) => (
-				<ChatBySearchChat
+				<Chat
 					chat={chat}
 					key={chat._id}
 				/>

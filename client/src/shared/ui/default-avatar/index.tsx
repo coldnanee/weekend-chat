@@ -2,6 +2,8 @@ import Image from "next/image";
 
 import AvatarImage from "../../images/default-avatar.svg";
 
+import cl from "./index.module.scss";
+
 export const DefaultAvatar = ({
 	className,
 	src,
@@ -17,7 +19,7 @@ export const DefaultAvatar = ({
 }) => {
 	return (
 		<Image
-			className={className}
+			className={[className, cl.root].join(" ")}
 			src={src || AvatarImage}
 			width={width}
 			height={height}

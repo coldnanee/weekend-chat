@@ -6,7 +6,7 @@ import { DefaultAvatar } from "@/shared";
 
 import Link from "next/link";
 
-export const ChatsUser = ({ user }: { user: TUser }) => {
+export const ChatUser = ({ user }: { user: TUser }) => {
 	return (
 		<li className={cl.root}>
 			<Link

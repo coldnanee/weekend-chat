@@ -6,15 +6,17 @@ import { DefaultAvatar } from "@/shared";
 
 import { useAppSelector } from "@/app/store/hooks/useAppSelector";
 
-import { useCountUnreadMessages } from "../../lib/useCountUnreadMessages";
-import { getMessageDate } from "../../lib/getMessageDate";
+import { useCountUnreadMessages } from "../../../layout/ui/chats/lib/useCountUnreadMessages";
+import { getMessageDate } from "../../../layout/ui/chats/lib/getMessageDate";
+
+import { getSlicedMessage } from "../../../layout/ui/chats/lib/getSlicedMessage";
 
 import Image from "next/image";
 
-import PinnedImage from "../../images/pinned.svg";
+import PinnedImage from "../images/pinned.svg";
 import Link from "next/link";
 
-export const ChatBySearchChat = ({ chat }: { chat: TChat }) => {
+export const Chat = ({ chat }: { chat: TChat }) => {
 	const { profile } = useAppSelector((state) => state.profile);
 
 	const { text, date, user } = chat.messages[chat.messages.length - 1];
@@ -32,7 +34,7 @@ export const ChatBySearchChat = ({ chat }: { chat: TChat }) => {
 		<li>
 			<Link
 				className={unreadMessagesCounter > 0 ? rootClasses.join(" ") : cl.root}
-				href={`chat/${chat.user.login}`}>
+				href={`/chat/${chat.user.login}`}>
 				<div className={cl.root__body}>
 					<DefaultAvatar
 						width={45}
@@ -43,10 +45,16 @@ export const ChatBySearchChat = ({ chat }: { chat: TChat }) => {
 					/>
 					<div className={cl.root__body__chat}>
 						<h4 className={cl.root__body__chat__name}>{chat.user.login}</h4>
-						<p className={cl.root__body__chat__message}>
-							{user === profile?._id && <span>You: </span>}
-							{text}
-						</p>
+						<div className={cl.root__body__chat__message}>
+							{user === profile?._id ? (
+								<>
+									<span>You: </span>
+									<p>{getSlicedMessage(text, true)}</p>
+								</>
+							) : (
+								<p>{getSlicedMessage(text, false)}</p>
+							)}
+						</div>
 					</div>
 				</div>
 				<div className={cl.root__info}>

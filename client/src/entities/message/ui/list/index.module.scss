@@ -1,0 +1,12 @@
+.root {
+    @apply flex flex-col gap-y-[15px] bg-[#202329] px-[20px] py-[65px];
+    max-height: 100dvh;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+        width: 5px; /* ширина scrollbar */
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: #474b53; /* цвет плашки */
+        border-radius: 20px; /* закругления плашки */
+    }
+}

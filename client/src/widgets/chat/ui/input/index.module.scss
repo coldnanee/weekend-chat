@@ -1,7 +1,7 @@
 .root {
-    @apply relative;
+    @apply absolute bottom-0 right-0 w-full;
     &__input {
-        @apply w-full bg-[#202329] p-[10px] text-[#a9aeba];
+        @apply w-full bg-[#383b46] p-[10px] text-[#a9aeba];
         &::placeholder {
             opacity: 0.5;
         }

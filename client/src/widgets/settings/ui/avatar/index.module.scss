@@ -1,7 +1,7 @@
 .root {
     @apply flex flex-col items-center;
     &__avatar {
-        @apply cursor-pointer rounded-[50%] w-[100px] h-[100px];
+        @apply cursor-pointer;
     }
     &__input {
         @apply hidden;

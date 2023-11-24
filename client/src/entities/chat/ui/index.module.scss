@@ -15,6 +15,9 @@
                 span {
                     @apply text-[#9d9d9e] font-bold inline-block mr-[7px];
                 }
+                p {
+                    @apply inline;
+                }
             }
         }
     }

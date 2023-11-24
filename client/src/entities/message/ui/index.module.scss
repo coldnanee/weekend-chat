@@ -1,0 +1,17 @@
+.root {
+    @apply flex items-end gap-[10px];
+    &__message {
+        @apply bg-[#2e333d] text-[#E7E9EA] p-[10px] rounded-[10px] min-w-[150px] max-w-[300px];
+        border-radius: 10px 10px 10px 0;
+        &_my {
+            @apply bg-[#6b8afd];
+        }
+        &__text {
+            @apply leading-[20px];
+            word-wrap: break-word;
+        }
+        &__info {
+            @apply flex justify-between text-[10px] items-center mt-[10px];
+        }
+    }
+}

@@ -10,9 +10,7 @@ import { io, Socket } from "socket.io-client";
 
 import type { ReactNode } from "react";
 
-import type { TMessage } from "@/entities/message";
-
-import type { TChat } from "@/entities/chat";
+import { getMessageHandler } from "@/entities/message";
 
 export const SocketContext = createContext<{ socket?: Socket }>({
 	socket: undefined
@@ -32,39 +30,9 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 		socket.connect();
 	});
 
-	// socket.current?.on("new-online-user", (data) => {
-	// 	// console.log(data);
-	// });
+	// connect handlers
 
-	socket.on("get-message", (data: TMessage) => {
-		console.log(data);
-
-		queryClient.setQueriesData(
-			{
-				queryKey: ["chats", { login: "" }]
-			},
-			(prevChats?: TChat[]) => {
-				if (!prevChats) {
-					return undefined;
-				}
-				return [...prevChats].map((chat) => {
-					if (chat._id === data.chat) {
-						return {
-							...chat,
-							messages: [...chat.messages, data]
-						};
-					}
-
-					return chat;
-				});
-			}
-		);
-
-		queryClient.invalidateQueries({
-			queryKey: ["chats", { login: "" }],
-			refetchType: "none"
-		});
-	});
+	getMessageHandler(socket, queryClient);
 
 	return (
 		<SocketContext.Provider value={{ socket: socket }}>

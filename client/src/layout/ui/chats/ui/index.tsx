@@ -1,8 +1,8 @@
 "use client";
 
 import { ChatsSearch } from "./search";
-import { ChatsUsers } from "./users";
-import { ChatBySearchChats } from "./chats";
+import { ChatUsers } from "@/entities/user";
+import { ChatList } from "@/entities/chat";
 
 import cl from "./index.module.scss";
 
@@ -14,8 +14,8 @@ export const Chats = () => {
 	return (
 		<div className={cl.root}>
 			<ChatsSearch setLogin={setLogin} />
-			<ChatBySearchChats login={login} />
-			<ChatsUsers login={login} />
+			<ChatList login={login} />
+			<ChatUsers login={login} />
 		</div>
 	);
 };
