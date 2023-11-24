@@ -1,4 +1,4 @@
-export { SocketProvider } from "./ui/socket/";
+export { SocketProvider, useSocketContext } from "./ui/socket/";
 export { ReactQueryProvider } from "./lib/react-query";
 
 export { DefaultAvatar } from "./ui/default-avatar";

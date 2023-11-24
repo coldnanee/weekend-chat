@@ -2,9 +2,11 @@
 
 import { useQueryClient } from "@tanstack/react-query";
 
-import { socket } from "@/shared/lib/socket";
+import { createContext, useContext } from "react";
 
 import { useEffect } from "react";
+
+import { io, Socket } from "socket.io-client";
 
 import type { ReactNode } from "react";
 
@@ -12,12 +14,27 @@ import type { TMessage } from "@/entities/message";
 
 import type { TChat } from "@/entities/chat";
 
+export const SocketContext = createContext<{ socket?: Socket }>({
+	socket: undefined
+});
+
+export const useSocketContext = () => useContext(SocketContext);
+
 export const SocketProvider = ({ children }: { children: ReactNode }) => {
 	const queryClient = useQueryClient();
+
+	const socket = io("http://localhost:4000", {
+		transports: ["websocket"],
+		autoConnect: false
+	});
 
 	useEffect(() => {
 		socket.connect();
 	});
+
+	// socket.current?.on("new-online-user", (data) => {
+	// 	// console.log(data);
+	// });
 
 	socket.on("get-message", (data: TMessage) => {
 		console.log(data);
@@ -49,5 +66,9 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 		});
 	});
 
-	return <>{children}</>;
+	return (
+		<SocketContext.Provider value={{ socket: socket }}>
+			{children}
+		</SocketContext.Provider>
+	);
 };
