@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useEffect, useRef } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 import { useAppSelector } from "@/app/store/hooks/useAppSelector";
 import { useAppDispatch } from "@/app/store/hooks/useAppDispatch";
@@ -12,7 +12,7 @@ import { fetchMyProfile } from "../../model/slice/fetchMyProfile";
 import { getCookie } from "cookies-next";
 
 export const ProfileProvider = ({ children }: { children: ReactNode }) => {
-	const isFetched = useRef(false);
+	const [isFetched, setIsFetched] = useState<boolean>(false);
 
 	const dispatch = useAppDispatch();
 
@@ -22,17 +22,16 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
 		const isProfileFetched = localStorage.getItem("fetchUser");
 
 		if (!isProfileFetched) {
-			getCookie("auth") && dispatch(fetchMyProfile());
+			const isAuth = getCookie("auth");
+			if (isAuth) {
+				dispatch(fetchMyProfile());
+			}
 			localStorage.setItem("fetchUser", "+");
-			isFetched.current = true;
+			setIsFetched(true);
 		} else {
 			localStorage.removeItem("fetchUser");
 		}
 	}, []);
 
-	// FIX:
-
-	return (
-		<>{!isFetched.current || status === "loading" ? <Loader /> : children}</>
-	);
+	return <>{!isFetched || status === "loading" ? <Loader /> : children}</>;
 };

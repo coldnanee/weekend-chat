@@ -2,13 +2,9 @@
 
 import { useQueryClient } from "@tanstack/react-query";
 
-import { createContext, useContext } from "react";
+import { socket } from "@/shared/lib/socket";
 
 import { useEffect } from "react";
-
-import { useAppSelector } from "@/app/store/hooks/useAppSelector";
-
-import { io, Socket } from "socket.io-client";
 
 import type { ReactNode } from "react";
 
@@ -16,34 +12,12 @@ import type { TMessage } from "@/entities/message";
 
 import type { TChat } from "@/entities/chat";
 
-export const SocketContext = createContext<{ socket?: Socket }>({
-	socket: undefined
-});
-
-export const useSocketContext = () => useContext(SocketContext);
-
 export const SocketProvider = ({ children }: { children: ReactNode }) => {
-	const { profile } = useAppSelector((state) => state.profile);
-
 	const queryClient = useQueryClient();
 
-	const socket = io("http://localhost:4000", {
-		transports: ["websocket"],
-		autoConnect: false,
-		query: {
-			user: profile?._id
-		}
-	});
-
 	useEffect(() => {
-		if (profile) {
-			socket.connect();
-		}
-	}, [profile]);
-
-	// socket.current?.on("new-online-user", (data) => {
-	// 	// console.log(data);
-	// });
+		socket.connect();
+	});
 
 	socket.on("get-message", (data: TMessage) => {
 		console.log(data);
@@ -75,9 +49,5 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 		});
 	});
 
-	return (
-		<SocketContext.Provider value={{ socket: socket }}>
-			{children}
-		</SocketContext.Provider>
-	);
+	return <>{children}</>;
 };

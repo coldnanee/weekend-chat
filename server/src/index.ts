@@ -76,7 +76,9 @@ const start = async () => {
 			cookies.split(" ").map((cookie) => {
 				const [name, value] = cookie.split("=");
 				if (name === "accessJwt") {
-					const userId = TokenService.validateAccessToken(value);
+					const userId = TokenService.validateAccessToken(
+						value.replace(";", "")
+					);
 
 					if (!userId) {
 						return socket.disconnect();
