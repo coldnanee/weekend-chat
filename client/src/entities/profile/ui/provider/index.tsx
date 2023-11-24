@@ -30,5 +30,9 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
 		}
 	}, []);
 
-	return <>{!isFetched || status === "loading" ? <Loader /> : children}</>;
+	// FIX:
+
+	return (
+		<>{!isFetched.current || status === "loading" ? <Loader /> : children}</>
+	);
 };

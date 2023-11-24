@@ -6,6 +6,7 @@ import UserModel from "../db/models/UserModel";
 import { TChat, TMessage } from "../types";
 import { ApiError } from "../errors";
 import { UserDto } from "../dtos/user.dto";
+import { Types } from "mongoose";
 
 class ChatsService {
 	async getAllChats(userId: string) {
@@ -101,23 +102,25 @@ class ChatsService {
 	): Promise<TMessage | null> {
 		const date = getDateForMessage();
 
-		const newMessage = new MessageModel({
-			user: userId,
-			text,
-			date
-		});
-
-		await newMessage.save();
-
 		const chat = await ChatModel.findOne({
 			members: { $all: [userId, recipientId] }
 		});
 
 		if (!chat) {
 			const newChat = new ChatModel({
-				members: [userId, recipientId],
-				messages: [newMessage._id]
+				members: [userId, recipientId]
 			});
+
+			const newMessage = new MessageModel({
+				user: userId,
+				text,
+				date,
+				chat: newChat._id
+			});
+
+			await newMessage.save();
+
+			newChat.messages = [newMessage._id];
 
 			await newChat.save();
 
@@ -137,11 +140,49 @@ class ChatsService {
 			return newMessage;
 		}
 
+		const newMessage = new MessageModel({
+			user: userId,
+			text,
+			date,
+			chat: chat._id
+		});
+
+		await newMessage.save();
+
 		chat.messages.push(newMessage._id);
 
 		await chat.save();
 
 		return newMessage;
+	}
+
+	async getChatByLogin(userId: string, login: string) {
+		const user = await UserModel.findOne({ login });
+
+		if (!user) {
+			throw ApiError.badRequestError("User not found!");
+		}
+
+		const chat = await ChatModel.findOne({
+			members: { $all: [userId, user._id] }
+		});
+
+		if (!chat) {
+			return { recipientId: user._id };
+		}
+
+		const { isPinned, _id } = chat;
+
+		const getMessages = chat.messages.map(async (msg) => {
+			const message = await MessageModel.findById(msg);
+			return message;
+		});
+
+		const messages = await Promise.all(getMessages);
+
+		const fullChat = { isPinned, _id, user, messages };
+
+		return fullChat;
 	}
 }
 

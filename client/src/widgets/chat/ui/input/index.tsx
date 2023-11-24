@@ -7,15 +7,15 @@ import { HiOutlinePaperAirplane } from "react-icons/hi2";
 
 import { useSocketContext } from "@/shared";
 
-export const ChatInput = () => {
+export const ChatInput = ({ recipientId }: { recipientId?: string }) => {
 	const { socket } = useSocketContext();
 
 	const [message, setMessage] = useState<string>("");
 
 	const sendMessage = () => {
-		if (socket) {
+		if (socket && message) {
 			socket.emit("send-message", {
-				recipientId: "655e20a77251d686a7d7f79f",
+				recipientId,
 				message
 			});
 			setMessage("");

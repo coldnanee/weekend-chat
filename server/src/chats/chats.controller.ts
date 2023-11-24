@@ -16,6 +16,23 @@ class ChatsController {
 			next(e);
 		}
 	}
+
+	async getChatByLogin(req: Request, res: Response, next: NextFunction) {
+		try {
+			const chat = await ChatsService.getChatByLogin(
+				req.userId,
+				req.params.login
+			);
+
+			if ("recipientId" in chat) {
+				return res.json({ recipientId: chat.recipientId });
+			}
+
+			return res.json({ chat });
+		} catch (e) {
+			next(e);
+		}
+	}
 }
 
 export default new ChatsController();
