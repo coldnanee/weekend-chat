@@ -11,7 +11,7 @@ export const DefaultAvatar = ({
 	width,
 	height
 }: {
-	className: string;
+	className?: string;
 	src?: string;
 	alt: string;
 	width: number;

@@ -18,7 +18,7 @@ export const ChatMessage = ({
 	const rootCl = [cl.root__message, cl.root__message_my];
 
 	return (
-		<div className={cl.root}>
+		<li className={cl.root}>
 			<DefaultAvatar
 				width={30}
 				height={30}
@@ -46,6 +46,6 @@ export const ChatMessage = ({
 					<p className={cl.root__message__date}>10:57</p>
 				</div>
 			</div>
-		</div>
+		</li>
 	);
 };

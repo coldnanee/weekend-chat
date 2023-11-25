@@ -18,6 +18,9 @@ import Link from "next/link";
 
 export const Chat = ({ chat }: { chat: TChat }) => {
 	const { profile } = useAppSelector((state) => state.profile);
+	const { users } = useAppSelector((state) => state.online);
+
+	const isOnline = users.includes(chat.user._id);
 
 	const { text, date, user } = chat.messages[chat.messages.length - 1];
 
@@ -36,13 +39,15 @@ export const Chat = ({ chat }: { chat: TChat }) => {
 				className={unreadMessagesCounter > 0 ? rootClasses.join(" ") : cl.root}
 				href={`/chat/${chat.user.login}`}>
 				<div className={cl.root__body}>
-					<DefaultAvatar
-						width={45}
-						height={45}
-						alt={chat.user.login}
-						src={chat.user.avatar}
-						className={cl.root__avatar}
-					/>
+					<div className={cl.root__avatar}>
+						<DefaultAvatar
+							width={45}
+							height={45}
+							alt={chat.user.login}
+							src={chat.user.avatar}
+						/>
+						{isOnline && <span className={cl.root__status} />}
+					</div>
 					<div className={cl.root__body__chat}>
 						<h4 className={cl.root__body__chat__name}>{chat.user.login}</h4>
 						<div className={cl.root__body__chat__message}>

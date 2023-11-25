@@ -22,13 +22,15 @@ export const ChatMessages = ({ chat }: { chat: TChat }) => {
 		<section
 			ref={messagesContainer}
 			className={cl.root}>
-			{chat.messages.map((message) => (
-				<ChatMessage
-					user={chat.user}
-					message={message}
-					key={message._id}
-				/>
-			))}
+			<ul className={cl.root__list}>
+				{chat.messages.map((message) => (
+					<ChatMessage
+						user={chat.user}
+						message={message}
+						key={message._id}
+					/>
+				))}
+			</ul>
 		</section>
 	);
 };

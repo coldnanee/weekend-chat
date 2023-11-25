@@ -3,7 +3,11 @@ import type { Socket } from "socket.io";
 import TokenService from "../../token/token.service";
 
 export const checkAuthForSocket = (socket: Socket) => {
-	const cookies = socket.handshake.headers.cookie || "";
+	const cookies = socket.handshake.headers.cookie;
+
+	if (!cookies) {
+		return socket.disconnect();
+	}
 
 	cookies.split(" ").map((cookie) => {
 		const [name, value] = cookie.split("=");

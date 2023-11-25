@@ -1,24 +1,22 @@
 import cl from "./index.module.scss";
 
-import { RiDeleteBin6Line } from "react-icons/ri";
-
 import type { TUser } from "@/entities/user";
 
 import type { TChat } from "@/entities/chat";
-
-import PinnedImage from "../../images/pinned.svg";
-
-import Image from "next/image";
 import { DefaultAvatar } from "@/shared";
+
+import { useAppSelector } from "@/app/store/hooks/useAppSelector";
 
 export const ChatInfo = ({
 	user,
 	chat
 }: {
-	user?: TUser;
+	user: TUser;
 	chat: TChat | null;
 }) => {
-	const isOnline = false;
+	const { users } = useAppSelector((state) => state.online);
+
+	const isOnline = users.includes(user?._id);
 
 	const rootClasses = [
 		cl.root__body__status__icon,
@@ -38,16 +36,6 @@ export const ChatInfo = ({
 					<p>{isOnline ? "online" : "offline"}</p>
 				</div>
 				<div className={cl.root__body__info}>
-					{/* <RiDeleteBin6Line
-						color="#a6abb7"
-						size="20px"
-					/>
-					<Image
-						width={20}
-						height={20}
-						alt="pinned"
-						src={PinnedImage}
-					/> */}
 					<DefaultAvatar
 						src={user?.avatar}
 						width={30}
