@@ -65,7 +65,7 @@ const slice = createSlice({
 				UserResponseHandlers.resolved(state);
 				state.profile = action.payload;
 			})
-			.addCase(fetchMyProfile.rejected, (state, action) => {
+			.addCase(fetchMyProfile.rejected, (state) => {
 				state.status = STATUSES.ERROR;
 				state.error = "Fetch profile error";
 				if (window) {

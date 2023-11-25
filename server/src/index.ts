@@ -20,7 +20,7 @@ import { router } from "./router";
 
 import { v2 as cloudinary } from "cloudinary";
 
-import TokenService from "./token/token.service";
+import { checkAuthForSocket } from "./libs";
 
 const { CLIENT_URL, CLOUD_NAME, CLOUD_API_KEY, CLOUD_API_SECRET_KEY, PORT } =
 	process.env as {
@@ -69,24 +69,7 @@ const start = async () => {
 		let onlineUsers = new Map<string, string>();
 
 		io.on("connection", (socket) => {
-			// const userId = TokenService.validateAccessToken(socket.handshake.headers.cookie);
-
-			const cookies = socket.handshake.headers.cookie || "";
-
-			cookies.split(" ").map((cookie) => {
-				const [name, value] = cookie.split("=");
-				if (name === "accessJwt") {
-					const userId = TokenService.validateAccessToken(
-						value.replace(";", "")
-					);
-
-					if (!userId) {
-						return socket.disconnect();
-					}
-
-					socket.handshake.query.user = userId;
-				}
-			});
+			checkAuthForSocket(socket);
 
 			onlineUsers.set(
 				socket.id,

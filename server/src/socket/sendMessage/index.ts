@@ -28,6 +28,7 @@ export const sendMessageHandler = (
 				);
 
 				io.to(recipientSocketId).emit("get-message", newMessage);
+				io.to(socket.id).emit("send-message", newMessage);
 			}
 		}
 	);

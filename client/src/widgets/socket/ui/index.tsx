@@ -1,7 +1,5 @@
 "use client";
 
-import { useQueryClient } from "@tanstack/react-query";
-
 import { createContext, useContext } from "react";
 
 import { useEffect } from "react";
@@ -10,7 +8,10 @@ import { io, Socket } from "socket.io-client";
 
 import type { ReactNode } from "react";
 
-import { getMessageHandler } from "@/entities/message";
+import { getMessageHandler } from "@/entities/chat";
+import { sendMessageHandler } from "@/entities/chat";
+
+import { useAppDispatch } from "@/app/store/hooks/useAppDispatch";
 
 export const SocketContext = createContext<{ socket?: Socket }>({
 	socket: undefined
@@ -19,7 +20,7 @@ export const SocketContext = createContext<{ socket?: Socket }>({
 export const useSocketContext = () => useContext(SocketContext);
 
 export const SocketProvider = ({ children }: { children: ReactNode }) => {
-	const queryClient = useQueryClient();
+	const dispatch = useAppDispatch();
 
 	const socket = io("http://localhost:4000", {
 		transports: ["websocket"],
@@ -30,9 +31,8 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 		socket.connect();
 	});
 
-	// connect handlers
-
-	getMessageHandler(socket, queryClient);
+	getMessageHandler(socket, dispatch);
+	sendMessageHandler(socket, dispatch);
 
 	return (
 		<SocketContext.Provider value={{ socket: socket }}>
