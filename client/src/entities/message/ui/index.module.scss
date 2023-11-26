@@ -13,5 +13,9 @@
         &__info {
             @apply flex justify-between text-[10px] items-center mt-[10px];
         }
+        &__date {
+            @apply text-right;
+            flex: 1 1 auto;
+        }
     }
 }

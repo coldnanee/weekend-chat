@@ -7,17 +7,21 @@ import { UserNotFound } from "./user-not-found";
 import cl from "./index.module.scss";
 
 import { useParams } from "next/navigation";
+import { useGetChatsQuery } from "@/entities/chat";
+
 import { ChatInfo } from "./chat-info";
 import { StartChat } from "./start-chat";
-
-import { useGetChatsQuery } from "@/entities/chat";
 
 export const Chat = () => {
 	const params = useParams<{ login: string }>();
 
-	const { data, isError } = useGetChatsQuery("");
+	const { data, isError, isLoading } = useGetChatsQuery("");
 
 	if (!data) {
+		return <></>;
+	}
+
+	if (isLoading) {
 		return <></>;
 	}
 

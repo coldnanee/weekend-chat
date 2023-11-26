@@ -1,7 +1,11 @@
 import { config } from "dotenv";
 config({ path: "./config/.env" });
 
-import { sendMessageHandler, disconnectHandler } from "./socket";
+import {
+	sendMessageHandler,
+	disconnectHandler,
+	readMessageHandler
+} from "./socket";
 
 import express from "express";
 import cookieParser from "cookie-parser";
@@ -79,6 +83,7 @@ const start = async () => {
 			io.emit("new-online-user", Array.from(onlineUsers.values()));
 
 			sendMessageHandler(io, socket, onlineUsers);
+			readMessageHandler(io, socket);
 			disconnectHandler(io, socket, onlineUsers);
 		});
 

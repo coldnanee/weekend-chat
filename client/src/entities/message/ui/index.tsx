@@ -8,6 +8,8 @@ import { PiCheckBold } from "react-icons/pi";
 
 import { DefaultAvatar } from "@/shared";
 
+import { getMessageDate } from "../lib/getMessageDate";
+
 export const ChatMessage = ({
 	message,
 	user
@@ -32,18 +34,24 @@ export const ChatMessage = ({
 				}>
 				<p className={cl.root__message__text}>{message.text}</p>
 				<div className={cl.root__message__info}>
-					{message.isRead ? (
-						<PiChecksBold
-							color="#fff"
-							size="16px"
-						/>
-					) : (
-						<PiCheckBold
-							color="#fff"
-							size="16px"
-						/>
+					{user._id !== message.user && (
+						<>
+							{message.isRead ? (
+								<PiChecksBold
+									color="#fff"
+									size="16px"
+								/>
+							) : (
+								<PiCheckBold
+									color="#fff"
+									size="16px"
+								/>
+							)}
+						</>
 					)}
-					<p className={cl.root__message__date}>10:57</p>
+					<p className={cl.root__message__date}>
+						{getMessageDate(message.date)}
+					</p>
 				</div>
 			</div>
 		</li>

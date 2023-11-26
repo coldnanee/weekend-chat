@@ -4,15 +4,10 @@ import cl from "./index.module.scss";
 
 import { ChatUser } from "..";
 
-import { fetchUsersByLogin } from "../../model/fetchUsersByLogin";
-
-import { useQuery } from "@tanstack/react-query";
+import { useChatUsersQuery } from "../../lib/useChatUsersQuery";
 
 export const ChatUsers = ({ login }: { login: string }) => {
-	const { data, isLoading } = useQuery({
-		queryKey: ["home-users", { login }],
-		queryFn: () => fetchUsersByLogin(login)
-	});
+	const { data, isLoading } = useChatUsersQuery(login);
 
 	if (!data) {
 		return <></>;

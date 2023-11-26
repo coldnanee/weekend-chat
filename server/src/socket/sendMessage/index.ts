@@ -16,20 +16,19 @@ export const sendMessageHandler = (
 
 			const recipientSocketId = getSocketIdByUserId(users, recipientId);
 
+			const userId = connectionQueryWrapper(socket.handshake.query.user);
+
+			const newMessage = await ChatsService.saveMessageToDb(
+				userId,
+				recipientId,
+				message
+			);
+
 			if (recipientSocketId) {
-				// пользователь онлайн - отправить сообщение и сохранить в бд
-
-				const userId = connectionQueryWrapper(socket.handshake.query.user);
-
-				const newMessage = await ChatsService.saveMessageToDb(
-					userId,
-					recipientId,
-					message
-				);
-
 				io.to(recipientSocketId).emit("get-message", newMessage);
-				io.to(socket.id).emit("send-message", newMessage);
 			}
+
+			io.to(socket.id).emit("send-message", newMessage);
 		}
 	);
 };
