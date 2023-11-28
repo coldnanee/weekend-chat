@@ -4,6 +4,8 @@ import { ChatInput } from "./input";
 import { ChatMessages } from "@/entities/message";
 import { UserNotFound } from "./user-not-found";
 
+import { ChatLoader } from "./loader";
+
 import cl from "./index.module.scss";
 
 import { useParams } from "next/navigation";
@@ -26,13 +28,11 @@ export const Chat = () => {
 		isLoading: isUserLoading
 	} = useGetUserByLogin(params?.login || "");
 
-	const isLoading = isChatsLoading || isUserLoading;
-
-	if (!chats || !user) {
-		return <></>;
+	if (isChatsLoading || isUserLoading) {
+		return <ChatLoader />;
 	}
 
-	if (isLoading) {
+	if (!chats || !user) {
 		return <></>;
 	}
 

@@ -4,24 +4,18 @@ import cl from "./index.module.scss";
 
 import { ChatUser } from "..";
 
-import { useChatUsersQuery } from "../../lib/useChatUsersQuery";
+import type { TUser } from "../..";
 
-export const ChatUsers = ({ login }: { login: string }) => {
-	const { data, isLoading } = useChatUsersQuery(login);
-
-	if (!data) {
+export const ChatUsers = ({ users }: { users?: TUser[] | null }) => {
+	if (!users) {
 		return <></>;
-	}
-
-	if (isLoading) {
-		return <>loading</>;
 	}
 
 	return (
 		<section className={cl.root}>
-			<h2 className={cl.root__title}>Users:</h2>
+			{users.length > 0 && <h2 className={cl.root__title}>Users:</h2>}
 			<ul className={cl.root__body}>
-				{data.map((user) => (
+				{users.map((user) => (
 					<ChatUser
 						key={user._id}
 						user={user}

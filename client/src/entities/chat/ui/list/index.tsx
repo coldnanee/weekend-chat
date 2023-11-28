@@ -2,25 +2,32 @@
 
 import cl from "./index.module.scss";
 
-import { useGetChatsQuery } from "../..";
-
 import { Chat } from "..";
 
-export const ChatList = ({ login }: { login: string }) => {
-	const { data } = useGetChatsQuery(login);
+import type { TChat } from "../..";
 
-	if (!data) {
+export const ChatList = ({
+	chats,
+	login
+}: {
+	chats?: TChat[];
+	login: string;
+}) => {
+	if (!chats) {
 		return <></>;
 	}
 
 	return (
-		<ul className={cl.root}>
-			{(data.chats || []).map((chat) => (
-				<Chat
-					chat={chat}
-					key={chat._id}
-				/>
-			))}
-		</ul>
+		<section className={cl.root}>
+			{login && chats.length > 0 && <h2 className={cl.root__title}>Chats:</h2>}
+			<ul className={cl.root__body}>
+				{(chats || []).map((chat) => (
+					<Chat
+						chat={chat}
+						key={chat._id}
+					/>
+				))}
+			</ul>
+		</section>
 	);
 };

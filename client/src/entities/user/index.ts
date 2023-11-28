@@ -1,3 +1,4 @@
+export { useChatUsersQuery } from "./lib/useChatUsersQuery";
 export { newOnlineUserHandler } from "./model/newOnlineUserHandler";
 export { newOfflineUserHandler } from "./model/newOfflineUserHandler";
 export { ChatUsers } from "./ui/list";
