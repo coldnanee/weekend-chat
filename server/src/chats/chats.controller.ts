@@ -16,6 +16,18 @@ class ChatsController {
 			next(e);
 		}
 	}
+
+	async getUserInfo(req: Request, res: Response, next: NextFunction) {
+		try {
+			const { login } = req.query as { login: string };
+
+			const user = await ChatsService.getUserInfo(login);
+
+			return res.json({ ...user });
+		} catch (e) {
+			next(e);
+		}
+	}
 }
 
 export default new ChatsController();

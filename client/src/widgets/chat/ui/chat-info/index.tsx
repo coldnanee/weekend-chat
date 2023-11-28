@@ -7,13 +7,7 @@ import { DefaultAvatar } from "@/shared";
 
 import { useAppSelector } from "@/app/store/hooks/useAppSelector";
 
-export const ChatInfo = ({
-	user,
-	chat
-}: {
-	user: TUser;
-	chat: TChat | null;
-}) => {
+export const ChatInfo = ({ user }: { user: TUser }) => {
 	const { users } = useAppSelector((state) => state.online);
 
 	const isOnline = users.includes(user?._id);

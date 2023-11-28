@@ -9,5 +9,6 @@ const controller = ChatsController;
 const router = Router();
 
 router.get("/", checkAuth, controller.getChats);
+router.get("/user", checkAuth, controller.getUserInfo);
 
 export const chats = router;

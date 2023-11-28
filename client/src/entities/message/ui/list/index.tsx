@@ -1,5 +1,9 @@
 "use client";
 
+import { StartChat } from "../start-chat";
+
+import { useParams } from "next/navigation";
+
 import type { TChat } from "@/entities/chat";
 
 import { useRef, useEffect } from "react";
@@ -8,7 +12,9 @@ import cl from "./index.module.scss";
 
 import { ChatMessage } from "..";
 
-export const ChatMessages = ({ chat }: { chat: TChat }) => {
+export const ChatMessages = ({ chat }: { chat?: TChat }) => {
+	const params = useParams<{ login: string }>();
+
 	const messagesContainer = useRef<null | HTMLElement>(null);
 
 	useEffect(() => {
@@ -17,6 +23,10 @@ export const ChatMessages = ({ chat }: { chat: TChat }) => {
 				messagesContainer.current.scrollHeight;
 		}
 	}, [chat]);
+
+	if (!chat) {
+		return <StartChat name={params?.login || ""} />;
+	}
 
 	return (
 		<section

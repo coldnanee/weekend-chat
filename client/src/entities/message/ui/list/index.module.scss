@@ -1,15 +1,15 @@
 .root {
-    @apply bg-[#202329] px-[20px] py-[65px];
-    max-height: 100dvh;
+    @apply bg-[#202329] px-[20px] py-[65px] h-full;
+    height: 100dvh;
     overflow-y: auto;
     &__list {
         @apply flex flex-col gap-y-[15px];
     }
     &::-webkit-scrollbar {
-        width: 5px; /* ширина scrollbar */
+        width: 5px;
     }
     &::-webkit-scrollbar-thumb {
-        background-color: #474b53; /* цвет плашки */
-        border-radius: 20px; /* закругления плашки */
+        background-color: #474b53;
+        border-radius: 20px;
     }
 }

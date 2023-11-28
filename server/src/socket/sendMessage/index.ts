@@ -18,17 +18,23 @@ export const sendMessageHandler = (
 
 			const userId = connectionQueryWrapper(socket.handshake.query.user);
 
-			const newMessage = await ChatsService.saveMessageToDb(
+			const messageBody = await ChatsService.saveMessageToDb(
 				userId,
 				recipientId,
 				message
 			);
 
 			if (recipientSocketId) {
-				io.to(recipientSocketId).emit("get-message", newMessage);
+				messageBody?.newChat
+					? io.to(recipientSocketId).emit("new-chat", messageBody.newChat)
+					: io
+							.to(recipientSocketId)
+							.emit("get-message", messageBody?.newMessage);
 			}
 
-			io.to(socket.id).emit("send-message", newMessage);
+			messageBody?.newChat
+				? io.to(socket.id).emit("new-chat", messageBody.newChat)
+				: io.to(socket.id).emit("send-message", messageBody?.newMessage);
 		}
 	);
 };

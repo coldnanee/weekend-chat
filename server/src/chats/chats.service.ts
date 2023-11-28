@@ -95,11 +95,7 @@ class ChatsService {
 		return this.getChatsByLogin(chat, userId);
 	}
 
-	async saveMessageToDb(
-		userId: string,
-		recipientId: string,
-		text: string
-	): Promise<TMessage | null> {
+	async saveMessageToDb(userId: string, recipientId: string, text: string) {
 		const date = getDateForMessage();
 
 		const chat = await ChatModel.findOne({
@@ -137,7 +133,23 @@ class ChatsService {
 			await user.save();
 			await recipient.save();
 
-			return newMessage;
+			const userDto = new UserDto(recipient);
+
+			const getMessages = newChat.messages.map(async (id) => {
+				const message = await MessageModel.findById(id);
+				return message || null;
+			});
+
+			const messages = await Promise.all(getMessages);
+
+			const chatDto = {
+				messages,
+				isPinned: false,
+				_id: newChat._id,
+				user: userDto
+			};
+
+			return { newMessage, newChat: chatDto };
 		}
 
 		const newMessage = new MessageModel({
@@ -153,7 +165,7 @@ class ChatsService {
 
 		await chat.save();
 
-		return newMessage;
+		return { newMessage, newChat: null };
 	}
 
 	async getChatByLogin(userId: string, login: string) {
@@ -183,6 +195,18 @@ class ChatsService {
 		const fullChat = { isPinned, _id, user, messages };
 
 		return fullChat;
+	}
+
+	async getUserInfo(login: string) {
+		const user = await UserModel.findOne({ login });
+
+		if (!user) {
+			throw ApiError.badRequestError("User not found");
+		}
+
+		const userDto = new UserDto(user);
+
+		return userDto;
 	}
 }
 
