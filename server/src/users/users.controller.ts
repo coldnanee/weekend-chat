@@ -13,7 +13,10 @@ class UsersController {
 
 			const { userId } = req;
 
-			const users = await UsersService.getUsersByLogin(login, userId);
+			const users = await UsersService.getUsersByLogin(
+				login.toLowerCase(),
+				userId
+			);
 
 			return res.json({ users });
 		} catch (e) {

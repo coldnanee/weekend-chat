@@ -15,7 +15,7 @@ class AuthController {
 			getValidationError(req);
 
 			const { tokens, profile } = await AuthService.login(
-				login.toUpperCase(),
+				login.toLowerCase(),
 				password
 			);
 
@@ -43,7 +43,7 @@ class AuthController {
 				password: string;
 			};
 
-			await AuthService.registration(login.toUpperCase(), password);
+			await AuthService.registration(login.toLowerCase(), password);
 
 			return res.json({ message: true });
 		} catch (e) {

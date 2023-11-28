@@ -8,7 +8,7 @@ import { useAppSelector } from "@/app/store/hooks/useAppSelector";
 
 import { useCountUnreadMessages } from "../../../layout/ui/chats/lib/useCountUnreadMessages";
 import { getMessageDate } from "../../../layout/ui/chats/lib/getMessageDate";
-
+import { useParams } from "next/navigation";
 import { getSlicedMessage } from "../../../layout/ui/chats/lib/getSlicedMessage";
 
 import Image from "next/image";
@@ -17,6 +17,8 @@ import PinnedImage from "../images/pinned.svg";
 import Link from "next/link";
 
 export const Chat = ({ chat }: { chat: TChat }) => {
+	const params = useParams<{ login: string }>();
+
 	const { profile } = useAppSelector((state) => state.profile);
 	const { users } = useAppSelector((state) => state.online);
 
@@ -31,12 +33,14 @@ export const Chat = ({ chat }: { chat: TChat }) => {
 		chat.messages
 	);
 
+	const isActive = params?.login === chat.user.login;
+
 	const messageDate = getMessageDate(date);
 
 	return (
 		<li>
 			<Link
-				className={unreadMessagesCounter > 0 ? rootClasses.join(" ") : cl.root}
+				className={isActive ? rootClasses.join(" ") : cl.root}
 				href={`/chat/${chat.user.login}`}>
 				<div className={cl.root__body}>
 					<div className={cl.root__avatar}>

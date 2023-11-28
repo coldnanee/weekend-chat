@@ -3,7 +3,10 @@
     &__input {
         @apply bg-[#2e333d] w-full p-[10px] text-[#a9aeba] rounded-[10px] pl-[40px];
     }
-    &__image {
+    &__search {
         @apply absolute top-[50%] translate-y-[-50%] left-[7px];
+    }
+    &__clear {
+        @apply absolute top-[50%] translate-y-[-50%] right-[7px] cursor-pointer;
     }
 }

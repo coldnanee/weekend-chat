@@ -10,7 +10,9 @@ export const newChatHandler = (socket: Socket, dispatch: any) => {
 
 		dispatch(
 			chatsApi.util.updateQueryData("getChats", "", ({ chats }) => {
-				chats.push(chat);
+				const prevChats = chats.slice(0, 4);
+
+				return { chats: [chat, ...prevChats] };
 			})
 		);
 	});

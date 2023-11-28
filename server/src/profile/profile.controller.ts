@@ -24,7 +24,7 @@ class ProfileController {
 			const id = req.userId;
 
 			const user = await ProfileService.updateProfile(
-				login.toUpperCase(),
+				login.toLowerCase(),
 				password,
 				avatar,
 				id
