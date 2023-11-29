@@ -5,11 +5,14 @@ import {
 	useState,
 	type ChangeEvent,
 	useRef,
-	useEffect
+	useEffect,
+	useCallback
 } from "react";
 import cl from "./index.module.scss";
 
 import { HiOutlinePaperAirplane } from "react-icons/hi2";
+
+import debounce from "lodash.debounce";
 
 import { useSocketContext } from "@/widgets/socket";
 
@@ -20,17 +23,17 @@ export const ChatInput = ({ recipientId }: { recipientId?: string }) => {
 
 	const [message, setMessage] = useState<string>("");
 
-	const changeMessage = (e: ChangeEvent<HTMLInputElement>) => {
-		const { value } = e.target;
-		if (value.length === 1 && isFirstTyping.current) {
-			isFirstTyping.current = false;
-			socket?.emit("start-typing", recipientId);
-		}
-		if (!value) {
-			isFirstTyping.current = true;
+	const changeMessage = useCallback(
+		debounce(() => {
 			socket?.emit("stop-typing", recipientId);
-		}
-		setMessage(value);
+		}, 700),
+		[]
+	);
+
+	const changeInput = (e: ChangeEvent<HTMLInputElement>) => {
+		setMessage(e.target.value);
+		socket?.emit("start-typing", recipientId);
+		changeMessage();
 	};
 
 	const sendMessage = () => {
@@ -60,7 +63,7 @@ export const ChatInput = ({ recipientId }: { recipientId?: string }) => {
 	return (
 		<section className={cl.root}>
 			<input
-				onChange={changeMessage}
+				onChange={changeInput}
 				onKeyDown={handlePressEnter}
 				className={cl.root__input}
 				placeholder="Write a message..."
