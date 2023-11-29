@@ -86,8 +86,8 @@ const start = async () => {
 
 			sendMessageHandler(io, socket, onlineUsers);
 			readMessageHandler(io, socket);
-			startTypingMessageHandler(io, socket);
-			endTypingMessageHandler(io, socket);
+			startTypingMessageHandler(io, socket, onlineUsers);
+			endTypingMessageHandler(io, socket, onlineUsers);
 			disconnectHandler(io, socket, onlineUsers);
 		});
 

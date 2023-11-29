@@ -7,7 +7,7 @@
         flex: 1 1 auto;
     }
     &__typing {
-        @apply text-[#6c6f75] text-center animate-pulse;
+        @apply text-[#6c6f75] text-center mt-[5px];
         span {
             @apply text-[20px];
         }

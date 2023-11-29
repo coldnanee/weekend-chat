@@ -5,12 +5,10 @@ import {
 	useState,
 	type ChangeEvent,
 	useRef,
-	useEffect,
-	useCallback
+	useCallback,
+	useEffect
 } from "react";
 import cl from "./index.module.scss";
-
-import debounce from "lodash.debounce";
 
 import { HiOutlinePaperAirplane } from "react-icons/hi2";
 
@@ -21,7 +19,6 @@ export const ChatInput = ({ recipientId }: { recipientId?: string }) => {
 
 	const { socket } = useSocketContext();
 
-	const [value, setValue] = useState<string>("");
 	const [message, setMessage] = useState<string>("");
 
 	const changeMessage = useCallback(
@@ -29,20 +26,16 @@ export const ChatInput = ({ recipientId }: { recipientId?: string }) => {
 			const { value } = e.target;
 			if (value.length === 1 && isFirstTyping.current) {
 				isFirstTyping.current = false;
-				socket?.emit("start-typing");
+				socket?.emit("start-typing", recipientId);
 			}
 			if (!value) {
 				isFirstTyping.current = true;
-				socket?.emit("stop-typing");
+				socket?.emit("stop-typing", recipientId);
 			}
 			setMessage(value);
 		},
 		[socket]
 	);
-
-	// const changeInput = (e: ChangeEvent<HTMLInputElement>) => {
-	// 	setValue(e.target.value);
-	// };
 
 	const sendMessage = useCallback(() => {
 		if (socket && message) {
@@ -62,6 +55,12 @@ export const ChatInput = ({ recipientId }: { recipientId?: string }) => {
 		},
 		[sendMessage]
 	);
+
+	useEffect(() => {
+		return () => {
+			socket?.emit("stop-typing", recipientId);
+		};
+	}, []);
 
 	return (
 		<section className={cl.root}>

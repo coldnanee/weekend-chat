@@ -12,8 +12,16 @@ import cl from "./index.module.scss";
 
 import { ChatMessage } from "..";
 
+import { useSocketContext } from "@/widgets/socket";
+
+import { useAppSelector } from "@/app/store/hooks/useAppSelector";
+
 export const ChatMessages = ({ chat }: { chat?: TChat }) => {
 	const params = useParams<{ login: string }>();
+
+	const { users } = useAppSelector((state) => state.online);
+
+	const { socket } = useSocketContext();
 
 	const [isTyping, setIsTyping] = useState<boolean>(false);
 
@@ -24,11 +32,23 @@ export const ChatMessages = ({ chat }: { chat?: TChat }) => {
 			messagesContainer.current.scrollTop =
 				messagesContainer.current.scrollHeight;
 		}
-	}, [chat]);
+	}, [chat, isTyping]);
 
 	if (!chat) {
 		return <StartChat name={params?.login || ""} />;
 	}
+
+	socket?.on("start-typing-client", (user: string) => {
+		if (chat.user._id === user) {
+			setIsTyping(true);
+		}
+	});
+
+	socket?.on("stop-typing-client", (user: string) => {
+		if (chat.user._id === user) {
+			setIsTyping(false);
+		}
+	});
 
 	return (
 		<section
@@ -43,7 +63,7 @@ export const ChatMessages = ({ chat }: { chat?: TChat }) => {
 					/>
 				))}
 			</ul>
-			{isTyping && (
+			{isTyping && users.includes(chat.user._id) && (
 				<p className={cl.root__typing}>
 					{chat.user.login} is typing<span> . . .</span>
 				</p>
