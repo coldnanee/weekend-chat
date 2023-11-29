@@ -15,8 +15,14 @@ import Image from "next/image";
 
 import PinnedImage from "../images/pinned.svg";
 import Link from "next/link";
+import { useSocketContext } from "@/widgets/socket";
+import { useState } from "react";
 
 export const Chat = ({ chat }: { chat: TChat }) => {
+	const { socket } = useSocketContext();
+
+	const [isTyping, setIsTyping] = useState<boolean>(false);
+
 	const params = useParams<{ login: string }>();
 
 	const { profile } = useAppSelector((state) => state.profile);
@@ -37,6 +43,18 @@ export const Chat = ({ chat }: { chat: TChat }) => {
 
 	const messageDate = getMessageDate(date);
 
+	socket?.on("start-typing-client", (user: string) => {
+		if (chat.user._id === user) {
+			setIsTyping(true);
+		}
+	});
+
+	socket?.on("stop-typing-client", (user: string) => {
+		if (chat.user._id === user) {
+			setIsTyping(false);
+		}
+	});
+
 	return (
 		<li>
 			<Link
@@ -55,7 +73,9 @@ export const Chat = ({ chat }: { chat: TChat }) => {
 					<div className={cl.root__body__chat}>
 						<h4 className={cl.root__body__chat__name}>{chat.user.login}</h4>
 						<div className={cl.root__body__chat__message}>
-							{user === profile?._id ? (
+							{isTyping ? (
+								"typing..."
+							) : user === profile?._id ? (
 								<>
 									<span>You: </span>
 									<p>{getSlicedMessage(text, true)}</p>

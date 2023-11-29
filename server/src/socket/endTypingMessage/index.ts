@@ -1,7 +1,7 @@
 import { connectionQueryWrapper } from "./../../libs";
 import type { Server, Socket } from "socket.io";
 
-import { getSocketIdByUserId } from "./../../libs";
+import { getKeyByValueMap } from "./../../libs";
 
 export const endTypingMessageHandler = (
 	io: Server,
@@ -11,7 +11,7 @@ export const endTypingMessageHandler = (
 	socket.on("stop-typing", (recipientId: string) => {
 		const userId = connectionQueryWrapper(socket.handshake.query.user);
 
-		const recipientSocketId = getSocketIdByUserId(onlineUsers, recipientId);
+		const recipientSocketId = getKeyByValueMap(onlineUsers, recipientId);
 
 		if (!recipientSocketId) {
 			return;

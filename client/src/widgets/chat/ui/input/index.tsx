@@ -5,7 +5,6 @@ import {
 	useState,
 	type ChangeEvent,
 	useRef,
-	useCallback,
 	useEffect
 } from "react";
 import cl from "./index.module.scss";
@@ -21,40 +20,36 @@ export const ChatInput = ({ recipientId }: { recipientId?: string }) => {
 
 	const [message, setMessage] = useState<string>("");
 
-	const changeMessage = useCallback(
-		(e: ChangeEvent<HTMLInputElement>) => {
-			const { value } = e.target;
-			if (value.length === 1 && isFirstTyping.current) {
-				isFirstTyping.current = false;
-				socket?.emit("start-typing", recipientId);
-			}
-			if (!value) {
-				isFirstTyping.current = true;
-				socket?.emit("stop-typing", recipientId);
-			}
-			setMessage(value);
-		},
-		[socket]
-	);
+	const changeMessage = (e: ChangeEvent<HTMLInputElement>) => {
+		const { value } = e.target;
+		if (value.length === 1 && isFirstTyping.current) {
+			isFirstTyping.current = false;
+			socket?.emit("start-typing", recipientId);
+		}
+		if (!value) {
+			isFirstTyping.current = true;
+			socket?.emit("stop-typing", recipientId);
+		}
+		setMessage(value);
+	};
 
-	const sendMessage = useCallback(() => {
+	const sendMessage = () => {
 		if (socket && message) {
 			socket.emit("send-message", {
 				recipientId,
 				message
 			});
+			isFirstTyping.current = true;
 			setMessage("");
+			socket?.emit("stop-typing", recipientId);
 		}
-	}, [socket, message, recipientId]);
+	};
 
-	const handlePressEnter = useCallback(
-		(e: KeyboardEvent<HTMLInputElement>) => {
-			if (e.key === "Enter") {
-				sendMessage();
-			}
-		},
-		[sendMessage]
-	);
+	const handlePressEnter = (e: KeyboardEvent<HTMLInputElement>) => {
+		if (e.key === "Enter") {
+			sendMessage();
+		}
+	};
 
 	useEffect(() => {
 		return () => {

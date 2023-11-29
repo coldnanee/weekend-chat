@@ -1,6 +1,6 @@
 import type { Socket, Server } from "socket.io";
 
-import { connectionQueryWrapper, getSocketIdByUserId } from "../../libs";
+import { connectionQueryWrapper, getKeyByValueMap } from "../../libs";
 
 import ChatsService from "../../chats/chats.service";
 
@@ -14,7 +14,7 @@ export const sendMessageHandler = (
 		async (data: { recipientId: string; message: string }) => {
 			const { recipientId, message } = data;
 
-			const recipientSocketId = getSocketIdByUserId(users, recipientId);
+			const recipientSocketId = getKeyByValueMap(users, recipientId);
 
 			const userId = connectionQueryWrapper(socket.handshake.query.user);
 

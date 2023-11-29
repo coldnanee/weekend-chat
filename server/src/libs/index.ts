@@ -1,5 +1,5 @@
 export { checkAuthForSocket } from "./checkAuthForSocket";
 export { getDateForMessage } from "./getDateForMessage";
-export { getSocketIdByUserId } from "./getSocketIdByUserId";
+export { getKeyByValueMap } from "./getKeyByValueMap";
 export { getValidationError } from "./getValidationError";
 export { connectionQueryWrapper } from "./connectionQueryWrapper";

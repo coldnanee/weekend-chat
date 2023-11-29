@@ -15,7 +15,7 @@ import cors from "cors";
 
 import { Server } from "socket.io";
 
-import { connectionQueryWrapper } from "./libs";
+import { connectionQueryWrapper, getKeyByValueMap } from "./libs";
 
 import { connectDB } from "./db";
 
@@ -77,10 +77,9 @@ const start = async () => {
 		io.on("connection", (socket) => {
 			checkAuthForSocket(socket);
 
-			onlineUsers.set(
-				socket.id,
-				connectionQueryWrapper(socket.handshake.query.user)
-			);
+			const user = connectionQueryWrapper(socket.handshake.query.user);
+
+			onlineUsers.set(socket.id, user);
 
 			io.emit("new-online-user", Array.from(onlineUsers.values()));
 
