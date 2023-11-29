@@ -4,7 +4,9 @@ config({ path: "./config/.env" });
 import {
 	sendMessageHandler,
 	disconnectHandler,
-	readMessageHandler
+	readMessageHandler,
+	startTypingMessageHandler,
+	endTypingMessageHandler
 } from "./socket";
 
 import express from "express";
@@ -84,6 +86,8 @@ const start = async () => {
 
 			sendMessageHandler(io, socket, onlineUsers);
 			readMessageHandler(io, socket);
+			startTypingMessageHandler(io, socket);
+			endTypingMessageHandler(io, socket);
 			disconnectHandler(io, socket, onlineUsers);
 		});
 

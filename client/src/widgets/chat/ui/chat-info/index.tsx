@@ -2,7 +2,6 @@ import cl from "./index.module.scss";
 
 import type { TUser } from "@/entities/user";
 
-import type { TChat } from "@/entities/chat";
 import { DefaultAvatar } from "@/shared";
 
 import { useAppSelector } from "@/app/store/hooks/useAppSelector";

@@ -6,7 +6,7 @@ import { useParams } from "next/navigation";
 
 import type { TChat } from "@/entities/chat";
 
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 
 import cl from "./index.module.scss";
 
@@ -14,6 +14,8 @@ import { ChatMessage } from "..";
 
 export const ChatMessages = ({ chat }: { chat?: TChat }) => {
 	const params = useParams<{ login: string }>();
+
+	const [isTyping, setIsTyping] = useState<boolean>(false);
 
 	const messagesContainer = useRef<null | HTMLElement>(null);
 
@@ -41,6 +43,11 @@ export const ChatMessages = ({ chat }: { chat?: TChat }) => {
 					/>
 				))}
 			</ul>
+			{isTyping && (
+				<p className={cl.root__typing}>
+					{chat.user.login} is typing<span> . . .</span>
+				</p>
+			)}
 		</section>
 	);
 };
