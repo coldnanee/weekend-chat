@@ -1,12 +1,16 @@
 import { Chat } from "@/widgets/chat";
 
+import "./ChatPage.scss";
+
 import { Layout } from "@/layout";
 
 const ChatPage = () => {
 	return (
-		<Layout>
-			<Chat />
-		</Layout>
+		<div className="chats-page-layout">
+			<Layout>
+				<Chat />
+			</Layout>
+		</div>
 	);
 };
 

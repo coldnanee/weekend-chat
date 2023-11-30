@@ -113,7 +113,7 @@ class ChatsService {
 			});
 
 			const newMessage = new MessageModel({
-				user: userId,
+				user: new Types.ObjectId(userId),
 				text,
 				date,
 				chat: newChat._id,
@@ -159,7 +159,7 @@ class ChatsService {
 		}
 
 		const newMessage = new MessageModel({
-			user: userId,
+			user: new Types.ObjectId(userId),
 			text,
 			date,
 			chat: chat._id,

@@ -1,6 +1,8 @@
-.root{
+.root {
     @apply w-[70px] bg-[#131313] flex flex-col items-center py-[20px];
-    &__logo{
-        @apply mb-[50px]
+    @media (max-width: 420px) {
+    }
+    &__logo {
+        @apply mb-[50px];
     }
 }

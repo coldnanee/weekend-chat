@@ -1,10 +1,19 @@
 .root {
     @apply flex items-end gap-[10px];
+    &_my {
+        @apply justify-end;
+    }
+    &__avatar {
+        @media (max-width: 700px) {
+            @apply hidden;
+        }
+    }
     &__message {
         @apply bg-[#2e333d] text-[#E7E9EA] p-[10px] rounded-[10px] min-w-[150px] max-w-[300px];
         border-radius: 10px 10px 10px 0;
         &_my {
             @apply bg-[#6b8afd];
+            border-radius: 10px 10px 0 10px;
         }
         &__text {
             @apply leading-[20px];

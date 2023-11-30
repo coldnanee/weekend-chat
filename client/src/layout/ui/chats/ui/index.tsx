@@ -22,7 +22,7 @@ export const Chats = () => {
 	const isLoading = isUsersLoading || isChatsLoading;
 
 	return (
-		<div className={cl.root}>
+		<div className={[cl.root, "layout-chats"].join(" ")}>
 			<ChatsSearch setLogin={setLogin} />
 			<ChatList
 				isLoading={isLoading}

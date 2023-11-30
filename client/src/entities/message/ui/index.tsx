@@ -17,10 +17,10 @@ export const ChatMessage = ({
 	message: TMessage;
 	user: TUser;
 }) => {
-	const rootCl = [cl.root__message, cl.root__message_my];
+	const isMyMessage = user._id !== message.user;
 
 	return (
-		<li className={cl.root}>
+		<li className={isMyMessage ? [cl.root, cl.root_my].join(" ") : cl.root}>
 			<DefaultAvatar
 				width={30}
 				height={30}
@@ -30,7 +30,9 @@ export const ChatMessage = ({
 			/>
 			<div
 				className={
-					user._id !== message.user ? rootCl.join(" ") : cl.root__message
+					isMyMessage
+						? [cl.root__message, cl.root__message_my].join(" ")
+						: cl.root__message
 				}>
 				<p className={cl.root__message__text}>{message.text}</p>
 				<div className={cl.root__message__info}>
