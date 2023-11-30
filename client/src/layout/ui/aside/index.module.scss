@@ -1,8 +1,15 @@
 .root {
-    @apply w-[70px] bg-[#131313] flex flex-col items-center py-[20px];
-    @media (max-width: 420px) {
+    @apply bg-[#131313] py-[20px];
+    @media (min-width: 451px) {
+        @apply flex-col flex justify-between items-center w-[70px];
+    }
+    @media (max-width: 450px) {
+        @apply w-full;
     }
     &__logo {
         @apply mb-[50px];
+        @media (max-width: 450px) {
+            @apply hidden;
+        }
     }
 }

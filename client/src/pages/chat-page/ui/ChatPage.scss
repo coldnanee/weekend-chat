@@ -3,3 +3,9 @@
         @apply hidden;
     }
 }
+
+.chats-page-layout .layout-aside {
+    @media (max-width: 580px) {
+        @apply hidden;
+    }
+}

@@ -7,7 +7,7 @@ import { Chats } from "./chats/ui";
 
 export const Layout = ({ children }: { children: ReactNode }) => {
 	return (
-		<div className={cl.root}>
+		<div className={[cl.root, "layout"].join(" ")}>
 			<Aside />
 			<div className={cl.root__wrapper}>
 				<Chats />

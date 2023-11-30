@@ -1,6 +1,9 @@
 .root {
     @apply flex flex-col items-center h-full justify-between;
+    @media (max-width: 450px) {
+        @apply hidden;
+    }
     &__list {
-        @apply flex flex-col gap-y-[30px];
+        @apply flex gap-y-[30px] flex-col;
     }
 }

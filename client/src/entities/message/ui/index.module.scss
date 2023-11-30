@@ -1,7 +1,9 @@
 .root {
     @apply flex items-end gap-[10px];
     &_my {
-        @apply justify-end;
+        @media (max-width: 800px) {
+            @apply justify-end;
+        }
     }
     &__avatar {
         @media (max-width: 700px) {
@@ -13,7 +15,9 @@
         border-radius: 10px 10px 10px 0;
         &_my {
             @apply bg-[#6b8afd];
-            border-radius: 10px 10px 0 10px;
+            @media (max-width: 800px) {
+                border-radius: 10px 10px 0 10px;
+            }
         }
         &__text {
             @apply leading-[20px];
