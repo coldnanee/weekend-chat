@@ -3,7 +3,9 @@
     &__body {
         @apply text-[#fff] flex justify-between items-center;
         &__info {
-            @apply flex;
+            @apply flex gap-x-[20px] items-center;
+            &__delete {
+            }
         }
         &__status {
             @apply flex gap-x-[4px] items-center;

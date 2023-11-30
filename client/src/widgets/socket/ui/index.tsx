@@ -12,7 +12,8 @@ import {
 	getMessageHandler,
 	newChatHandler,
 	sendMessageHandler,
-	entryChatHandler
+	entryChatHandler,
+	deleteChatHandler
 } from "@/entities/chat";
 import { newOnlineUserHandler } from "@/entities/user";
 import { newOfflineUserHandler } from "@/entities/user";
@@ -43,6 +44,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 	newOfflineUserHandler(socket, dispatch);
 	newChatHandler(socket, dispatch);
 	entryChatHandler(socket, dispatch);
+	deleteChatHandler(socket, dispatch);
 
 	return (
 		<SocketContext.Provider value={{ socket: socket }}>

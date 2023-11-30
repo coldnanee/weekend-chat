@@ -6,8 +6,26 @@ import { DefaultAvatar } from "@/shared";
 
 import { useAppSelector } from "@/app/store/hooks/useAppSelector";
 
-export const ChatInfo = ({ user }: { user: TUser }) => {
+import { RiDeleteBin6Line } from "react-icons/ri";
+
+import { useSocketContext } from "@/widgets/socket";
+
+import type { TChat } from "@/entities/chat";
+
+export const ChatInfo = ({ user, chat }: { user: TUser; chat?: TChat }) => {
+	const { socket } = useSocketContext();
+
 	const { users } = useAppSelector((state) => state.online);
+
+	const deleteChat = () => {
+		if (chat) socket?.emit("delete-chat", chat._id);
+	};
+
+	const showConfirmWindow = () => {
+		const result = confirm("Do you want to delete the chat?");
+
+		if (result) deleteChat();
+	};
 
 	const isOnline = users.includes(user?._id);
 
@@ -29,6 +47,16 @@ export const ChatInfo = ({ user }: { user: TUser }) => {
 					<p>{isOnline ? "online" : "offline"}</p>
 				</div>
 				<div className={cl.root__body__info}>
+					<button
+						className={cl.root__body__info__delete}
+						onClick={showConfirmWindow}>
+						<RiDeleteBin6Line
+							color="#6C6F75"
+							size="20px"
+							className={cl.root__body__info__delete__image}
+						/>
+					</button>
+
 					<DefaultAvatar
 						src={user?.avatar}
 						width={30}

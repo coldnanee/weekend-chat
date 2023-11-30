@@ -44,7 +44,10 @@ export const Chat = () => {
 
 	return (
 		<div className={cl.root}>
-			<ChatInfo user={user} />
+			<ChatInfo
+				user={user}
+				chat={chat}
+			/>
 			<ChatMessages chat={chat} />
 			<ChatInput recipientId={user._id} />
 		</div>

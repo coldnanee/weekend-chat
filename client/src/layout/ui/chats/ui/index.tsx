@@ -11,28 +11,25 @@ import { useState } from "react";
 import { useChatUsersQuery } from "@/entities/user";
 import { useGetChatsQuery } from "@/entities/chat";
 
-import { ChatsLoader } from "./loader";
-
 export const Chats = () => {
 	const [login, setLogin] = useState<string>("");
 
 	const { data: users, isLoading: isUsersLoading } = useChatUsersQuery(login);
 	const { data: chats, isLoading: isChatsLoading } = useGetChatsQuery(login);
 
+	const skeletons = [...new Array(5)];
+
+	const isLoading = isUsersLoading || isChatsLoading;
+
 	return (
 		<div className={cl.root}>
 			<ChatsSearch setLogin={setLogin} />
-			{isChatsLoading || isUsersLoading ? (
-				<ChatsLoader />
-			) : (
-				<>
-					<ChatList
-						login={login || ""}
-						chats={chats?.chats}
-					/>
-					<ChatUsers users={users} />
-				</>
-			)}
+			<ChatList
+				isLoading={isLoading}
+				login={login || ""}
+				chats={isLoading ? skeletons : chats?.chats}
+			/>
+			<ChatUsers users={users} />
 		</div>
 	);
 };
