@@ -6,7 +6,9 @@ import {
 	disconnectHandler,
 	readMessageHandler,
 	startTypingMessageHandler,
-	endTypingMessageHandler
+	endTypingMessageHandler,
+	entryChatHandler,
+	leaveChatHandler
 } from "./socket";
 
 import express from "express";
@@ -15,7 +17,7 @@ import cors from "cors";
 
 import { Server } from "socket.io";
 
-import { connectionQueryWrapper, getKeyByValueMap } from "./libs";
+import { connectionQueryWrapper } from "./libs";
 
 import { connectDB } from "./db";
 
@@ -74,6 +76,8 @@ const start = async () => {
 
 		let onlineUsers = new Map<string, string>();
 
+		let usersIntoChats = new Map<string, string>(); // userId - chatId
+
 		io.on("connection", (socket) => {
 			checkAuthForSocket(socket);
 
@@ -83,11 +87,13 @@ const start = async () => {
 
 			io.emit("new-online-user", Array.from(onlineUsers.values()));
 
-			sendMessageHandler(io, socket, onlineUsers);
+			sendMessageHandler(io, socket, onlineUsers, usersIntoChats);
 			readMessageHandler(io, socket);
 			startTypingMessageHandler(io, socket, onlineUsers);
 			endTypingMessageHandler(io, socket, onlineUsers);
-			disconnectHandler(io, socket, onlineUsers);
+			disconnectHandler(io, socket, onlineUsers, usersIntoChats);
+			entryChatHandler(io, socket, onlineUsers, usersIntoChats);
+			leaveChatHandler(socket, usersIntoChats);
 		});
 
 		await connectDB();

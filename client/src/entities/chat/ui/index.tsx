@@ -6,10 +6,10 @@ import { DefaultAvatar } from "@/shared";
 
 import { useAppSelector } from "@/app/store/hooks/useAppSelector";
 
-import { useCountUnreadMessages } from "../../../layout/ui/chats/lib/useCountUnreadMessages";
-import { getMessageDate } from "../../../layout/ui/chats/lib/getMessageDate";
+import { useCountUnreadMessages } from "../lib/useCountUnreadMessages";
+import { getMessageDate } from "../lib/getMessageDate";
 import { useParams } from "next/navigation";
-import { getSlicedMessage } from "../../../layout/ui/chats/lib/getSlicedMessage";
+import { getSlicedMessage } from "../lib/getSlicedMessage";
 
 import Image from "next/image";
 

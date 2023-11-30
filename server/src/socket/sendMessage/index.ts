@@ -7,7 +7,8 @@ import ChatsService from "../../chats/chats.service";
 export const sendMessageHandler = (
 	io: Server,
 	socket: Socket,
-	users: Map<string, string>
+	users: Map<string, string>,
+	usersIntoChats: Map<string, string>
 ) => {
 	socket.on(
 		"send-message",
@@ -18,10 +19,13 @@ export const sendMessageHandler = (
 
 			const userId = connectionQueryWrapper(socket.handshake.query.user);
 
+			const isMessageRead = !!usersIntoChats.get(recipientId);
+
 			const messageBody = await ChatsService.saveMessageToDb(
 				userId,
 				recipientId,
-				message
+				message,
+				isMessageRead
 			);
 
 			if (recipientSocketId) {

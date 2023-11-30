@@ -1,3 +1,4 @@
+export { entryChatHandler } from "./model/entryChatHandler";
 export { newChatHandler } from "./model/newChatHandler";
 export { sendMessageHandler } from "./model/sendMessageHandler";
 export { getMessageHandler } from "./model/getMessageHandler";

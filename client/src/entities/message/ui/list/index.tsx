@@ -34,6 +34,14 @@ export const ChatMessages = ({ chat }: { chat?: TChat }) => {
 		}
 	}, [chat, isTyping]);
 
+	useEffect(() => {
+		socket?.emit("entry-chat", chat?._id);
+
+		return () => {
+			socket?.emit("leave-chat");
+		};
+	}, []);
+
 	if (!chat) {
 		return <StartChat name={params?.login || ""} />;
 	}
