@@ -17,7 +17,7 @@ type TProfileStore = {
 	error: null | string;
 	removeProfileAvatar: () => void;
 	fetchProfile: () => Promise<void>;
-	logoutUser: () => Promise<void>;
+	logoutUser: () => void;
 	updateProfile: (user: TSettingsProfile) => Promise<void>;
 	loginUser: (user: TAuthForm, router: AppRouterInstance) => Promise<void>;
 	registrationUser: (
@@ -25,6 +25,21 @@ type TProfileStore = {
 		router: AppRouterInstance
 	) => Promise<void>;
 };
+
+const handleProfileStoreError = (e: unknown) => {
+	const err = e as AxiosError<{ message: string }>;
+	const message = err.response?.data.message || "Unexpected error";
+	useProfileStore.setState((state) => {
+		state.error = message;
+	});
+	alert(message);
+};
+
+const preFetchFn = () =>
+	useProfileStore.setState((state) => {
+		state.error = null;
+		state.isLoading = true;
+	});
 
 export const useProfileStore = create<TProfileStore>()(
 	immer((set) => ({
@@ -39,50 +54,33 @@ export const useProfileStore = create<TProfileStore>()(
 			}),
 		fetchProfile: async () =>
 			set((state) => {
-				state.isLoading = true;
-				state.error = null;
+				preFetchFn();
 				$axios
 					.post<IProfile>("/token/refresh")
-					.then(({ data }) => {
+					.then(({ data }) =>
 						useProfileStore.setState((state) => {
 							state.profile = data;
-						});
-					})
-					.catch((e) => {
-						console.log(e);
-						if (window) {
-							localStorage.setItem("fetchUser", "+");
-							location.href = "/";
-						} else {
-							alert("Fetch profile error");
-						}
-					})
+						})
+					)
+					.catch((e) => handleProfileStoreError(e))
 					.finally(() =>
 						useProfileStore.setState((state) => {
 							state.isLoading = false;
 						})
 					);
 			}),
-		logoutUser: async () =>
-			set((state) => {
-				state.error = null;
-				state.isLoading = true;
+		logoutUser: () =>
+			set(async (state) => {
+				preFetchFn();
 				$axios
-					.post("/token/logout")
-					.then(() => {
-						useProfileStore.setState((state) => {
+					.post<{ message: string }>("/token/logout")
+					.then(({ data }) => {
+						if (data.message) {
 							state.profile = null;
-						});
-						location.href = "/login";
+							location.href = "/login";
+						}
 					})
-					.catch((e) => {
-						const err = e as AxiosError<{ message: string }>;
-						const message = err.response?.data.message || "Logout error";
-						alert(message);
-						useProfileStore.setState((state) => {
-							state.error = message;
-						});
-					})
+					.catch((e) => handleProfileStoreError(e))
 					.finally(() =>
 						useProfileStore.setState((state) => {
 							state.isLoading = false;
@@ -91,26 +89,17 @@ export const useProfileStore = create<TProfileStore>()(
 			}),
 		updateProfile: async (user) =>
 			set((state) => {
-				state.error = null;
-				state.isLoading = true;
+				preFetchFn();
 				$axios
 					.post<IProfile>("/profile/update", {
 						...user
 					})
-					.then(({ data }) => {
+					.then(({ data }) =>
 						useProfileStore.setState((state) => {
 							state.profile = data;
-						});
-					})
-					.catch((e) => {
-						const err = e as AxiosError<{ message: string }>;
-						const message =
-							err.response?.data.message || "update profile error";
-						useProfileStore.setState((state) => {
-							state.error = message;
-						});
-						alert(message);
-					})
+						})
+					)
+					.catch((e) => handleProfileStoreError(e))
 					.finally(() =>
 						useProfileStore.setState((state) => {
 							state.isLoading = false;
@@ -133,12 +122,7 @@ export const useProfileStore = create<TProfileStore>()(
 					})
 					.catch((e) => {
 						localStorage.setItem("user", JSON.stringify(user));
-						const err = e as AxiosError<{ message: string }>;
-						const message = err.response?.data.message || "login error";
-						useProfileStore.setState((state) => {
-							state.error = message;
-						});
-						alert(message);
+						handleProfileStoreError(e);
 					})
 					.finally(() => {
 						useProfileStore.setState((state) => {
@@ -158,12 +142,7 @@ export const useProfileStore = create<TProfileStore>()(
 					})
 					.catch((e) => {
 						localStorage.setItem("user", JSON.stringify(user));
-						const err = e as AxiosError<{ message: string }>;
-						const message = err.response?.data.message || "registration error";
-						useProfileStore.setState((state) => {
-							state.error = message;
-						});
-						alert(message);
+						handleProfileStoreError(e);
 					})
 					.finally(() =>
 						useProfileStore.setState((state) => {

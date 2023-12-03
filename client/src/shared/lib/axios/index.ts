@@ -1,4 +1,5 @@
 import axios from "axios";
+import { setCookie } from "cookies-next";
 
 const refreshToken = async () => {
 	try {
@@ -24,6 +25,12 @@ $axios.interceptors.response.use(
 	(response) => response,
 	async (err) => {
 		const origin = err.config;
+
+		if (!err.response) {
+			axios.post("http://localhost:3000/api/logout").then(() => {
+				if (window) window.location.href = "/login";
+			});
+		}
 
 		if (err.response && err.response.status == 401 && !origin._isRetry) {
 			origin._isRetry = true;
