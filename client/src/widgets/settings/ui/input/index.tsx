@@ -4,7 +4,7 @@ import type { RegisterOptions } from "react-hook-form";
 
 import type { TSettingsForm, TSettingsFormField } from "../../model/types";
 
-import { useAppSelector } from "@/app/store/hooks/useAppSelector";
+import { useProfileStore } from "@/entities/profile";
 
 import { useFormContext } from "react-hook-form";
 
@@ -24,7 +24,7 @@ export const SettingsInput = ({
 		formState: { errors }
 	} = useFormContext<TSettingsForm>();
 
-	const { profile } = useAppSelector((store) => store.profile);
+	const { profile } = useProfileStore();
 
 	const error = errors[name];
 

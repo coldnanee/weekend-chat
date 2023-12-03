@@ -10,24 +10,21 @@ import type { TAuthForm } from "../..";
 
 import { useFormContext } from "react-hook-form";
 
-import { useAppDispatch } from "@/app/store/hooks/useAppDispatch";
-import type { AsyncThunk } from "@reduxjs/toolkit";
+import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 export function AuthForm({
 	children,
 	thunk
 }: {
 	children: ReactNode;
-	thunk: AsyncThunk<any, any, any>;
+	thunk: (user: TAuthForm, router: AppRouterInstance) => Promise<void>;
 }) {
-	const dispatch = useAppDispatch();
-
 	const { handleSubmit } = useFormContext<TAuthForm>();
 
 	const router = useRouter();
 
 	const onSubmit = (user: TAuthForm) => {
-		dispatch(thunk({ user, router }));
+		thunk(user, router);
 	};
 
 	return (

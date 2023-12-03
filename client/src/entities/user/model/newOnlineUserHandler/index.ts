@@ -1,9 +1,9 @@
 import { Socket } from "socket.io-client";
 
-import { updateOnlineUsersAction } from "../slice";
+import { useOnlineUsersStore } from "../store";
 
-export const newOnlineUserHandler = (socket: Socket, dispatch: any) => {
+export const newOnlineUserHandler = (socket: Socket) => {
 	socket.on("new-online-user", (users: string[]) => {
-		dispatch(updateOnlineUsersAction(users));
+		useOnlineUsersStore.getState().updateOnlineUsers(users);
 	});
 };

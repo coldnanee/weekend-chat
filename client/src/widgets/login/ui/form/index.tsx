@@ -6,11 +6,10 @@ import { fieldsLoginArr } from "../../model/fields";
 
 import Link from "next/link";
 
-import { loginUser } from "@/entities/profile";
-import { useFormContext } from "react-hook-form";
+import { useProfileStore } from "@/entities/profile";
 
 export const LoginForm = () => {
-	const {} = useFormContext();
+	const { loginUser } = useProfileStore();
 
 	return (
 		<AuthForm thunk={loginUser}>

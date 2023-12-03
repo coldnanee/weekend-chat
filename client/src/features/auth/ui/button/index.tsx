@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
 
-import cl from "./index.module.scss";
+import { useProfileStore } from "@/entities/profile";
 
-import { useAppSelector } from "@/app/store/hooks/useAppSelector";
+import cl from "./index.module.scss";
 
 export const AuthButton = ({
 	children,
@@ -11,11 +11,11 @@ export const AuthButton = ({
 	children: ReactNode;
 	className: string;
 }) => {
-	const status = useAppSelector((store) => store.profile.status);
+	const { isLoading } = useProfileStore();
 
 	return (
 		<button
-			disabled={status === "loading"}
+			disabled={isLoading}
 			className={[cl.root, className].join(" ")}>
 			{children}
 		</button>

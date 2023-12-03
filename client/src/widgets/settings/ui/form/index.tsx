@@ -12,8 +12,7 @@ import { SettingsSwitch } from "../switch";
 
 import { goBackFromSettings } from "../../lib/goBackFromSettings";
 
-import { useAppDispatch } from "@/app/store/hooks/useAppDispatch";
-import { updateMyProfile } from "@/entities/profile";
+import { useProfileStore } from "@/entities/profile";
 
 import { convertToBase64 } from "../../lib/convertToBase64";
 
@@ -21,7 +20,8 @@ import { SettingsContextProvider } from "../chapter-provider";
 
 export const SettingsForm = () => {
 	const router = useRouter();
-	const dispatch = useAppDispatch();
+
+	const { updateProfile } = useProfileStore();
 
 	const { handleSubmit } = useFormContext<TSettingsForm>();
 
@@ -31,7 +31,7 @@ export const SettingsForm = () => {
 				? await convertToBase64(data.avatar[0])
 				: ""
 			: "null";
-		dispatch(updateMyProfile({ user: { ...data, avatar } }));
+		updateProfile({ ...data, avatar });
 	};
 
 	return (

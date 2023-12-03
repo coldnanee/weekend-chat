@@ -4,7 +4,7 @@ import type { TUser } from "@/entities/user";
 
 import { DefaultAvatar } from "@/shared";
 
-import { useAppSelector } from "@/app/store/hooks/useAppSelector";
+import { useOnlineUsersStore } from "@/entities/user";
 
 import { RiDeleteBin6Line } from "react-icons/ri";
 
@@ -15,7 +15,7 @@ import type { TChat } from "@/entities/chat";
 export const ChatInfo = ({ user, chat }: { user: TUser; chat?: TChat }) => {
 	const { socket } = useSocketContext();
 
-	const { users } = useAppSelector((state) => state.online);
+	const users = useOnlineUsersStore((state) => state.users);
 
 	const deleteChat = () => {
 		if (chat) socket?.emit("delete-chat", chat._id);

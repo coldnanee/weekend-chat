@@ -14,12 +14,12 @@ import { ChatMessage } from "..";
 
 import { useSocketContext } from "@/widgets/socket";
 
-import { useAppSelector } from "@/app/store/hooks/useAppSelector";
+import { useOnlineUsersStore } from "@/entities/user";
 
 export const ChatMessages = ({ chat }: { chat?: TChat }) => {
 	const params = useParams<{ login: string }>();
 
-	const { users } = useAppSelector((state) => state.online);
+	const users = useOnlineUsersStore((state) => state.users);
 
 	const { socket } = useSocketContext();
 

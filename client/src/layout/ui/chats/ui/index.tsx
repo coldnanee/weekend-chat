@@ -6,16 +6,20 @@ import { ChatList } from "@/entities/chat";
 
 import cl from "./index.module.scss";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { useChatUsersQuery } from "@/entities/user";
-import { useGetChatsQuery } from "@/entities/chat";
+import { useChatsStore } from "@/entities/chat/model/store";
 
 export const Chats = () => {
 	const [login, setLogin] = useState<string>("");
 
 	const { data: users, isLoading: isUsersLoading } = useChatUsersQuery(login);
-	const { data: chats, isLoading: isChatsLoading } = useGetChatsQuery(login);
+	const { isLoading: isChatsLoading, fetchChats, chats } = useChatsStore();
+
+	useEffect(() => {
+		fetchChats(login);
+	}, [login]);
 
 	const skeletons = [...new Array(5)];
 
@@ -27,7 +31,7 @@ export const Chats = () => {
 			<ChatList
 				isLoading={isLoading}
 				login={login || ""}
-				chats={isLoading ? skeletons : chats?.chats}
+				chats={isLoading ? skeletons : chats}
 			/>
 			<ChatUsers users={users} />
 		</div>

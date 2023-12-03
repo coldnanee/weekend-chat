@@ -6,9 +6,11 @@ import Link from "next/link";
 
 import { fieldsRegistrationArr } from "../../model/fields";
 
-import { registrationUser } from "@/entities/profile";
+import { useProfileStore } from "@/entities/profile";
 
 export const RegistrationForm = () => {
+	const { registrationUser } = useProfileStore();
+
 	return (
 		<AuthForm thunk={registrationUser}>
 			{fieldsRegistrationArr.map((field, index) => (

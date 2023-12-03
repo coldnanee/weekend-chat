@@ -18,8 +18,6 @@ import {
 import { newOnlineUserHandler } from "@/entities/user";
 import { newOfflineUserHandler } from "@/entities/user";
 
-import { useAppDispatch } from "@/app/store/hooks/useAppDispatch";
-
 export const SocketContext = createContext<{ socket?: Socket }>({
 	socket: undefined
 });
@@ -27,8 +25,6 @@ export const SocketContext = createContext<{ socket?: Socket }>({
 export const useSocketContext = () => useContext(SocketContext);
 
 export const SocketProvider = ({ children }: { children: ReactNode }) => {
-	const dispatch = useAppDispatch();
-
 	const socket = io("http://localhost:4000", {
 		transports: ["websocket"],
 		autoConnect: false
@@ -38,13 +34,13 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 		socket.connect();
 	});
 
-	getMessageHandler(socket, dispatch);
-	sendMessageHandler(socket, dispatch);
-	newOnlineUserHandler(socket, dispatch);
-	newOfflineUserHandler(socket, dispatch);
-	newChatHandler(socket, dispatch);
-	entryChatHandler(socket, dispatch);
-	deleteChatHandler(socket, dispatch);
+	getMessageHandler(socket);
+	sendMessageHandler(socket);
+	newOnlineUserHandler(socket);
+	newOfflineUserHandler(socket);
+	newChatHandler(socket);
+	entryChatHandler(socket);
+	deleteChatHandler(socket);
 
 	return (
 		<SocketContext.Provider value={{ socket: socket }}>

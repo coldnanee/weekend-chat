@@ -4,12 +4,12 @@ import cl from "./index.module.scss";
 
 import { DefaultAvatar } from "@/shared";
 
-import { useAppSelector } from "@/app/store/hooks/useAppSelector";
-
 import { useCountUnreadMessages } from "../lib/useCountUnreadMessages";
 import { getMessageDate } from "../lib/getMessageDate";
 import { useParams } from "next/navigation";
 import { getSlicedMessage } from "../lib/getSlicedMessage";
+
+import { useProfileStore } from "@/entities/profile";
 
 import Image from "next/image";
 
@@ -18,6 +18,8 @@ import Link from "next/link";
 import { useSocketContext } from "@/widgets/socket";
 import { useState } from "react";
 
+import { useOnlineUsersStore } from "@/entities/user";
+
 export const Chat = ({ chat }: { chat: TChat }) => {
 	const { socket } = useSocketContext();
 
@@ -25,8 +27,9 @@ export const Chat = ({ chat }: { chat: TChat }) => {
 
 	const params = useParams<{ login: string }>();
 
-	const { profile } = useAppSelector((state) => state.profile);
-	const { users } = useAppSelector((state) => state.online);
+	const { profile } = useProfileStore();
+
+	const users = useOnlineUsersStore((state) => state.users);
 
 	const isOnline = users.includes(chat.user._id);
 

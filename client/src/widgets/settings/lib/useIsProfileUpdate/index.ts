@@ -1,14 +1,15 @@
 import { useMemo } from "react";
 
-import { useAppSelector } from "@/app/store/hooks/useAppSelector";
+import { useProfileStore } from "@/entities/profile";
 
 import type { TSettingsForm } from "../..";
 
 import { useFormContext } from "react-hook-form";
 
 export const useIsProfileUpdate = (): { isUpdated: boolean } => {
+	const { profile } = useProfileStore();
+
 	const { watch } = useFormContext<TSettingsForm>();
-	const { profile } = useAppSelector((state) => state.profile);
 
 	const watchingForm: TSettingsForm = {
 		login: watch("login"),

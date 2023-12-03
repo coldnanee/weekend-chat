@@ -6,12 +6,9 @@ import Image from "next/image";
 
 import { DefaultAvatar } from "@/shared";
 
-import { useAppSelector } from "@/app/store/hooks/useAppSelector";
-import { useAppDispatch } from "@/app/store/hooks/useAppDispatch";
-
 import type { TSettingsForm } from "../..";
 
-import { removeProfileAvatarAction } from "@/entities/profile";
+import { useProfileStore } from "@/entities/profile";
 
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
@@ -21,19 +18,17 @@ import { AiFillDelete } from "react-icons/ai";
 import { SettingsButton } from "../button";
 
 export const SettingsAvatar = () => {
-	const dispatch = useAppDispatch();
-
 	const [previewAvatarPath, setPreviewAvatarPath] = useState<string>("");
 
 	const { watch, register, reset } = useFormContext<TSettingsForm>();
 
 	const watchedImage = watch("avatar");
 
-	const avatar = useAppSelector((state) => state.profile.profile?.avatar);
+	const { profile, removeProfileAvatar } = useProfileStore();
 
 	const removeAvatar = () => {
 		setPreviewAvatarPath("");
-		dispatch(removeProfileAvatarAction());
+		removeProfileAvatar();
 		reset({ avatar: null });
 	};
 
@@ -61,7 +56,7 @@ export const SettingsAvatar = () => {
 		<div className={cl.root}>
 			<label htmlFor="#settings-avatar">
 				<DefaultAvatar
-					src={previewAvatarPath || avatar}
+					src={previewAvatarPath || profile?.avatar}
 					className={cl.root__avatar}
 					alt="avatar"
 					width={100}
@@ -75,7 +70,7 @@ export const SettingsAvatar = () => {
 				id="#settings-avatar"
 			/>
 			<div className={cl.root__buttons}>
-				{(avatar || previewAvatarPath) && (
+				{(profile?.avatar || previewAvatarPath) && (
 					<SettingsButton
 						onClick={removeAvatar}
 						border={false}>

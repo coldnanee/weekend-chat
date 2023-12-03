@@ -1,11 +1,9 @@
-import { useAppDispatch } from "@/app/store/hooks/useAppDispatch";
-
-import { logoutUser } from "@/entities/profile";
+import { useProfileStore } from "@/entities/profile";
 
 export const useLogoutUser = () => {
-	const dispatch = useAppDispatch();
+	const { logoutUser } = useProfileStore();
 
-	const handler = () => dispatch(logoutUser());
+	const handler = () => logoutUser();
 
 	return handler;
 };
