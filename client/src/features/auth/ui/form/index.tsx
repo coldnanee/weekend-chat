@@ -17,7 +17,7 @@ export function AuthForm({
 	thunk
 }: {
 	children: ReactNode;
-	thunk: (user: TAuthForm, router: AppRouterInstance) => Promise<void>;
+	thunk: (user: TAuthForm, router: AppRouterInstance) => void;
 }) {
 	const { handleSubmit } = useFormContext<TAuthForm>();
 

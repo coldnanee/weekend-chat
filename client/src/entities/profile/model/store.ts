@@ -19,7 +19,7 @@ type TProfileStore = {
 	fetchProfile: () => Promise<void>;
 	logoutUser: () => void;
 	updateProfile: (user: TSettingsProfile) => Promise<void>;
-	loginUser: (user: TAuthForm, router: AppRouterInstance) => Promise<void>;
+	loginUser: (user: TAuthForm, router: AppRouterInstance) => void;
 	registrationUser: (
 		user: TAuthForm,
 		router: AppRouterInstance
@@ -31,6 +31,7 @@ const handleProfileStoreError = (e: unknown) => {
 	const message = err.response?.data.message || "Unexpected error";
 	useProfileStore.setState((state) => {
 		state.error = message;
+		state.isLoading = false;
 	});
 	alert(message);
 };
@@ -71,21 +72,19 @@ export const useProfileStore = create<TProfileStore>()(
 			}),
 		logoutUser: () =>
 			set(async (state) => {
-				preFetchFn();
-				$axios
-					.post<{ message: string }>("/token/logout")
-					.then(({ data }) => {
-						if (data.message) {
-							state.profile = null;
-							location.href = "/login";
-						}
-					})
-					.catch((e) => handleProfileStoreError(e))
-					.finally(() =>
-						useProfileStore.setState((state) => {
-							state.isLoading = false;
-						})
+				try {
+					preFetchFn();
+					const { data } = await $axios.post<{ message: string }>(
+						"/token/logout"
 					);
+					if (data) {
+						state.profile = null;
+						location.href = "/login";
+						state.isLoading = false;
+					}
+				} catch (e) {
+					handleProfileStoreError(e);
+				}
 			}),
 		updateProfile: async (user) =>
 			set((state) => {
@@ -106,34 +105,27 @@ export const useProfileStore = create<TProfileStore>()(
 						})
 					);
 			}),
-		loginUser: async (user, router) =>
-			set((state) => {
-				state.isLoading = true;
-				state.error = null;
-				$axios
-					.post<IProfile>("/auth/login", {
+		loginUser: (user, router) =>
+			set(async (state) => {
+				try {
+					preFetchFn();
+
+					const { status } = await $axios.post("/auth/login", {
 						...user
-					})
-					.then(({ data }) => {
-						useProfileStore.setState((state) => {
-							state.profile = data;
-						});
-						router.replace("/");
-					})
-					.catch((e) => {
-						localStorage.setItem("user", JSON.stringify(user));
-						handleProfileStoreError(e);
-					})
-					.finally(() => {
-						useProfileStore.setState((state) => {
-							state.isLoading = false;
-						});
 					});
+
+					if (status == 200) {
+						state.isLoading = false;
+						if (window) location.href = "/";
+					}
+				} catch (e) {
+					localStorage.setItem("user", JSON.stringify(user));
+					handleProfileStoreError(e);
+				}
 			}),
 		registrationUser: async (user, router) =>
 			set((state) => {
-				state.isLoading = true;
-				state.error = null;
+				preFetchFn();
 
 				$axios
 					.post<{ message: string }>("/auth/registration", { ...user })

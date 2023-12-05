@@ -14,7 +14,7 @@ type TChatsStore = {
 	error: null | string;
 	isLoading: boolean;
 	updateChats: (chats: TChat[]) => void;
-	fetchChats: (login: string) => Promise<void>;
+	fetchChats: (login: string) => void;
 	deleteChat: (chatId: string) => void;
 	entryChat: (chatId: string, userId: string) => void;
 	newMessage: (message: TMessage) => void;
@@ -31,36 +31,38 @@ export const useChatsStore = create<TChatsStore>()(
 			set((state) => {
 				state.chats = chats;
 			}),
-		fetchChats: async (chat) =>
-			set((state) => {
-				state.error = null;
-				state.isLoading = true;
-				$axios
-					.get<{ chats: TChat[] }>("chats", {
+		fetchChats: (chat) =>
+			set(async (state) => {
+				try {
+					useChatsStore.setState((state) => {
+						state.error = null;
+						state.isLoading = true;
+					});
+
+					const { data } = await $axios.get<{ chats: TChat[] }>("chats", {
 						params: { chat }
-					})
-					.then(({ data }) => {
+					});
+
+					console.log(data);
+
+					if (data) {
 						useChatsStore.setState((state) => {
 							state.chats = data.chats;
-						});
-					})
-					.catch((e) => {
-						const err = e as AxiosError<{ message: string }>;
-						const message = err.response?.data.message || "fetch chats error";
-						alert(message);
-						useChatsStore.setState((state) => {
-							state.error = message;
-						});
-					})
-					.finally(() => {
-						useChatsStore.setState((state) => {
 							state.isLoading = false;
 						});
+					}
+				} catch (e) {
+					const err = e as AxiosError<{ message: string }>;
+					const message = err.response?.data.message || "fetch chats error";
+					alert(message);
+					useChatsStore.setState((state) => {
+						state.error = message;
 					});
+				}
 			}),
 		deleteChat: (chatId) =>
 			set((state) => {
-				state.chats = state.chats.filter((chat) => chat._id !== chatId);
+				state.chats = state.chats.filter((chat) => chat && chat._id !== chatId);
 				if (window) location.href = "/";
 			}),
 		entryChat: (chatId, userId) =>

@@ -1,0 +1,12 @@
+.root {
+	@apply flex gap-x-[4px] items-center;
+	p {
+		@apply text-[#6C6F75];
+	}
+	&__icon {
+		@apply w-[10px] h-[10px] bg-[#6C6F75] rounded-[50%];
+		&_online {
+			@apply bg-[#29c729];
+		}
+	}
+}

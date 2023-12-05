@@ -1,23 +1,28 @@
 .root {
-    @apply bg-[#262b35] p-[10px] absolute top-0 right-0 w-full;
-    &__body {
-        @apply text-[#fff] flex justify-between items-center;
-        &__info {
-            @apply flex gap-x-[20px] items-center;
-            &__delete {
-            }
-        }
-        &__status {
-            @apply flex gap-x-[4px] items-center;
-            p {
-                @apply text-[#6C6F75];
-            }
-            &__icon {
-                @apply w-[10px] h-[10px] bg-[#6C6F75] rounded-[50%];
-                &_online {
-                    @apply bg-[#29c729];
-                }
-            }
-        }
-    }
+	@apply bg-[#262b35] p-[10px] absolute top-0 right-0 w-full;
+	&__body {
+		@apply text-[#fff] flex justify-between items-center;
+		&__info {
+			@apply flex gap-x-[20px] items-center;
+			&__delete {
+			}
+		}
+		&__arrow {
+			@media (min-width: 581px) {
+				@apply hidden;
+			}
+		}
+		&__name,
+		&__status {
+			@media (max-width: 580px) {
+				@apply hidden;
+			}
+		}
+		&__adaptive {
+			@apply flex flex-col gap-y-[3px] items-center;
+			@media (min-width: 581px) {
+				@apply hidden;
+			}
+		}
+	}
 }

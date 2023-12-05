@@ -14,21 +14,21 @@ class AuthController {
 
 			getValidationError(req);
 
-			const { tokens, profile } = await AuthService.login(
+			const { accessToken, refreshToken } = await AuthService.login(
 				login.toLowerCase(),
 				password
 			);
 
-			res.cookie("accessJwt", tokens.accessToken, {
+			res.cookie("accessJwt", accessToken, {
 				httpOnly: true,
 				maxAge: 60 * 60 * 1000
 			});
-			res.cookie("refreshJwt", tokens.refreshToken, {
+			res.cookie("refreshJwt", refreshToken, {
 				httpOnly: true,
 				maxAge: 30 * 24 * 60 * 60 * 1000
 			});
 
-			return res.json({ ...profile });
+			return res.status(200).send();
 		} catch (e) {
 			next(e);
 		}

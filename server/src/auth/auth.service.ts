@@ -12,10 +12,7 @@ class AuthService {
 	async login(
 		login: string,
 		password: string
-	): Promise<{
-		tokens: { accessToken: string; refreshToken: string };
-		profile: ProfileDto;
-	}> {
+	): Promise<{ accessToken: string; refreshToken: string }> {
 		const candidate = await UserModel.findOne({ login });
 
 		if (!candidate) {
@@ -32,9 +29,7 @@ class AuthService {
 
 		await TokenService.saveRefreshTokenToDb(candidate._id, tokens.refreshToken);
 
-		const profile = new ProfileDto(candidate);
-
-		return { tokens, profile };
+		return tokens;
 	}
 
 	async registration(login: string, password: string) {

@@ -10,7 +10,8 @@ const nextConfig = {
                 hostname: "res.cloudinary.com"
             }
         ]
-    }
+    },
+    reactStrictMode: false
 }
 
 module.exports = nextConfig

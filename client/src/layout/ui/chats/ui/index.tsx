@@ -1,15 +1,12 @@
 "use client";
 
 import { ChatsSearch } from "./search";
-import { ChatUsers } from "@/entities/user";
-import { ChatList } from "@/entities/chat";
+import { ChatUsers, useChatUsersQuery } from "@/entities/user";
+import { ChatList, useChatsStore } from "@/entities/chat";
 
 import cl from "./index.module.scss";
 
 import { useState, useEffect } from "react";
-
-import { useChatUsersQuery } from "@/entities/user";
-import { useChatsStore } from "@/entities/chat/model/store";
 
 export const Chats = () => {
 	const [login, setLogin] = useState<string>("");
@@ -18,6 +15,7 @@ export const Chats = () => {
 	const { isLoading: isChatsLoading, fetchChats, chats } = useChatsStore();
 
 	useEffect(() => {
+		console.log(login);
 		fetchChats(login);
 	}, [login]);
 
