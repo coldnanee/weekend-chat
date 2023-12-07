@@ -8,7 +8,7 @@ on:
 
 jobs:
   client_ci:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: client
@@ -28,7 +28,7 @@ jobs:
       run: npm run prettier:fix
 
   server_ci:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: server
