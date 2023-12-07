@@ -81,8 +81,7 @@ jobs:
             - name: login to docker
               run: | 
                 docker login -u ${{env.LOGIN}} -p ${{env.PASSWORD}}
-            - uses: actions/checkout@master
             - name: build image
-              run: docker build -t ${{env.LOGIN}}/${{env.CLIENT_NAME}}:${GITHUB_REF:11} -f Dockerfile .
+              run: docker build -t ${{env.LOGIN}}/${{env.SERVER_NAME}}:${GITHUB_REF:11} -f Dockerfile .
             - name: push build
-              run: docker push ${{env.LOGIN}}/${{env.CLIENT_NAME}}:${GITHUB_REF:11}
+              run: docker push ${{env.LOGIN}}/${{env.SERVER_NAME}}:${GITHUB_REF:11}
