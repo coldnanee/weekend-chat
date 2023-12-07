@@ -1,0 +1,85 @@
+name: Weekend-Chat-BUILD
+
+on:
+    push:
+      branches: [ "deploy" ]
+    pull_request:
+      branches: [ "deploy" ]
+
+env:
+    LOGIN: ${{ secrets.DOCKER_LOGIN }}
+    PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+    CLIENT_NAME: ${{secrets.DOCKER_CLIENT_NAME}}
+    SERVER_NAME: ${{secrets.DOCKER_SERVER_NAME}}
+
+jobs:
+    client_ci:
+        runs-on: self-hosted
+        defaults:
+          run:
+            working-directory: client
+        steps:
+        - name: Checkout repository
+          uses: actions/checkout@v3
+    
+        - name: Setup Node.js for client
+          uses: actions/setup-node@v3
+          with:
+            node-version: 18.x
+    
+        - name: Install dependencies
+          run: npm i
+    
+        - name: prettier formatting
+          run: npm run prettier:fix
+    
+    server_ci:
+        runs-on: self-hosted
+        defaults:
+            run:
+                working-directory: server
+        steps:
+        - name: Checkout repository
+          uses: actions/checkout@v3
+        
+        - name: Setup Node.js for server
+          uses: actions/setup-node@v3
+          with:
+            node-version: 18.x
+            
+        - name: Install dependencies
+          run: npm i
+        
+        - name: prettier formatting
+          run: npm run prettier:fix
+
+    client_build:
+        runs-on: self-hosted
+        needs: [client_ci]
+        defaults:
+            run:
+                working-directory: client
+        steps:
+            - name: login to docker
+              run: docker login -u ${{env.LOGIN}} -p ${{env.PASSWORD}}
+            - uses: actions/checkout@master
+            - name: build image
+              run: docker build -t ${{env.LOGIN}}/${{env.CLIENT_NAME}}:${GITHUB_REF:11} -f Dockerfile .
+            - name: push build
+              run: docker push ${{env.LOGIN}}/${{env.CLIENT_NAME}}:${GITHUB_REF:11}
+
+    
+    server_build:
+        runs-on: self-hosted
+        needs: [server_ci]
+        defaults:
+            run:
+                working-directory: server
+        steps:
+            - name: login to docker
+              run: docker login -u ${{env.LOGIN}} -p ${{env.PASSWORD}}
+            - uses: actions/checkout@master
+            - name: build image
+              run: docker build -t ${{env.LOGIN}}/${{env.CLIENT_NAME}}:${GITHUB_REF:11} -f Dockerfile .
+            - name: push build
+              run: docker push ${{env.LOGIN}}/${{env.CLIENT_NAME}}:${GITHUB_REF:11}
