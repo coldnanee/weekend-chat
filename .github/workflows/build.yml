@@ -14,7 +14,6 @@ env:
     API_URL: ${{secrets.API_URL}}
     SERVER_URL: ${{secrets.SERVER_URL}}
 
-
 jobs:
     client_ci:
         runs-on: ubuntu-latest
