@@ -12,6 +12,7 @@ env:
     CLIENT_NAME: ${{secrets.DOCKER_CLIENT_NAME}}
     SERVER_NAME: ${{secrets.DOCKER_SERVER_NAME}}
 
+
 jobs:
     client_ci:
         runs-on: ubuntu-latest

@@ -27,7 +27,7 @@ $axios.interceptors.response.use(
 		const origin = err.config;
 
 		if (!err.response) {
-			axios.post("http://localhost:3000/api/logout").then(() => {
+			axios.post(`${process.env.API_URL}/logout`).then(() => {
 				if (window) window.location.href = "/login";
 			});
 		}
