@@ -1,5 +1,4 @@
 import axios from "axios";
-import { setCookie } from "cookies-next";
 
 const refreshToken = async () => {
 	try {
@@ -24,6 +23,7 @@ const $axios = axios.create({
 $axios.interceptors.response.use(
 	(response) => response,
 	async (err) => {
+		console.log(process.env.API_URL);
 		const origin = err.config;
 
 		if (!err.response) {

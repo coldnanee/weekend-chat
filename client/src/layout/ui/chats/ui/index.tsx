@@ -15,7 +15,6 @@ export const Chats = () => {
 	const { isLoading: isChatsLoading, fetchChats, chats } = useChatsStore();
 
 	useEffect(() => {
-		console.log(login);
 		fetchChats(login);
 	}, [login]);
 

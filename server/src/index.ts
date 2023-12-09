@@ -4,7 +4,6 @@ config({ path: "./config/.env" });
 import {
 	sendMessageHandler,
 	disconnectHandler,
-	readMessageHandler,
 	startTypingMessageHandler,
 	endTypingMessageHandler,
 	entryChatHandler,
@@ -89,7 +88,6 @@ const start = async () => {
 			io.emit("new-online-user", Array.from(onlineUsers.values()));
 
 			sendMessageHandler(io, socket, onlineUsers, usersIntoChats);
-			readMessageHandler(io, socket);
 			startTypingMessageHandler(io, socket, onlineUsers);
 			endTypingMessageHandler(io, socket, onlineUsers);
 			disconnectHandler(io, socket, onlineUsers, usersIntoChats);
