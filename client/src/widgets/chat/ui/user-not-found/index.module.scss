@@ -1,6 +1,6 @@
 .root {
-    @apply min-h-[100dvh] flex items-center justify-center;
-    &__text {
-        @apply text-[#fff] text-[20px];
-    }
+	@apply min-h-[100vh] flex items-center justify-center;
+	&__text {
+		@apply text-[#fff] text-[20px];
+	}
 }
