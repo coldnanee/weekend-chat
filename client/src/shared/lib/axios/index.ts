@@ -23,7 +23,6 @@ const $axios = axios.create({
 $axios.interceptors.response.use(
 	(response) => response,
 	async (err) => {
-		console.log(process.env.NEXT_PUBLIC_API_URL);
 		const origin = err.config;
 
 		if (!err.response) {
