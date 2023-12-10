@@ -25,7 +25,9 @@ export const SocketContext = createContext<{ socket?: Socket }>({
 export const useSocketContext = () => useContext(SocketContext);
 
 export const SocketProvider = ({ children }: { children: ReactNode }) => {
-	const socket = io(`${process.env.NEXT_PUBLIC_API_URL}:4000` || "", {
+	console.log(process.env.NEXT_PUBLIC_API_URL);
+
+	const socket = io(process.env.NEXT_PUBLIC_API_URL || "", {
 		transports: ["websocket"],
 		autoConnect: false
 	});
