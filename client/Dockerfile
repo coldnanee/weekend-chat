@@ -9,9 +9,7 @@ RUN npm install
 COPY . .
 
 ARG API_URL
-ARG SERVER_URL
 ENV API_URl = $API_URL
-ENV SERVER_URL = $SERVER_URL
 
 RUN npm run build
 
