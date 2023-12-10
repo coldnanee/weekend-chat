@@ -3,8 +3,7 @@ require('dotenv').config({ path: "./config/.env" })
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     env: {
-        API_URL: `${process.env.SERVER_URL}/api`,
-        SOCKET_URL: process.env.SERVER_URL
+        NEXT_PUBLIC_API_URL: global.process.env.API_URL,
     },
     images: {
         remotePatterns: [

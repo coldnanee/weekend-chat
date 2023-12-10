@@ -1,10 +1,9 @@
 import axios from "axios";
-import { setCookie } from "cookies-next";
 
 const refreshToken = async () => {
 	try {
 		await axios.post(
-			`${process.env.API_URL}/token/refresh`,
+			`${process.env.NEXT_PUBLIC_API_URL}/token/refresh`,
 			{},
 			{
 				withCredentials: true
@@ -18,7 +17,7 @@ const refreshToken = async () => {
 
 const $axios = axios.create({
 	withCredentials: true,
-	baseURL: process.env.API_URL
+	baseURL: process.env.NEXT_PUBLIC_API_URL
 });
 
 $axios.interceptors.response.use(
@@ -27,7 +26,7 @@ $axios.interceptors.response.use(
 		const origin = err.config;
 
 		if (!err.response) {
-			axios.post(`${process.env.API_URL}/logout`).then(() => {
+			axios.post(`${process.env.NEXT_PUBLIC_API_URL}/logout`).then(() => {
 				if (window) window.location.href = "/login";
 			});
 		}

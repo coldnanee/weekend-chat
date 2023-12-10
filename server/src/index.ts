@@ -4,7 +4,6 @@ config({ path: "./config/.env" });
 import {
 	sendMessageHandler,
 	disconnectHandler,
-	readMessageHandler,
 	startTypingMessageHandler,
 	endTypingMessageHandler,
 	entryChatHandler,
@@ -60,7 +59,6 @@ app.use(
 app.use(cookieParser());
 app.use(express.json({ limit: "25mb" }));
 app.use(express.urlencoded({ limit: "25mb", extended: true }));
-app.use("/api", router);
 app.use(errorsMiddleware);
 
 const start = async () => {
@@ -89,7 +87,6 @@ const start = async () => {
 			io.emit("new-online-user", Array.from(onlineUsers.values()));
 
 			sendMessageHandler(io, socket, onlineUsers, usersIntoChats);
-			readMessageHandler(io, socket);
 			startTypingMessageHandler(io, socket, onlineUsers);
 			endTypingMessageHandler(io, socket, onlineUsers);
 			disconnectHandler(io, socket, onlineUsers, usersIntoChats);

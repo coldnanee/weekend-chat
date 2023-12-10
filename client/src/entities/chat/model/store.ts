@@ -43,8 +43,6 @@ export const useChatsStore = create<TChatsStore>()(
 						params: { chat }
 					});
 
-					console.log(data);
-
 					if (data) {
 						useChatsStore.setState((state) => {
 							state.chats = data.chats;
