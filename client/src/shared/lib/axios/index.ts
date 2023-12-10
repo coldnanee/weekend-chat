@@ -3,7 +3,7 @@ import axios from "axios";
 const refreshToken = async () => {
 	try {
 		await axios.post(
-			`${process.env.API_URL}/token/refresh`,
+			`${process.env.NEXT_PUBLIC_API_URL}/token/refresh`,
 			{},
 			{
 				withCredentials: true
@@ -17,17 +17,17 @@ const refreshToken = async () => {
 
 const $axios = axios.create({
 	withCredentials: true,
-	baseURL: process.env.API_URL
+	baseURL: process.env.NEXT_PUBLIC_API_URL
 });
 
 $axios.interceptors.response.use(
 	(response) => response,
 	async (err) => {
-		console.log(process.env.API_URL);
+		console.log(process.env.NEXT_PUBLIC_API_URL);
 		const origin = err.config;
 
 		if (!err.response) {
-			axios.post(`${process.env.API_URL}/logout`).then(() => {
+			axios.post(`${process.env.NEXT_PUBLIC_API_URL}/logout`).then(() => {
 				if (window) window.location.href = "/login";
 			});
 		}
