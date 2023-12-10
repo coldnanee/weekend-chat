@@ -28,6 +28,8 @@ type TProfileStore = {
 
 const handleProfileStoreError = (e: unknown) => {
 	const err = e as AxiosError<{ message: string }>;
+	console.log(e);
+
 	const message = err.response?.data.message || "Unexpected error";
 	useProfileStore.setState((state) => {
 		state.error = message;
@@ -78,9 +80,11 @@ export const useProfileStore = create<TProfileStore>()(
 						"/token/logout"
 					);
 					if (data) {
-						state.profile = null;
+						useProfileStore.setState((state) => {
+							state.profile = null;
+							state.isLoading = false;
+						});
 						location.href = "/login";
-						state.isLoading = false;
 					}
 				} catch (e) {
 					handleProfileStoreError(e);
@@ -115,7 +119,9 @@ export const useProfileStore = create<TProfileStore>()(
 					});
 
 					if (status == 200) {
-						state.isLoading = false;
+						useProfileStore.setState((state) => {
+							state.isLoading = false;
+						});
 						if (window) location.href = "/";
 					}
 				} catch (e) {

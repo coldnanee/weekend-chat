@@ -18,6 +18,8 @@ import {
 import { newOnlineUserHandler } from "@/entities/user";
 import { newOfflineUserHandler } from "@/entities/user";
 
+import { getCookie } from "cookies-next";
+
 export const SocketContext = createContext<{ socket?: Socket }>({
 	socket: undefined
 });
@@ -25,14 +27,19 @@ export const SocketContext = createContext<{ socket?: Socket }>({
 export const useSocketContext = () => useContext(SocketContext);
 
 export const SocketProvider = ({ children }: { children: ReactNode }) => {
-	const socket = io(`${process.env.NEXT_PUBLIC_API_URL}:4000` || "", {
+	console.log(process.env.NEXT_PUBLIC_API_URL);
+
+	const socket = io(process.env.NEXT_PUBLIC_API_URL || "", {
 		transports: ["websocket"],
 		autoConnect: false
 	});
 
 	useEffect(() => {
-		socket.connect();
-	});
+		const isAuth = getCookie("auth");
+		if (isAuth) {
+			socket.connect();
+		}
+	}, []);
 
 	getMessageHandler(socket);
 	sendMessageHandler(socket);
