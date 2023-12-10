@@ -8,12 +8,12 @@ RUN npm install
 
 COPY . .
 
-RUN npm run build
-
 ARG API_URL
 ARG SERVER_URL
 ENV API_URl = $API_URL
 ENV SERVER_URL = $SERVER_URL
+
+RUN npm run build
 
 EXPOSE 3000
 
