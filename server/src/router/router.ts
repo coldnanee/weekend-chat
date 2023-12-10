@@ -15,6 +15,5 @@ routes.use("/profile", profile);
 routes.use("/users", users);
 routes.use("/chats", chats);
 routes.use("/health", health);
-routes.use("");
 
 export const router = routes;
