@@ -18,6 +18,8 @@ import {
 import { newOnlineUserHandler } from "@/entities/user";
 import { newOfflineUserHandler } from "@/entities/user";
 
+import { getCookie } from "cookies-next";
+
 export const SocketContext = createContext<{ socket?: Socket }>({
 	socket: undefined
 });
@@ -33,8 +35,11 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 	});
 
 	useEffect(() => {
-		socket.connect();
-	});
+		const isAuth = getCookie("auth");
+		if (isAuth) {
+			socket.connect();
+		}
+	}, []);
 
 	getMessageHandler(socket);
 	sendMessageHandler(socket);
