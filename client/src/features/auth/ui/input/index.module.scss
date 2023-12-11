@@ -2,6 +2,9 @@
 	@apply flex flex-col items-center relative pt-[10px];
 	&__input {
 		@apply bg-transparent border-b border-[#a9aeba] border-solid p-[5px] w-[200px] relative z-10;
+		&:focus {
+			@apply outline-none;
+		}
 		&:focus + .root__label {
 			@apply top-0 text-[#a9aeba] left-0;
 		}
