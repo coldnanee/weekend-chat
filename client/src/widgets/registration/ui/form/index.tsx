@@ -12,7 +12,9 @@ export const RegistrationForm = () => {
 	const { registrationUser } = useProfileStore();
 
 	return (
-		<AuthForm thunk={registrationUser}>
+		<AuthForm
+			thunk={registrationUser}
+			title="Registration">
 			{fieldsRegistrationArr.map((field, index) => (
 				<AuthInput
 					{...field}
@@ -28,7 +30,7 @@ export const RegistrationForm = () => {
 			<Link
 				className={cl.root__link}
 				href="/login">
-				login
+				Login
 			</Link>
 		</AuthForm>
 	);
