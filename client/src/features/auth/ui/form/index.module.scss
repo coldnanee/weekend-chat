@@ -1,5 +1,5 @@
 .root {
-	@apply flex justify-center min-h-[100vh] items-center bg-[#131313];
+	@apply flex justify-center h-[100dvh] items-center bg-[#131313];
 	&__form {
 		@apply bg-[#202329] p-[30px] rounded-[10px] text-[#a9aeba] flex flex-col items-center;
 		&__title {

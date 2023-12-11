@@ -1,6 +1,6 @@
 .root {
 	@apply bg-[#202329] px-[20px] py-[75px] h-full flex flex-col;
-	height: 100vh;
+	height: 100dvh;
 	overflow-y: auto;
 	&__list {
 		@apply flex flex-col gap-y-[15px];
