@@ -25,16 +25,21 @@ export const AuthInput = ({
 	const error = errors[name];
 
 	return (
-		<div className={cl.root}>
+		<div className={[cl.root, className].join(" ")}>
 			<input
 				autoComplete="off"
 				type={type}
-				placeholder={name}
 				{...register(name, validation)}
-				className={[cl.root__input, className].join(" ")}
+				className={cl.root__input}
 				required
+				id={`#${name}`}
 			/>
 			{error && <p className={cl.root__error}>{error.message}</p>}
+			<label
+				className={cl.root__label}
+				htmlFor={`#${name}`}>
+				{name}
+			</label>
 		</div>
 	);
 };

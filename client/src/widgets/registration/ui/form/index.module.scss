@@ -1,13 +1,13 @@
 .root {
-    &__button {
-        @apply mt-[20px];
-    }
-    &__input {
-        &_last {
-            @apply mt-[15px];
-        }
-    }
-    &__link {
-        @apply underline inline-block mt-[20px];
-    }
+	&__button {
+		@apply mt-[35px] mb-[10px];
+	}
+	&__input {
+		&_last {
+			@apply mt-[20px];
+		}
+	}
+	&__link {
+		@apply underline inline-block mt-[15px];
+	}
 }

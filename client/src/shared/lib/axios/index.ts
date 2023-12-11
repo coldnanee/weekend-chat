@@ -27,7 +27,7 @@ $axios.interceptors.response.use(
 
 		if (!err.response) {
 			axios.post(`${process.env.NEXT_PUBLIC_API_URL}/logout`).then(() => {
-				if (window) window.location.href = "/login";
+				if (window) location.replace("/login");
 			});
 		}
 

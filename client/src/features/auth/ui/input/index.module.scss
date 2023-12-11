@@ -1,16 +1,23 @@
 .root {
-    @apply flex flex-col items-center;
-    &__input {
-        @apply bg-transparent border-b border-[#a9aeba] border-solid p-[5px] w-[200px];
-
-        &::placeholder {
-            @apply uppercase opacity-40;
-        }
-    }
-    &__error {
-        @apply p-[5px] text-[#c94444];
-        &:first-letter {
-            @apply uppercase;
-        }
-    }
+	@apply flex flex-col items-center relative pt-[10px];
+	&__input {
+		@apply bg-transparent border-b border-[#a9aeba] border-solid p-[5px] w-[200px] relative z-10;
+		&:focus + .root__label {
+			@apply top-0 text-[#a9aeba] left-0;
+		}
+	}
+	&__label {
+		@apply absolute block top-[50%] left-[5px] text-[#5c5e5e];
+		transform: translateY(-20%);
+		transition: all 0.1s linear;
+		&::first-letter {
+			@apply uppercase;
+		}
+	}
+	&__error {
+		@apply p-[5px] text-[#c94444];
+		&:first-letter {
+			@apply uppercase;
+		}
+	}
 }

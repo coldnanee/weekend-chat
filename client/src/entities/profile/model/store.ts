@@ -80,10 +80,8 @@ export const useProfileStore = create<TProfileStore>()(
 						"/token/logout"
 					);
 					if (data) {
-						useProfileStore.setState((state) => {
-							state.profile = null;
-							state.isLoading = false;
-						});
+						state.profile = null;
+						state.isLoading = false;
 						location.href = "/login";
 					}
 				} catch (e) {
@@ -119,10 +117,7 @@ export const useProfileStore = create<TProfileStore>()(
 					});
 
 					if (status == 200) {
-						useProfileStore.setState((state) => {
-							state.isLoading = false;
-						});
-						if (window) location.href = "/";
+						if (window) location.replace("/");
 					}
 				} catch (e) {
 					localStorage.setItem("user", JSON.stringify(user));

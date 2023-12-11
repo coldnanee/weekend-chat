@@ -1,3 +1,8 @@
 .root {
-    @apply border border-[#a9aeba] border-solid p-[10px] font-bold text-[#a9aeba];
+	@apply p-[10px] font-bold text-[#202329] bg-[#a9aeba] rounded-[5px] w-full border border-[#a9aeba] border-solid;
+	transition: all 0.3s linear;
+
+	&:hover {
+		@apply bg-transparent text-[#a9aeba];
+	}
 }

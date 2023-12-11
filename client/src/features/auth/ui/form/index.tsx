@@ -14,10 +14,12 @@ import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.
 
 export function AuthForm({
 	children,
-	thunk
+	thunk,
+	title
 }: {
 	children: ReactNode;
 	thunk: (user: TAuthForm, router: AppRouterInstance) => void;
+	title: string;
 }) {
 	const { handleSubmit } = useFormContext<TAuthForm>();
 
@@ -32,6 +34,7 @@ export function AuthForm({
 			<form
 				onSubmit={handleSubmit(onSubmit)}
 				className={cl.root__form}>
+				<h1 className={cl.root__form__title}>{title}</h1>
 				{children}
 			</form>
 		</section>
