@@ -31,33 +31,32 @@ export const useChatsStore = create<TChatsStore>()(
 			set((state) => {
 				state.chats = chats;
 			}),
-		fetchChats: (chat) =>
-			set(async (state) => {
-				try {
-					useChatsStore.setState((state) => {
-						state.error = null;
-						state.isLoading = true;
-					});
+		fetchChats: async (chat) => {
+			useChatsStore.setState((state) => {
+				state.error = null;
+				state.isLoading = true;
+			});
+			try {
+				const { data } = await $axios.get<{ chats: TChat[] }>("chats", {
+					params: { chat }
+				});
 
-					const { data } = await $axios.get<{ chats: TChat[] }>("chats", {
-						params: { chat }
-					});
-
-					if (data) {
-						useChatsStore.setState((state) => {
-							state.chats = data.chats;
-							state.isLoading = false;
-						});
-					}
-				} catch (e) {
-					const err = e as AxiosError<{ message: string }>;
-					const message = err.response?.data.message || "fetch chats error";
-					alert(message);
+				if (data) {
 					useChatsStore.setState((state) => {
-						state.error = message;
+						state.chats = data.chats;
+						state.isLoading = false;
 					});
 				}
-			}),
+			} catch (e) {
+				const err = e as AxiosError<{ message: string }>;
+				const message = err.response?.data.message || "fetch chats error";
+				alert(message);
+				useChatsStore.setState((state) => {
+					state.error = message;
+				});
+			}
+		},
+
 		deleteChat: (chatId) =>
 			set((state) => {
 				state.chats = state.chats.filter((chat) => chat && chat._id !== chatId);

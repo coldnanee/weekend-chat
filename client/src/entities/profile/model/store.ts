@@ -55,26 +55,20 @@ export const useProfileStore = create<TProfileStore>()(
 					state.profile.avatar = "";
 				}
 			}),
-		fetchProfile: async () =>
-			set((state) => {
-				preFetchFn();
-				$axios
-					.post<IProfile>("/token/refresh")
-					.then(({ data }) =>
-						useProfileStore.setState((state) => {
-							state.profile = data;
-						})
-					)
-					.catch((e) => handleProfileStoreError(e))
-					.finally(() =>
-						useProfileStore.setState((state) => {
-							state.isLoading = false;
-						})
-					);
-			}),
-		logoutUser: async () => {
+		fetchProfile: async () => {
+			preFetchFn();
 			try {
-				preFetchFn();
+				const { data } = await $axios.post<IProfile>("/token/refresh");
+				set({ profile: data });
+			} catch (e) {
+				handleProfileStoreError(e);
+			} finally {
+				set({ isLoading: false });
+			}
+		},
+		logoutUser: async () => {
+			preFetchFn();
+			try {
 				const { data } = await $axios.post<{ message: string }>(
 					"/token/logout"
 				);
@@ -85,60 +79,52 @@ export const useProfileStore = create<TProfileStore>()(
 				handleProfileStoreError(e);
 			}
 		},
-		updateProfile: async (user) =>
-			set((state) => {
-				preFetchFn();
-				$axios
-					.post<IProfile>("/profile/update", {
-						...user
-					})
-					.then(({ data }) =>
-						useProfileStore.setState((state) => {
-							state.profile = data;
-						})
-					)
-					.catch((e) => handleProfileStoreError(e))
-					.finally(() =>
-						useProfileStore.setState((state) => {
-							state.isLoading = false;
-						})
-					);
-			}),
-		loginUser: (user, router) =>
-			set(async (state) => {
-				try {
-					preFetchFn();
+		updateProfile: async (user) => {
+			preFetchFn();
+			try {
+				const { data } = await $axios.post<IProfile>("/profile/update", {
+					...user
+				});
+				set({ profile: data });
+			} catch (e) {
+				handleProfileStoreError(e);
+			} finally {
+				set({ isLoading: false });
+			}
+		},
+		loginUser: async (user, router) => {
+			preFetchFn();
+			try {
+				const { status } = await $axios.post("/auth/login", {
+					...user
+				});
 
-					const { status } = await $axios.post("/auth/login", {
-						...user
-					});
-
-					if (status == 200) {
-						if (window) location.replace("/");
-					}
-				} catch (e) {
-					localStorage.setItem("user", JSON.stringify(user));
-					handleProfileStoreError(e);
+				if (status == 200 && window) {
+					location.replace("/");
 				}
-			}),
-		registrationUser: async (user, router) =>
-			set((state) => {
-				preFetchFn();
+			} catch (e) {
+				localStorage.setItem("user", JSON.stringify(user));
+				handleProfileStoreError(e);
+			}
+		},
 
-				$axios
-					.post<{ message: string }>("/auth/registration", { ...user })
-					.then(() => {
-						router.replace("/login");
-					})
-					.catch((e) => {
-						localStorage.setItem("user", JSON.stringify(user));
-						handleProfileStoreError(e);
-					})
-					.finally(() =>
-						useProfileStore.setState((state) => {
-							state.isLoading = false;
-						})
-					);
-			})
+		registrationUser: async (user, router) => {
+			preFetchFn();
+			try {
+				const { status } = await $axios.post<{ message: string }>(
+					"/auth/registration",
+					{ ...user }
+				);
+
+				if (status == 200) {
+					router.replace("/login");
+				}
+			} catch (e) {
+				localStorage.setItem("user", JSON.stringify(user));
+				handleProfileStoreError(e);
+			} finally {
+				set({ isLoading: false });
+			}
+		}
 	}))
 );
