@@ -1,9 +1,9 @@
 .root {
-    @apply px-[20px];
-    @media (min-width: 451px) {
-        @apply hidden;
-    }
-    &__list {
-        @apply flex justify-between;
-    }
+	@apply px-[20px];
+	@media (min-width: 551px) {
+		@apply hidden;
+	}
+	&__list {
+		@apply flex justify-between;
+	}
 }

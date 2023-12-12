@@ -1,0 +1,11 @@
+.home-page-layout .layout-chats {
+	@media (max-width: 800px) {
+		@apply max-w-full;
+	}
+}
+
+.home-page-layout .layout-body {
+	@media (max-width: 800px) {
+		@apply hidden;
+	}
+}

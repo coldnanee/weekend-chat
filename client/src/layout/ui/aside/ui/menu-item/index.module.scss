@@ -1,12 +1,15 @@
 .root {
-    @apply flex flex-col items-center justify-center;
-    &__text {
-        @apply text-[#a6abb7] text-[12px] mt-[7px] font-bold;
-        @media (max-width: 450px) {
-            @apply hidden;
-        }
-    }
-    &_click {
-        @apply cursor-pointer;
-    }
+	@apply flex flex-col items-center justify-center;
+	@media (max-width: 550px) {
+		@apply p-[12px];
+	}
+	&__text {
+		@apply text-[#a6abb7] text-[12px] mt-[7px] font-bold;
+		@media (max-width: 550px) {
+			@apply hidden;
+		}
+	}
+	&_click {
+		@apply cursor-pointer;
+	}
 }
