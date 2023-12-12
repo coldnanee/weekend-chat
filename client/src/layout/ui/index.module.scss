@@ -1,12 +1,18 @@
 .root {
-    @apply flex justify-between min-h-full;
-    @media (max-width: 450px) {
-        @apply flex-col;
-    }
-    &__wrapper {
-        @apply w-full bg-[#131313] flex;
-        &__body {
-            @apply w-full h-full gap-x-[20px];
-        }
-    }
+	@apply flex justify-between min-h-full;
+	@media (max-width: 550px) {
+		@apply flex-col;
+	}
+	&__wrapper {
+		@apply w-full bg-[#131313] flex;
+		@media (max-width: 550px) {
+			flex: 1 1 auto;
+		}
+		&__body {
+			@apply w-full h-full gap-x-[20px];
+		}
+		@media (max-width: 550px) {
+			@apply order-1;
+		}
+	}
 }

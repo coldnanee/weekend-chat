@@ -19,10 +19,13 @@ export const AuthInput = ({
 }) => {
 	const {
 		register,
-		formState: { errors }
+		formState: { errors },
+		watch
 	} = useFormContext<TAuthForm>();
 
 	const error = errors[name];
+
+	const inputValue = watch(name);
 
 	return (
 		<div className={[cl.root, className].join(" ")}>
@@ -36,7 +39,11 @@ export const AuthInput = ({
 			/>
 			{error && <p className={cl.root__error}>{error.message}</p>}
 			<label
-				className={cl.root__label}
+				className={
+					inputValue
+						? [cl.root__label, cl.root__label_hidden].join(" ")
+						: cl.root__label
+				}
 				htmlFor={`#${name}`}>
 				{name}
 			</label>

@@ -1,15 +1,15 @@
 .root {
-    @apply bg-[#131313] py-[20px];
-    @media (min-width: 451px) {
-        @apply flex-col flex justify-between items-center w-[70px];
-    }
-    @media (max-width: 450px) {
-        @apply w-full;
-    }
-    &__logo {
-        @apply mb-[50px];
-        @media (max-width: 450px) {
-            @apply hidden;
-        }
-    }
+	@apply bg-[#131313] py-[20px];
+	@media (min-width: 551px) {
+		@apply flex-col flex justify-between items-center w-[70px];
+	}
+	@media (max-width: 550px) {
+		@apply w-full order-2 p-0;
+	}
+	&__logo {
+		@apply mb-[50px];
+		@media (max-width: 550px) {
+			@apply hidden;
+		}
+	}
 }

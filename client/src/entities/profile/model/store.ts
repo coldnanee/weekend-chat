@@ -72,22 +72,19 @@ export const useProfileStore = create<TProfileStore>()(
 						})
 					);
 			}),
-		logoutUser: () =>
-			set(async (state) => {
-				try {
-					preFetchFn();
-					const { data } = await $axios.post<{ message: string }>(
-						"/token/logout"
-					);
-					if (data) {
-						state.profile = null;
-						state.isLoading = false;
-						location.href = "/login";
-					}
-				} catch (e) {
-					handleProfileStoreError(e);
+		logoutUser: async () => {
+			try {
+				preFetchFn();
+				const { data } = await $axios.post<{ message: string }>(
+					"/token/logout"
+				);
+				if (data) {
+					location.href = "/login";
 				}
-			}),
+			} catch (e) {
+				handleProfileStoreError(e);
+			}
+		},
 		updateProfile: async (user) =>
 			set((state) => {
 				preFetchFn();
