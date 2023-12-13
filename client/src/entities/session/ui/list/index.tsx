@@ -1,27 +1,17 @@
-import { useGetSessions } from "../../lib/useGetSessions";
+import type { TSession } from "../..";
 
 import cl from "./index.module.scss";
 
 import { SessionItem } from "..";
 
-export const SessionList = () => {
-	const { data, isLoading, isError } = useGetSessions();
-
-	if (isLoading) {
-		return <h1>loading</h1>;
-	}
-
-	if (!data) {
-		return <></>;
-	}
-
-	if (isError) {
+export const SessionList = ({ sessions }: { sessions: TSession[] }) => {
+	if (!sessions) {
 		return <></>;
 	}
 
 	return (
 		<ul className={cl.root}>
-			{data.sessions.map((i) => (
+			{sessions.map((i) => (
 				<SessionItem
 					session={i}
 					key={i._id}

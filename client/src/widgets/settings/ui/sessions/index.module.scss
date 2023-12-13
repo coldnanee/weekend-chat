@@ -1,2 +1,18 @@
 .root {
+	@apply p-[10px];
+	&__select_panel {
+		@apply mb-[10px] pl-[9px];
+		&__checkbox {
+			@apply cursor-pointer flex gap-x-[3px] items-center;
+			input {
+				@apply hidden;
+			}
+			&__body {
+				@apply w-[16px] h-[16px] bg-[#a9aeba] flex justify-center items-center;
+				&_checked {
+					@apply bg-[#64beda];
+				}
+			}
+		}
+	}
 }
