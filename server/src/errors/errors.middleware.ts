@@ -12,6 +12,7 @@ export const errorsMiddleware = (
 	if (err instanceof ApiError) {
 		const { status, message } = err;
 		_logger.error(message);
+
 		return res.status(status).json({ message });
 	} else {
 		return res.status(500).json({ message: "Unexpected error" });

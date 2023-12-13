@@ -25,19 +25,19 @@ class AuthController {
 				browserInfo
 			);
 
-			res.cookie("accessJwt", tokens.accessToken, {
-				httpOnly: true,
-				maxAge: 60 * 60 * 1000
-			});
-			res.cookie("refreshJwt", tokens.refreshToken, {
-				httpOnly: true,
-				maxAge: 30 * 24 * 60 * 60 * 1000
-			});
-
-			res.cookie("sessionId", sessionId, {
-				httpOnly: true,
-				maxAge: 30 * 24 * 60 * 60 * 1000
-			});
+			res
+				.cookie("accessJwt", tokens.accessToken, {
+					httpOnly: true,
+					maxAge: 60 * 60 * 1000
+				})
+				.cookie("refreshJwt", tokens.refreshToken, {
+					httpOnly: true,
+					maxAge: 30 * 24 * 60 * 60 * 1000
+				})
+				.cookie("sessionId", sessionId, {
+					httpOnly: true,
+					maxAge: 30 * 24 * 60 * 60 * 1000
+				});
 
 			return res.status(200).send();
 		} catch (e) {

@@ -46,3 +46,11 @@ export type TBrowserInfo = {
 	version: string;
 	type: string;
 } | null;
+
+export type TSession = {
+	_id: string;
+	user: Schema.Types.ObjectId;
+	refreshToken: string;
+	browser: string;
+	os: string;
+};

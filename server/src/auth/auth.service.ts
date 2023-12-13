@@ -8,8 +8,6 @@ import TokenService from "../token/token.service";
 
 import { ProfileDto } from "../dtos/profile.dto";
 
-import { v4 as uuid } from "uuid";
-
 class AuthService {
 	async login(
 		login: string,
@@ -26,8 +24,6 @@ class AuthService {
 	}> {
 		const candidate = await UserModel.findOne({ login });
 
-		const sessionId = uuid();
-
 		if (!candidate) {
 			throw new ApiError(400, "User not found");
 		}
@@ -40,14 +36,14 @@ class AuthService {
 
 		const tokens = TokenService.generateTokens(new ProfileDto(candidate));
 
-		await TokenService.saveRefreshTokenToDb(
-			sessionId,
+		const session = await TokenService.saveRefreshTokenToDb(
+			"",
 			tokens.refreshToken,
 			browserInfo,
 			candidate._id
 		);
 
-		return { tokens, sessionId };
+		return { tokens, sessionId: session._id.toString() };
 	}
 
 	async registration(login: string, password: string) {
