@@ -1,12 +1,16 @@
 import jwt from "jsonwebtoken";
 
 import { TUserPayload } from "../types";
-import TokenModel from "../db/models/TokenModel";
+
+import SessionModel from "../db/models/SessionModel";
 
 import type { TUser } from "../types";
-import { ApiError } from "../errors";
 import UserModel from "../db/models/UserModel";
 import { ProfileDto } from "../dtos/profile.dto";
+
+import type { TBrowserInfo } from "../types";
+
+import { getBrowserName } from "../libs/getBrowserName";
 
 class TokenService {
 	generateTokens(user: TUserPayload): {
@@ -31,19 +35,34 @@ class TokenService {
 
 		return { accessToken, refreshToken };
 	}
-	async saveRefreshTokenToDb(user: string, refreshToken: string) {
-		const tokenFromDb = await TokenModel.findOne({ user });
+	async saveRefreshTokenToDb(
+		sessionId: string,
+		refreshToken: string,
+		browserInfo: TBrowserInfo,
+		user: string
+	) {
+		const tokenFromDb = await SessionModel.findOne({ sessionId });
 		if (tokenFromDb) {
 			tokenFromDb.refreshToken = refreshToken;
 			return tokenFromDb.save();
 		}
-		const token = new TokenModel({ user, refreshToken: refreshToken });
+		const token = new SessionModel({
+			user,
+			refreshToken,
+			sessionId,
+			os: browserInfo?.os,
+			browser: getBrowserName(browserInfo)
+		});
 		return token.save();
 	}
 
-	async refreshToken(refreshToken: string) {
+	async refreshToken(
+		sessionId: string,
+		refreshToken: string,
+		browserInfo: TBrowserInfo
+	) {
 		const userId = this.validateRefreshToken(refreshToken);
-		const tokenFromDb = await TokenModel.findOne({ refreshToken });
+		const tokenFromDb = await SessionModel.findOne({ sessionId });
 
 		if (!userId || !tokenFromDb) {
 			return null;
@@ -59,7 +78,12 @@ class TokenService {
 
 		const tokens = this.generateTokens(userDto);
 
-		await this.saveRefreshTokenToDb(user._id, tokens.refreshToken);
+		await this.saveRefreshTokenToDb(
+			sessionId,
+			tokens.refreshToken,
+			browserInfo,
+			user._id
+		);
 
 		return { tokens, user: userDto };
 	}
@@ -89,7 +113,7 @@ class TokenService {
 	}
 
 	async removeTokenFromDb(refreshToken: string) {
-		const result = await TokenModel.deleteOne({ refreshToken });
+		const result = await SessionModel.deleteOne({ refreshToken });
 		return result.deletedCount > 0;
 	}
 }

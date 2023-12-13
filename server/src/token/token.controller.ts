@@ -2,6 +2,9 @@ import type { Request, Response, NextFunction } from "express";
 import { ApiError } from "../errors";
 import TokenService from "./token.service";
 
+import { detect } from "detect-browser";
+import { TBrowserInfo } from "../types";
+
 class TokenController {
 	async logout(req: Request, res: Response, next: NextFunction) {
 		try {
@@ -19,6 +22,7 @@ class TokenController {
 
 			res.clearCookie("refreshJwt");
 			res.clearCookie("accessJwt");
+			res.clearCookie("sessionId");
 
 			return res.json({ message: result });
 		} catch (e) {
@@ -30,11 +34,19 @@ class TokenController {
 		try {
 			const { refreshJwt } = req.cookies as { refreshJwt: string };
 
-			if (!refreshJwt) {
+			const { sessionId } = req.cookies as { sessionId: string };
+
+			if (!refreshJwt || !sessionId) {
 				throw ApiError.unAuthorizedError();
 			}
 
-			const data = await TokenService.refreshToken(refreshJwt);
+			const browserInfo = detect(req.headers["user-agent"]) as TBrowserInfo;
+
+			const data = await TokenService.refreshToken(
+				sessionId,
+				refreshJwt,
+				browserInfo
+			);
 
 			if (!data) {
 				return res

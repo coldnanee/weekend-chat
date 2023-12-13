@@ -39,3 +39,10 @@ export type TChatPayload = Pick<TChat, "_id" | "isPinned"> & {
 	user: TUser;
 	message: TMessage[];
 };
+
+export type TBrowserInfo = {
+	os: string;
+	name: string;
+	version: string;
+	type: string;
+} | null;
