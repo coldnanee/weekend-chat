@@ -3,6 +3,9 @@ import type { Request, Response, NextFunction } from "express";
 import AuthService from "./auth.service";
 
 import { getValidationError } from "../libs";
+import { detect } from "detect-browser";
+
+import type { TBrowserInfo } from "../types";
 
 class AuthController {
 	async login(req: Request, res: Response, next: NextFunction) {
@@ -14,16 +17,24 @@ class AuthController {
 
 			getValidationError(req);
 
-			const { accessToken, refreshToken } = await AuthService.login(
+			const browserInfo = detect(req.headers["user-agent"]) as TBrowserInfo;
+
+			const { tokens, sessionId } = await AuthService.login(
 				login.toLowerCase(),
-				password
+				password,
+				browserInfo
 			);
 
-			res.cookie("accessJwt", accessToken, {
+			res.cookie("accessJwt", tokens.accessToken, {
 				httpOnly: true,
 				maxAge: 60 * 60 * 1000
 			});
-			res.cookie("refreshJwt", refreshToken, {
+			res.cookie("refreshJwt", tokens.refreshToken, {
+				httpOnly: true,
+				maxAge: 30 * 24 * 60 * 60 * 1000
+			});
+
+			res.cookie("sessionId", sessionId, {
 				httpOnly: true,
 				maxAge: 30 * 24 * 60 * 60 * 1000
 			});
