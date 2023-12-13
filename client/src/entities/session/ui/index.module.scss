@@ -1,0 +1,11 @@
+.root {
+	@apply flex items-center gap-x-[10px] text-[#a9aeba] text-[16px];
+	&__body {
+		@apply flex gap-x-[20px];
+		&__browser {
+			&::first-letter {
+				@apply uppercase;
+			}
+		}
+	}
+}

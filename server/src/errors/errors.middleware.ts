@@ -13,15 +13,6 @@ export const errorsMiddleware = (
 		const { status, message } = err;
 		_logger.error(message);
 
-		if (status == 401) {
-			return res
-				.clearCookie("refreshJwt")
-				.clearCookie("accessJwt")
-				.clearCookie("sessionId")
-				.status(status)
-				.json({ message });
-		}
-
 		return res.status(status).json({ message });
 	} else {
 		return res.status(500).json({ message: "Unexpected error" });

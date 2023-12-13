@@ -1,11 +1,6 @@
 import { Schema, model } from "mongoose";
 
-type TSession = {
-	user: Schema.Types.ObjectId;
-	refreshToken: string;
-	browser: string;
-	os: string;
-};
+import type { TSession } from "../../types";
 
 const session = new Schema<TSession>({
 	user: { type: Schema.Types.ObjectId, ref: "User" },
