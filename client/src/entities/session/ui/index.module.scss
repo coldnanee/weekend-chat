@@ -1,10 +1,31 @@
 .root {
-	@apply flex items-center gap-x-[10px] text-[#a9aeba] text-[16px];
-	&__body {
-		@apply flex gap-x-[20px];
-		&__browser {
-			&::first-letter {
-				@apply uppercase;
+	@apply justify-center;
+	flex: 0 1 49%;
+	&:hover {
+		background: rgba(255, 255, 255, 0.08);
+	}
+	&_check {
+		background: rgba(255, 255, 255, 0.08);
+	}
+	&__wrapper {
+		@apply flex items-center gap-x-[20px] text-[#a9aeba] text-[16px] cursor-pointer px-[10px];
+		&__body {
+			&__browser {
+				@apply mb-[7px];
+				&::first-letter {
+					@apply uppercase;
+				}
+			}
+		}
+		&__checkbox {
+			input {
+				@apply hidden;
+			}
+			&__body {
+				@apply w-[16px] h-[16px] bg-[#9ea0a5] block;
+				&_check {
+					background: #64beda !important;
+				}
 			}
 		}
 	}
