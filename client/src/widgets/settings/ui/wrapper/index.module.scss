@@ -2,6 +2,6 @@
 	@apply bg-[#202329] p-[10px] rounded-[10px];
 	flex: 0 1 75%;
 	&__arrow {
-		@apply cursor-pointer p-[5px];
+		@apply cursor-pointer p-[5px] block;
 	}
 }

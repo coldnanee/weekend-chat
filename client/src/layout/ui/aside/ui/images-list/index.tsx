@@ -1,5 +1,4 @@
 import { useLogoutUser } from "../../lib/useLogoutUser";
-import { useSettingsNavigate } from "../../lib/useSettingsNavigate";
 
 import { asideImagesDataArr } from "../../model/images";
 
@@ -13,8 +12,6 @@ import cl from "./index.module.scss";
 import { IconContext } from "react-icons";
 
 export const ImagesList = () => {
-	const { goToSettings } = useSettingsNavigate();
-
 	const logoutUser = useLogoutUser();
 
 	return (
@@ -39,9 +36,9 @@ export const ImagesList = () => {
 					</li>
 				</ul>
 				<SettingsMenuItem
-					cb={goToSettings}
 					Image={IoMdSettings}
 					text="Settings"
+					link="/settings"
 				/>
 			</nav>
 		</IconContext.Provider>
