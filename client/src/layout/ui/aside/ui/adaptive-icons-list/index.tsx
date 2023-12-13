@@ -3,7 +3,6 @@ import cl from "./index.module.scss";
 import { asideImagesDataArr } from "../../model/images";
 
 import { useLogoutUser } from "../../lib/useLogoutUser";
-import { useSettingsNavigate } from "../../lib/useSettingsNavigate";
 
 import { MdLogout } from "react-icons/md";
 import { IoMdSettings } from "react-icons/io";
@@ -13,8 +12,6 @@ import { SettingsMenuItem } from "../menu-item";
 import { IconContext } from "react-icons";
 
 export const AdaptiveIconsList = () => {
-	const { goToSettings } = useSettingsNavigate();
-
 	const logoutUser = useLogoutUser();
 
 	return (
@@ -39,9 +36,9 @@ export const AdaptiveIconsList = () => {
 					</li>
 					<li>
 						<SettingsMenuItem
-							cb={goToSettings}
 							Image={IoMdSettings}
 							text="Settings"
+							link="/settings"
 						/>
 					</li>
 				</ul>
