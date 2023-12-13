@@ -1,0 +1,12 @@
+.root {
+	@apply cursor-pointer flex items-center gap-x-[10px] p-[10px] rounded-[10px];
+	&_active {
+		background: rgba(255, 255, 255, 0.08);
+	}
+	&:hover {
+		background: rgba(255, 255, 255, 0.08);
+	}
+	&__text {
+		@apply text-[#a9aeba] text-[16px];
+	}
+}

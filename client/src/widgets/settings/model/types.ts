@@ -1,5 +1,7 @@
 import type { RegisterOptions } from "react-hook-form";
 
+import type { IconType } from "react-icons";
+
 export type TSettingsFormItem = {
 	name: TSettingsFormField;
 	type: "text" | "password";
@@ -19,12 +21,12 @@ export type TSettingsProfile = Omit<TSettingsForm, "avatar"> & {
 
 export type TSettingsFormField = "login" | "password" | "avatar";
 
-export type TSettingsChapter = {
-	label: string;
-	value: string;
-};
-
 export type TSettingsContext = {
 	activeChapter: string;
 	setActiveChapter: (activeChapter: string) => void;
+};
+
+export type TSettingsCategoriesItem = {
+	label: string;
+	Image: IconType;
 };
