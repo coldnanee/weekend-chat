@@ -32,9 +32,10 @@ class TokenController {
 
 	async refresh(req: Request, res: Response, next: NextFunction) {
 		try {
-			const { refreshJwt } = req.cookies as { refreshJwt: string };
-
-			const { sessionId } = req.cookies as { sessionId: string };
+			const { refreshJwt, sessionId } = req.cookies as {
+				refreshJwt: string;
+				sessionId: string;
+			};
 
 			if (!refreshJwt || !sessionId) {
 				throw ApiError.unAuthorizedError();
@@ -52,6 +53,7 @@ class TokenController {
 				return res
 					.clearCookie("refreshJwt")
 					.clearCookie("accessJwt")
+					.clearCookie("sessionId")
 					.status(400)
 					.send();
 			}

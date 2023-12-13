@@ -41,19 +41,22 @@ class TokenService {
 		browserInfo: TBrowserInfo,
 		user: string
 	) {
-		const tokenFromDb = await SessionModel.findOne({ sessionId });
-		if (tokenFromDb) {
-			tokenFromDb.refreshToken = refreshToken;
-			return tokenFromDb.save();
+		if (sessionId) {
+			const tokenFromDb = await SessionModel.findById(sessionId);
+			if (tokenFromDb) {
+				tokenFromDb.refreshToken = refreshToken;
+				return tokenFromDb.save();
+			}
 		}
-		const token = new SessionModel({
+
+		const session = new SessionModel({
 			user,
 			refreshToken,
-			sessionId,
 			os: browserInfo?.os,
 			browser: getBrowserName(browserInfo)
 		});
-		return token.save();
+
+		return session.save();
 	}
 
 	async refreshToken(
@@ -62,7 +65,7 @@ class TokenService {
 		browserInfo: TBrowserInfo
 	) {
 		const userId = this.validateRefreshToken(refreshToken);
-		const tokenFromDb = await SessionModel.findOne({ sessionId });
+		const tokenFromDb = await SessionModel.findById(sessionId);
 
 		if (!userId || !tokenFromDb) {
 			return null;
