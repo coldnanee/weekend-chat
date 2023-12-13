@@ -1,0 +1,6 @@
+.root {
+	@apply bg-[#131313] min-h-[100dvh] pt-[20px];
+	&__body {
+		@apply flex gap-x-[20px] justify-between;
+	}
+}
