@@ -28,14 +28,15 @@ type TProfileStore = {
 
 const handleProfileStoreError = (e: unknown) => {
 	const err = e as AxiosError<{ message: string }>;
-	console.log(e);
 
 	const message = err.response?.data.message || "Unexpected error";
 	useProfileStore.setState((state) => {
 		state.error = message;
 		state.isLoading = false;
 	});
-	alert(message);
+	if (err.response?.status !== 401) {
+		alert(message);
+	}
 };
 
 const preFetchFn = () =>

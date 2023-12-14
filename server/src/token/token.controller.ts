@@ -8,10 +8,18 @@ import { TBrowserInfo } from "../types";
 class TokenController {
 	async logout(req: Request, res: Response, next: NextFunction) {
 		try {
-			const { refreshJwt } = req.cookies as { refreshJwt: string };
+			const { refreshJwt, sessionId } = req.cookies as {
+				refreshJwt: string;
+				sessionId: string;
+			};
 
-			if (!refreshJwt) {
-				throw ApiError.unAuthorizedError();
+			if (!refreshJwt || sessionId) {
+				return res
+					.status(401)
+					.clearCookie("refreshJwt")
+					.clearCookie("accessJwt")
+					.clearCookie("sessionId")
+					.json({ message: "You unauthorized" });
 			}
 
 			const result = await TokenService.removeTokenFromDb(refreshJwt);
@@ -38,7 +46,12 @@ class TokenController {
 			};
 
 			if (!refreshJwt || !sessionId) {
-				throw ApiError.unAuthorizedError();
+				return res
+					.status(401)
+					.clearCookie("refreshJwt")
+					.clearCookie("accessJwt")
+					.clearCookie("sessionId")
+					.json({ message: "You unauthorized" });
 			}
 
 			const browserInfo = detect(req.headers["user-agent"]) as TBrowserInfo;
