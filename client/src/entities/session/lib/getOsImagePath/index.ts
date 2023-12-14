@@ -6,7 +6,7 @@ export const getOsImagePath = (os: string): string => {
 	switch (os) {
 		case "Linux":
 			return LinuxImage;
-		case "Windows":
+		case "Windows 10":
 			return WindowsImage;
 		case "Android OS":
 			return AndroidImage;

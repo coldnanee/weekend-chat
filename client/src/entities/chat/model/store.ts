@@ -50,7 +50,9 @@ export const useChatsStore = create<TChatsStore>()(
 			} catch (e) {
 				const err = e as AxiosError<{ message: string }>;
 				const message = err.response?.data.message || "fetch chats error";
-				alert(message);
+				if (err.response?.status !== 401) {
+					alert(message);
+				}
 				useChatsStore.setState((state) => {
 					state.error = message;
 				});
