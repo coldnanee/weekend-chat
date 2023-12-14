@@ -7,19 +7,18 @@ import cl from "./index.module.scss";
 
 import { TiTick } from "react-icons/ti";
 
-import LinuxImage from "../images/linux.svg";
-import { useState } from "react";
+import { getOsImagePath } from "../lib/getOsImagePath";
+
+import { useSettingsSession } from "..";
 
 export const SessionItem = ({ session }: { session: TSession }) => {
-	const [isSelected, setIsSelected] = useState<boolean>(false);
-
-	const toggleSession = () => {
-		setIsSelected(!isSelected);
-	};
+	const { selectedSessions, toggleSession } = useSettingsSession();
 
 	const rootCl = [cl.root];
 
 	const rootClCheckbox = [cl.root__wrapper__checkbox__body];
+
+	const isSelected = selectedSessions.includes(session._id);
 
 	if (isSelected) {
 		rootCl.push(cl.root_check);
@@ -36,7 +35,7 @@ export const SessionItem = ({ session }: { session: TSession }) => {
 						type="checkbox"
 						checked={isSelected}
 						id={session._id}
-						onClick={toggleSession}
+						onChange={() => toggleSession(session._id)}
 					/>
 					<span className={rootClCheckbox.join(" ")}>
 						{isSelected && <TiTick color="676768" />}
@@ -44,7 +43,7 @@ export const SessionItem = ({ session }: { session: TSession }) => {
 				</div>
 				<Image
 					className={cl.root__wrapper__image}
-					src={LinuxImage}
+					src={getOsImagePath(session.os)}
 					alt={session.os}
 					height={30}
 					width={30}

@@ -13,6 +13,7 @@ class SessionController {
 
 			return res.json({ sessions });
 		} catch (e) {
+			console.log(e);
 			next(e);
 		}
 	}

@@ -11,7 +11,9 @@ class SessionService {
 			throw ApiError.unAuthorizedError();
 		}
 
-		const sessionsDto = sessions.map((s) => new SessionDto(s, sessionId));
+		const sessionsDto = sessions
+			.map((s) => new SessionDto(s, sessionId))
+			.filter((s) => !s.isThisDevice);
 
 		return sessionsDto;
 	}

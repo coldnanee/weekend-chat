@@ -2,32 +2,38 @@
 
 import cl from "./index.module.scss";
 
-import { SessionList } from "@/entities/session";
+import { SessionList, useGetSessions } from "@/entities/session";
 
 import { TiTick } from "react-icons/ti";
 import { IoMdArrowDropdown } from "react-icons/io";
+import { TbReload } from "react-icons/tb";
 
-import { useSettingsSession } from "../../model/store";
+import { Loader } from "@/shared";
+
+import { useSettingsSession } from "@/entities/session";
 
 import { useEffect } from "react";
 
 export const SettingsSessions = () => {
-	const {
-		fetchSessions,
-		selectedSessionsArr,
-		isAllSelected,
-		toggleAllSessions,
-		sessions
-	} = useSettingsSession();
-
-	useEffect(() => {
-		fetchSessions();
-	}, []);
+	const { isAllSelected, toggleAllSession, setAllSessionListId } =
+		useSettingsSession();
+	const { data, isError, isLoading, refetch } = useGetSessions();
 
 	const rootClChecked = [cl.root__select_panel__checkbox__body];
 
 	if (isAllSelected) {
 		rootClChecked.push(cl.root__select_panel__checkbox__body_checked);
+	}
+
+	useEffect(() => {
+		if (data) {
+			const sessionListId = data.sessions.map((i) => i._id);
+			setAllSessionListId(sessionListId);
+		}
+	}, [data]);
+
+	if (isError) {
+		return <></>;
 	}
 
 	return (
@@ -38,7 +44,7 @@ export const SettingsSessions = () => {
 						type="text"
 						id="#settings-session-all"
 						checked={isAllSelected}
-						onClick={toggleAllSessions}
+						onChange={toggleAllSession}
 					/>
 					<div className={rootClChecked.join(" ")}>
 						{isAllSelected && (
@@ -56,8 +62,20 @@ export const SettingsSessions = () => {
 						size="30px"
 					/>
 				</label>
+				<TbReload
+					color="#a9aeba"
+					className={cl.root__select_panel__reload}
+					size="25px"
+					onClick={refetch}
+				/>
 			</div>
-			<SessionList sessions={sessions} />
+			{isLoading ? (
+				<div className={cl.root__select_panel__loader}>
+					<Loader />
+				</div>
+			) : (
+				<SessionList sessions={data?.sessions || []} />
+			)}
 		</div>
 	);
 };

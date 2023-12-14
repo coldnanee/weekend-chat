@@ -10,6 +10,6 @@ export class SessionDto {
 		this._id = session._id;
 		this.browser = session.browser;
 		this.os = session.os;
-		this.isThisDevice = session._id === sessionId;
+		this.isThisDevice = session._id.toString() == sessionId;
 	}
 }

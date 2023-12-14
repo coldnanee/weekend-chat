@@ -1,7 +1,7 @@
 .root {
 	@apply p-[10px];
 	&__select_panel {
-		@apply mb-[10px] pl-[9px];
+		@apply mb-[10px] pl-[9px] flex items-center justify-between;
 		&__checkbox {
 			@apply cursor-pointer flex gap-x-[3px] items-center;
 			input {
@@ -14,5 +14,20 @@
 				}
 			}
 		}
+		&__reload {
+			@apply cursor-pointer;
+		}
+		&__loader {
+			section {
+				@apply bg-transparent;
+			}
+		}
+	}
+}
+
+.loader {
+	@apply px-[10px];
+	section {
+		@apply bg-transparent;
 	}
 }
