@@ -17,6 +17,18 @@ class SessionController {
 			next(e);
 		}
 	}
+
+	async killSessions(req: Request, res: Response, next: NextFunction) {
+		try {
+			const { sessions } = req.query as { sessions: string };
+
+			await SessionService.killSessions(sessions.split("-"));
+
+			return res.status(200).send();
+		} catch (e) {
+			next(e);
+		}
+	}
 }
 
 export default new SessionController();
