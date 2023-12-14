@@ -17,6 +17,12 @@ class SessionService {
 
 		return sessionsDto;
 	}
+
+	async killSessions(sessionIdArr: string[]) {
+		await SessionModel.deleteMany({
+			_id: { $in: sessionIdArr }
+		});
+	}
 }
 
 export default new SessionService();
