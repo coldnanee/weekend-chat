@@ -25,8 +25,6 @@ $axios.interceptors.response.use(
 	async (err) => {
 		const origin = err.config;
 
-		// FIX:
-
 		if (!err.response) {
 			axios.post(`${process.env.NEXT_PUBLIC_API_URL}/logout`).then(() => {
 				if (window) location.replace("/login");

@@ -83,7 +83,6 @@ class TokenController {
 
 			return res.json({ ...data.user });
 		} catch (e) {
-			console.log(e);
 			next(e);
 		}
 	}
