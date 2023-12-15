@@ -9,6 +9,7 @@ env:
     PASSWORD: ${{secrets.DOCKER_PASSWORD}}
     CLIENT_NAME: ${{secrets.DOCKER_CLIENT_NAME}}
     SERVER_NAME: ${{secrets.DOCKER_SERVER_NAME}}
+    SERVER_URL: ${{secrets.SERVER_URL}}
     API_URL: ${{secrets.API_URL}}
 
 jobs:
@@ -66,7 +67,7 @@ jobs:
               run: |
                 docker login -u ${{env.LOGIN}} -p ${{env.PASSWORD}}
             - name: build image
-              run: docker build --build-arg API_URL=${{env.API_URL}} -t ${{env.LOGIN}}/${{env.CLIENT_NAME}}:deploy -f Dockerfile .
+              run: docker build --build-arg SERVER_URL=${{env.SERVER_URL}} --build-arg API_URL=${{env.API_URL}} -t ${{env.LOGIN}}/${{env.CLIENT_NAME}}:deploy -f Dockerfile .
             - name: push build
               run: docker push ${{env.LOGIN}}/${{env.CLIENT_NAME}}:deploy
 

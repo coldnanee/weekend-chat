@@ -69,7 +69,8 @@ const start = async () => {
 		const io = new Server(server, {
 			cors: {
 				origin: CLIENT_URL
-			}
+			},
+			path: "/ws"
 		});
 
 		server.listen(PORT);
