@@ -1,0 +1,9 @@
+.root {
+	@apply flex justify-center items-center h-[100dvh] bg-[#000] text-[#a9aeba];
+	&__body {
+		@apply flex flex-col items-center;
+		&__title {
+			@apply text-[20px] mb-[10px];
+		}
+	}
+}
