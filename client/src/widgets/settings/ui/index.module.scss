@@ -1,6 +1,15 @@
 .root {
-	@apply bg-[#131313] min-h-[100dvh] pt-[20px];
+	@apply bg-[#131313] min-h-[100dvh];
+	@media (min-width: 801px) {
+		@apply pt-[20px];
+	}
 	&__body {
-		@apply flex gap-x-[20px] justify-between;
+		@apply flex gap-x-[20px] justify-between p-[20px];
+		@media (max-width: 1115px) {
+			@apply gap-x-[10px];
+		}
+		@media (max-width: 800px) {
+			@apply flex-col gap-y-[20px];
+		}
 	}
 }

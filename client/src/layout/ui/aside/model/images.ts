@@ -8,7 +8,7 @@ export const asideImagesDataArr: TAsideImage[] = [
 	{
 		text: "All chats",
 		Image: BsChatLeftTextFill,
-		link: "/chats"
+		link: "/"
 	},
 	{
 		text: "Support",
