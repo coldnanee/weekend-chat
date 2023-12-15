@@ -14,7 +14,6 @@ type TSettingsSession = {
 	toggleSession: (id: string) => void;
 	toggleAllSession: () => void;
 	killSessions: () => void;
-	isAllSelected: boolean;
 	fetchSessions: () => void;
 };
 
@@ -22,7 +21,6 @@ export const useSettingsSession = create<TSettingsSession>()(
 	immer((set, get) => ({
 		sessions: [],
 		selectedSessions: [],
-		isAllSelected: false,
 		isSessionsLoading: false,
 		sessionsError: null,
 		toggleSession: (id) =>
@@ -39,10 +37,8 @@ export const useSettingsSession = create<TSettingsSession>()(
 			set((state) => {
 				if (state.selectedSessions.length === state.sessions.length) {
 					state.selectedSessions = [];
-					state.isAllSelected = false;
 				} else {
 					state.selectedSessions = state.sessions.map((s) => s._id);
-					state.isAllSelected = true;
 				}
 			}),
 		killSessions: async () => {
@@ -66,7 +62,6 @@ export const useSettingsSession = create<TSettingsSession>()(
 							(s) => !sessions.includes(s._id)
 						);
 						state.selectedSessions = [];
-						state.isAllSelected = false;
 					});
 				}
 			} catch (e) {

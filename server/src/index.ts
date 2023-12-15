@@ -79,6 +79,7 @@ const start = async () => {
 		let usersIntoChats = new Map<string, string>(); // userId - chatId
 
 		io.on("connection", (socket) => {
+			console.log(socket.id);
 			checkAuthForSocket(socket);
 
 			const user = connectionQueryWrapper(socket.handshake.query.user);

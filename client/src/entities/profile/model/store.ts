@@ -62,6 +62,7 @@ export const useProfileStore = create<TProfileStore>()(
 				const { data } = await $axios.post<IProfile>("/token/refresh");
 				set({ profile: data });
 			} catch (e) {
+				alert(e);
 				handleProfileStoreError(e);
 			} finally {
 				set({ isLoading: false });

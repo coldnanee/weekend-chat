@@ -16,7 +16,6 @@ import { useEffect } from "react";
 
 export const SettingsSessions = () => {
 	const {
-		isAllSelected,
 		toggleAllSession,
 		selectedSessions,
 		killSessions,
@@ -24,6 +23,8 @@ export const SettingsSessions = () => {
 		isSessionsLoading,
 		sessions
 	} = useSettingsSession();
+
+	const isAllSelected = selectedSessions.length === sessions.length;
 
 	const rootClChecked = [cl.root__select_panel__body__checkbox__body];
 
