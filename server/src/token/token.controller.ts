@@ -67,7 +67,7 @@ class TokenController {
 					.clearCookie("refreshJwt")
 					.clearCookie("accessJwt")
 					.clearCookie("sessionId")
-					.status(400)
+					.status(401)
 					.send();
 			}
 
