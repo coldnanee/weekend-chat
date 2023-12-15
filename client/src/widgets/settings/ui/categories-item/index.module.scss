@@ -1,5 +1,8 @@
 .root {
 	@apply cursor-pointer flex items-center gap-x-[10px] p-[10px] rounded-[10px];
+	@media (max-width: 800px) {
+		@apply min-w-[200px];
+	}
 	&_active {
 		background: rgba(255, 255, 255, 0.08);
 	}

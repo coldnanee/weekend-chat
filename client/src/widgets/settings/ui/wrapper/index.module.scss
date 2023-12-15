@@ -1,6 +1,9 @@
 .root {
 	@apply bg-[#202329] p-[10px] rounded-[10px];
 	flex: 0 1 75%;
+	@media (max-width: 800px) {
+		@apply order-2;
+	}
 	&__arrow {
 		@apply cursor-pointer p-[5px] block;
 	}

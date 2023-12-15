@@ -1,6 +1,9 @@
 .root {
 	@apply justify-center;
 	flex: 0 1 49%;
+	@media (max-width: 1115px) {
+		flex: 0 1 100%;
+	}
 	&:hover {
 		background: rgba(255, 255, 255, 0.08);
 	}
