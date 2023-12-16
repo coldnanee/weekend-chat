@@ -1,15 +1,17 @@
 .root {
-	@apply relative;
-	&__input {
-		@apply w-full bg-[#383b46] p-[10px] text-[#a9aeba] pr-[45px];
-		&::placeholder {
-			opacity: 0.5;
-		}
-		@media (max-width: 580px) {
-			@apply p-[12px] pr-[45px];
-		}
-		&__send {
-			@apply absolute bottom-[50%] right-[10px] translate-y-[50%] cursor-pointer z-10;
+	@apply absolute bottom-0 right-0 w-full;
+	&__wrapper {
+		&__input {
+			@apply w-full bg-[#383b46] p-[10px] text-[#a9aeba] pr-[45px];
+			&::placeholder {
+				opacity: 0.5;
+			}
+			@media (max-width: 580px) {
+				@apply p-[12px] pr-[45px];
+			}
+			&__send {
+				@apply absolute bottom-[50%] right-[10px] translate-y-[50%] cursor-pointer z-10;
+			}
 		}
 	}
 }

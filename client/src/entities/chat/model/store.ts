@@ -104,9 +104,10 @@ export const useChatsStore = create<TChatsStore>()(
 			}),
 		newChat: (chat) =>
 			set((state) => {
-				const unread = chat.messages.map(
-					(msg) => msg.user !== useProfileStore.getState().profile?._id
-				).length;
+				const unread = chat.messages.map((msg) => {
+					console.log(msg.user !== useProfileStore.getState().profile?._id);
+					return msg.user !== useProfileStore.getState().profile?._id;
+				}).length;
 
 				state.chats = [{ ...chat, unread }, ...state.chats];
 			}),

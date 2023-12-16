@@ -30,13 +30,13 @@ export const Chat = ({ chat }: { chat: TChat }) => {
 
 	const users = useOnlineUsersStore((state) => state.users);
 
-	const isOnline = useRef(users.includes(chat.user._id));
+	const isOnline = users.includes(chat.user._id);
 
 	const { text, date, user } = chat.messages[chat.messages.length - 1];
 
 	const rootClasses = [cl.root, cl.root_active];
 
-	const isActive = useRef<boolean>(params?.login === chat.user.login);
+	const isActive = params?.login === chat.user.login;
 
 	const messageDate = getMessageDate(date);
 
@@ -55,7 +55,7 @@ export const Chat = ({ chat }: { chat: TChat }) => {
 	return (
 		<li>
 			<Link
-				className={isActive.current ? rootClasses.join(" ") : cl.root}
+				className={isActive ? rootClasses.join(" ") : cl.root}
 				href={`/chat/${chat.user.login}`}>
 				<div className={cl.root__body}>
 					<div className={cl.root__avatar}>
@@ -65,7 +65,7 @@ export const Chat = ({ chat }: { chat: TChat }) => {
 							alt={chat.user.login}
 							src={chat.user.avatar}
 						/>
-						{isOnline.current && <span className={cl.root__status} />}
+						{isOnline && <span className={cl.root__status} />}
 					</div>
 					<div className={cl.root__body__chat}>
 						<h4 className={cl.root__body__chat__name}>{chat.user.login}</h4>

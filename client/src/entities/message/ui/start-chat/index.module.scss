@@ -1,5 +1,6 @@
 .root {
-	@apply min-h-[100dvh] flex justify-center items-center;
+	@apply flex justify-center items-center;
+	height: calc(100dvh - 50px);
 	&__text {
 		@apply text-[20px] text-[#fff];
 	}

@@ -13,7 +13,7 @@ class TokenController {
 				sessionId: string;
 			};
 
-			if (!refreshJwt || sessionId) {
+			if (!refreshJwt || !sessionId) {
 				return res
 					.status(401)
 					.clearCookie("refreshJwt")
