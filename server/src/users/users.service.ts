@@ -24,7 +24,7 @@ class UsersService {
 			(user) => user._id !== profile._id.toString() // toString() т.к. по факту _id ObjectId тип
 		);
 
-		return filteredUsers.slice(0, 5);
+		return usersDto;
 	}
 }
 

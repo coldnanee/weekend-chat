@@ -88,8 +88,8 @@ export const useChatsStore = create<TChatsStore>()(
 			}),
 		newChat: (chat) =>
 			set((state) => {
-				const prevChats = state.chats.slice(0, 4);
-				state.chats = [chat, ...prevChats];
+				// const prevChats = state.chats.slice(0, 4);
+				state.chats = [chat, ...state.chats];
 			}),
 		sendMessage: (message) =>
 			set((state) => {

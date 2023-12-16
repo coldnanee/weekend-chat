@@ -6,9 +6,11 @@ import { ChatList, useChatsStore } from "@/entities/chat";
 
 import cl from "./index.module.scss";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export const Chats = () => {
+	const chatsRef = useRef<HTMLDivElement | null>(null);
+
 	const [login, setLogin] = useState<string>("");
 
 	const { data: users, isLoading: isUsersLoading } = useChatUsersQuery(login);
@@ -22,8 +24,12 @@ export const Chats = () => {
 
 	const isLoading = isUsersLoading || isChatsLoading;
 
+	console.log(chatsRef.current?.getBoundingClientRect());
+
 	return (
-		<div className={[cl.root, "layout-chats"].join(" ")}>
+		<div
+			className={[cl.root, "layout-chats"].join(" ")}
+			ref={chatsRef}>
 			<ChatsSearch setLogin={setLogin} />
 			<ChatList
 				isLoading={isLoading}

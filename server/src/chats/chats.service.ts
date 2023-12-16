@@ -17,7 +17,7 @@ class ChatsService {
 
 		const chats = await ChatModel.find({ _id: { $in: user.chats } });
 
-		const formattingChats = chats.slice(0, 5).map(async (chat) => {
+		const formattingChats = chats.map(async (chat) => {
 			const { isPinned, _id } = chat;
 
 			const messages = await MessageModel.find({
@@ -81,7 +81,7 @@ class ChatsService {
 		});
 
 		const chats = await Promise.all(getChats);
-		return chats.filter((chat) => chat).slice(0, 5);
+		return chats.filter((chat) => chat);
 	}
 	async getChats(chat: string, userId: string) {
 		// chat - буква логина человека

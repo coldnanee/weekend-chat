@@ -1,5 +1,3 @@
-"use client";
-
 import cl from "./index.module.scss";
 
 import { Chat } from "..";
@@ -7,6 +5,8 @@ import { Chat } from "..";
 import type { TChat } from "../..";
 
 import { ChatSkeleton } from "../..";
+
+import { MutableRefObject } from "react";
 
 export const ChatList = ({
 	chats,

@@ -1,5 +1,5 @@
 .root {
-	@apply flex justify-between min-h-full;
+	@apply flex justify-between h-full max-h-[100dvh];
 	@media (max-width: 550px) {
 		@apply flex-col;
 	}
@@ -10,9 +10,6 @@
 		}
 		&__body {
 			@apply w-full h-full gap-x-[20px];
-		}
-		@media (max-width: 550px) {
-			@apply order-1;
 		}
 	}
 }
