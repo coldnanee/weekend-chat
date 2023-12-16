@@ -1,7 +1,10 @@
 .root {
-	@apply bg-[#202329] px-[20px] py-[75px] h-full flex flex-col;
-	height: 100dvh;
+	@apply bg-[#202329] flex flex-col p-[20px];
+	height: calc(100dvh - 40px - 52px);
 	overflow-y: auto;
+	@media (max-width: 580px) {
+		height: calc(100dvh - 40px - 56px);
+	}
 	&__list {
 		@apply flex flex-col gap-y-[15px];
 		flex: 1 1 auto;

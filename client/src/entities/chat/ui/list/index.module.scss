@@ -1,9 +1,9 @@
 .root {
-    @apply mt-[15px];
-    &__title {
-        @apply text-[#a9aeba] text-[16px] font-bold;
-    }
-    &__body {
-        @apply flex flex-col gap-y-[10px];
-    }
+	@apply mt-[15px];
+	&__title {
+		@apply text-[#a9aeba] text-[16px] font-bold;
+	}
+	&__body {
+		@apply flex flex-col gap-y-[10px];
+	}
 }

@@ -69,12 +69,14 @@ export const ChatInput = ({ recipientId }: { recipientId?: string }) => {
 				placeholder="Write a message..."
 				value={message}
 			/>
-			<HiOutlinePaperAirplane
-				size="25px"
-				color="#5E636C"
-				className={cl.root__input__send}
-				onClick={sendMessage}
-			/>
+			{message && (
+				<HiOutlinePaperAirplane
+					size="25px"
+					color="#5E636C"
+					className={cl.root__input__send}
+					onClick={sendMessage}
+				/>
+			)}
 		</section>
 	);
 };
