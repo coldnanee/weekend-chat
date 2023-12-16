@@ -3,7 +3,6 @@ import { getDateForMessage } from "../libs";
 import MessageModel from "../db/models/MessageModel";
 import ChatModel from "../db/models/ChatModel";
 import UserModel from "../db/models/UserModel";
-import { TChat, TMessage } from "../types";
 import { ApiError } from "../errors";
 import { UserDto } from "../dtos/user.dto";
 import { Types } from "mongoose";

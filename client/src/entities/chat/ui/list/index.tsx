@@ -6,8 +6,6 @@ import type { TChat } from "../..";
 
 import { ChatSkeleton } from "../..";
 
-import { MutableRefObject } from "react";
-
 export const ChatList = ({
 	chats,
 	isLoading,

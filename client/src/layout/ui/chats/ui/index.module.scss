@@ -1,5 +1,12 @@
 .root {
 	@apply p-[30px] max-w-[350px] w-full bg-[#202329] max-h-full overflow-y-auto;
+	&::-webkit-scrollbar {
+		width: 5px;
+	}
+	&::-webkit-scrollbar-thumb {
+		background-color: #474b53;
+		border-radius: 20px;
+	}
 	@media (min-width: 801px) {
 		@apply border-r border-solid border-[#131313];
 	}

@@ -10,6 +10,7 @@ import { useState, useEffect, useRef } from "react";
 
 export const Chats = () => {
 	const chatsRef = useRef<HTMLDivElement | null>(null);
+	const isMounted = useRef<boolean>(false);
 
 	const [login, setLogin] = useState<string>("");
 
@@ -17,14 +18,18 @@ export const Chats = () => {
 	const { isLoading: isChatsLoading, fetchChats, chats } = useChatsStore();
 
 	useEffect(() => {
-		fetchChats(login);
+		if (isMounted.current) {
+			fetchChats(login);
+		}
 	}, [login]);
+
+	useEffect(() => {
+		isMounted.current = true;
+	}, []);
 
 	const skeletons = [...new Array(5)];
 
 	const isLoading = isUsersLoading || isChatsLoading;
-
-	console.log(chatsRef.current?.getBoundingClientRect());
 
 	return (
 		<div

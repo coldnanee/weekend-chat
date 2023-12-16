@@ -11,7 +11,7 @@ export const entryChatHandler = (
 	usersIntoChats: Map<string, string>
 ) => {
 	socket.on("entry-chat", async (chat: string) => {
-		const user = connectionQueryWrapper(socket.handshake.query.user);
+		const myId = connectionQueryWrapper(socket.handshake.query.user);
 
 		const chatBody = await ChatModel.findById(chat);
 
@@ -19,16 +19,14 @@ export const entryChatHandler = (
 			return;
 		}
 
-		const { members } = chatBody;
+		const recipientId = chatBody.members.find((id) => id !== myId) || "";
 
-		const recipientId = members.find((id) => id !== user);
-
-		const recipientSocketId = getKeyByValueMap(onlineUsers, recipientId || "");
+		const recipientSocketId = getKeyByValueMap(onlineUsers, recipientId);
 
 		const unreadMessages = await MessageModel.find({
 			chat,
 			isRead: false,
-			user
+			user: recipientId
 		});
 
 		const readMessages = unreadMessages.map(async (message) => {
@@ -38,12 +36,12 @@ export const entryChatHandler = (
 
 		await Promise.all(readMessages);
 
-		usersIntoChats.set(user, chat);
+		usersIntoChats.set(myId, chat);
 
 		if (recipientSocketId) {
 			io.to(recipientSocketId).emit("entry-chat-client", {
 				chatId: chat,
-				userId: user
+				userId: myId
 			});
 		}
 	});

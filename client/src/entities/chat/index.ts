@@ -1,3 +1,4 @@
+export { ChatsProvider } from "./ui/provider";
 export { useChatsStore } from "./model/store";
 export { entryChatHandler } from "./model/entryChatHandler";
 export { newChatHandler } from "./model/newChatHandler";

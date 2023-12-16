@@ -16,12 +16,27 @@ import debounce from "lodash.debounce";
 
 import { useSocketContext } from "@/widgets/socket";
 
-export const ChatInput = ({ recipientId }: { recipientId?: string }) => {
+import type { MutableRefObject } from "react";
+
+export const ChatInput = ({
+	recipientId,
+	messagesContainer
+}: {
+	recipientId?: string;
+	messagesContainer: MutableRefObject<HTMLElement | null>;
+}) => {
 	const isFirstTyping = useRef<boolean>(true);
 
 	const { socket } = useSocketContext();
 
 	const [message, setMessage] = useState<string>("");
+
+	// const scrollBottom = () => {
+	// 	if (messagesContainer.current) {
+	// 		messagesContainer.current.scrollTop =
+	// 			messagesContainer.current.scrollHeight;
+	// 	}
+	// };
 
 	const changeMessage = useCallback(
 		debounce(() => {

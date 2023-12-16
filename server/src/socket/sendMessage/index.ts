@@ -3,6 +3,7 @@ import type { Socket, Server } from "socket.io";
 import { connectionQueryWrapper, getKeyByValueMap } from "../../libs";
 
 import ChatsService from "../../chats/chats.service";
+import ChatModel from "../../db/models/ChatModel";
 
 export const sendMessageHandler = (
 	io: Server,
@@ -15,14 +16,24 @@ export const sendMessageHandler = (
 		async (data: { recipientId: string; message: string }) => {
 			const { recipientId, message } = data;
 
+			const myId = connectionQueryWrapper(socket.handshake.query.user);
+
+			const chat = await ChatModel.findOne({
+				members: { $all: [recipientId, myId] }
+			});
+
+			if (!chat) {
+				return;
+			}
+
 			const recipientSocketId = getKeyByValueMap(users, recipientId);
 
-			const userId = connectionQueryWrapper(socket.handshake.query.user);
-
-			const isMessageRead = !!usersIntoChats.get(recipientId);
+			const isMessageRead = !!(
+				usersIntoChats.get(recipientId) === chat._id.toString()
+			);
 
 			const messageBody = await ChatsService.saveMessageToDb(
-				userId,
+				myId,
 				recipientId,
 				message,
 				isMessageRead
