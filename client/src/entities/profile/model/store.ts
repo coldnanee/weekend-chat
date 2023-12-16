@@ -74,7 +74,7 @@ export const useProfileStore = create<TProfileStore>()(
 					"/token/logout"
 				);
 				if (data) {
-					location.href = "/login";
+					location.replace("/login");
 				}
 			} catch (e) {
 				handleProfileStoreError(e);

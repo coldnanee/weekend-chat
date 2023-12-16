@@ -22,14 +22,10 @@ export const sendMessageHandler = (
 				members: { $all: [recipientId, myId] }
 			});
 
-			if (!chat) {
-				return;
-			}
-
 			const recipientSocketId = getKeyByValueMap(users, recipientId);
 
 			const isMessageRead = !!(
-				usersIntoChats.get(recipientId) === chat._id.toString()
+				chat?._id && usersIntoChats.get(recipientId) === chat?._id.toString()
 			);
 
 			const messageBody = await ChatsService.saveMessageToDb(
@@ -49,7 +45,7 @@ export const sendMessageHandler = (
 
 			messageBody?.newChat
 				? io.to(socket.id).emit("new-chat", messageBody.newChat)
-				: io.to(socket.id).emit("send-message", messageBody?.newMessage);
+				: io.to(socket.id).emit("send-message-client", messageBody?.newMessage);
 		}
 	);
 };

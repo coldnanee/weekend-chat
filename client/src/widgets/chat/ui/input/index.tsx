@@ -31,12 +31,12 @@ export const ChatInput = ({
 
 	const [message, setMessage] = useState<string>("");
 
-	// const scrollBottom = () => {
-	// 	if (messagesContainer.current) {
-	// 		messagesContainer.current.scrollTop =
-	// 			messagesContainer.current.scrollHeight;
-	// 	}
-	// };
+	const scrollBottom = () => {
+		if (messagesContainer.current) {
+			messagesContainer.current.scrollTop =
+				messagesContainer.current.scrollHeight;
+		}
+	};
 
 	const changeMessage = useCallback(
 		debounce(() => {
@@ -77,21 +77,24 @@ export const ChatInput = ({
 
 	return (
 		<section className={cl.root}>
-			<input
-				onChange={changeInput}
-				onKeyDown={handlePressEnter}
-				className={cl.root__input}
-				placeholder="Write a message..."
-				value={message}
-			/>
-			{message && (
-				<HiOutlinePaperAirplane
-					size="25px"
-					color="#5E636C"
-					className={cl.root__input__send}
-					onClick={sendMessage}
+			<div className={cl.root_wrapper}>
+				<input
+					onClick={scrollBottom}
+					onChange={changeInput}
+					onKeyDown={handlePressEnter}
+					className={cl.root__wrapper__input}
+					placeholder="Write a message..."
+					value={message}
 				/>
-			)}
+				{message && (
+					<HiOutlinePaperAirplane
+						size="25px"
+						color="#5E636C"
+						className={cl.root__wrapper__input__send}
+						onClick={sendMessage}
+					/>
+				)}
+			</div>
 		</section>
 	);
 };
