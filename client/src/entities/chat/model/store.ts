@@ -4,21 +4,21 @@ import $axios from "@/shared";
 
 import { immer } from "zustand/middleware/immer";
 
-import type { TChat } from "..";
+import type { TChat, TChatRes } from "./types";
 import type { AxiosError } from "axios";
-
+import { useProfileStore } from "@/entities/profile";
 import type { TMessage } from "@/entities/message";
 
 type TChatsStore = {
 	chats: TChat[];
 	error: null | string;
 	isLoading: boolean;
-	updateChats: (chats: TChat[]) => void;
+	readMessagesLocal: (chatId: string) => void;
 	fetchChats: (login: string) => void;
 	deleteChat: (chatId: string) => void;
 	entryChat: (chatId: string, userId: string) => void;
 	newMessage: (message: TMessage) => void;
-	newChat: (chat: TChat) => void;
+	newChat: (chat: TChatRes) => void;
 	sendMessage: (message: TMessage) => void;
 };
 
@@ -27,23 +27,19 @@ export const useChatsStore = create<TChatsStore>()(
 		chats: [],
 		error: null,
 		isLoading: false,
-		updateChats: (chats) =>
-			set((state) => {
-				state.chats = chats;
-			}),
 		fetchChats: async (chat) => {
 			useChatsStore.setState((state) => {
 				state.error = null;
 				state.isLoading = true;
 			});
 			try {
-				const { data } = await $axios.get<{ chats: TChat[] }>("chats", {
+				const { data } = await $axios.get<{ chats: TChatRes[] }>("chats", {
 					params: { chat }
 				});
 
 				if (data) {
 					useChatsStore.setState((state) => {
-						state.chats = data.chats;
+						state.chats = data.chats.map((chat) => ({ ...chat, unread: 0 }));
 						state.isLoading = false;
 					});
 				}
@@ -58,11 +54,19 @@ export const useChatsStore = create<TChatsStore>()(
 				});
 			}
 		},
-
+		readMessagesLocal: (chatId) =>
+			set((state) => {
+				state.chats = state.chats.map((chat) => {
+					if (chat._id === chatId) {
+						return { ...chat, unread: 0 };
+					}
+					return chat;
+				});
+			}),
 		deleteChat: (chatId) =>
 			set((state) => {
 				state.chats = state.chats.filter((chat) => chat && chat._id !== chatId);
-				if (window) location.href = "/";
+				if (window) location.replace("/");
 			}),
 		entryChat: (chatId, userId) =>
 			set((state) => {
@@ -83,13 +87,28 @@ export const useChatsStore = create<TChatsStore>()(
 			}),
 		newMessage: (message) =>
 			set((state) => {
-				const chat = state.chats.find((chat) => chat._id === message.chat);
-				chat?.messages.push(message);
+				const chats = [...state.chats];
+				const chat = chats.find((chat) => chat._id === message.chat);
+				if (chat) {
+					chat.unread = chat.unread + 1;
+					chat.messages.push(message);
+					const chatIndex = chats.indexOf(chat);
+
+					if (chatIndex > -1) {
+						chats.splice(chatIndex, 1);
+						chats.unshift(chat);
+
+						state.chats = chats;
+					}
+				}
 			}),
 		newChat: (chat) =>
 			set((state) => {
-				// const prevChats = state.chats.slice(0, 4);
-				state.chats = [chat, ...state.chats];
+				const unread = chat.messages.map(
+					(msg) => msg.user !== useProfileStore.getState().profile?._id
+				).length;
+
+				state.chats = [{ ...chat, unread }, ...state.chats];
 			}),
 		sendMessage: (message) =>
 			set((state) => {

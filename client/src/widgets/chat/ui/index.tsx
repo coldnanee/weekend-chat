@@ -15,8 +15,12 @@ import { useChatsStore } from "@/entities/chat";
 
 import { ChatInfo } from "./chat-info";
 
+import { useRef } from "react";
+
 export const Chat = () => {
 	const params = useParams<{ login: string }>();
+
+	const messagesContainer = useRef<HTMLElement | null>(null);
 
 	const { chats, isLoading: isChatsLoading } = useChatsStore();
 	const {
@@ -45,8 +49,14 @@ export const Chat = () => {
 				user={user}
 				chat={chat}
 			/>
-			<ChatMessages chat={chat} />
-			<ChatInput recipientId={user._id} />
+			<ChatMessages
+				chat={chat}
+				messagesContainer={messagesContainer}
+			/>
+			<ChatInput
+				recipientId={user._id}
+				messagesContainer={messagesContainer}
+			/>
 		</div>
 	);
 };

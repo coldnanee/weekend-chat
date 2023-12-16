@@ -4,9 +4,9 @@ import { StartChat } from "../start-chat";
 
 import { useParams } from "next/navigation";
 
-import type { TChat } from "@/entities/chat";
+import { useChatsStore, type TChat } from "@/entities/chat";
 
-import { useRef, useEffect, useState } from "react";
+import { useEffect, useState, type MutableRefObject } from "react";
 
 import cl from "./index.module.scss";
 
@@ -16,8 +16,15 @@ import { useSocketContext } from "@/widgets/socket";
 
 import { useOnlineUsersStore } from "@/entities/user";
 
-export const ChatMessages = ({ chat }: { chat?: TChat }) => {
+export const ChatMessages = ({
+	chat,
+	messagesContainer
+}: {
+	chat?: TChat;
+	messagesContainer: MutableRefObject<HTMLElement | null>;
+}) => {
 	const params = useParams<{ login: string }>();
+	const { readMessagesLocal } = useChatsStore();
 
 	const users = useOnlineUsersStore((state) => state.users);
 
@@ -25,16 +32,15 @@ export const ChatMessages = ({ chat }: { chat?: TChat }) => {
 
 	const [isTyping, setIsTyping] = useState<boolean>(false);
 
-	const messagesContainer = useRef<null | HTMLElement>(null);
-
 	useEffect(() => {
 		if (messagesContainer.current) {
 			messagesContainer.current.scrollTop =
 				messagesContainer.current.scrollHeight;
 		}
-	}, [chat, isTyping]);
+	}, [chat]);
 
 	useEffect(() => {
+		readMessagesLocal(chat?._id || "");
 		socket?.emit("entry-chat", chat?._id);
 
 		return () => {
