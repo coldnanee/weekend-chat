@@ -1,10 +1,22 @@
 .root {
 	@apply bg-[#202329] p-[10px] rounded-[10px];
-	flex: 0 1 75%;
 	@media (max-width: 800px) {
-		@apply order-2;
+		min-height: calc(100dvh - 40px);
 	}
-	&__arrow {
-		@apply cursor-pointer p-[5px] block;
+	flex: 0 1 75%;
+	&__buttons {
+		@apply flex justify-between items-center;
+		&__arrow {
+			@apply cursor-pointer p-[5px] block;
+		}
+		&__label_menu {
+			@apply p-[10px] w-[45px] flex flex-col justify-between h-[36px];
+			@media (min-width: 801px) {
+				@apply hidden;
+			}
+			span {
+				@apply bg-[#a9aeba] w-full h-[2px] block;
+			}
+		}
 	}
 }

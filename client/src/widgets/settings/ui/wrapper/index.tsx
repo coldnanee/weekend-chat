@@ -6,13 +6,13 @@ import { SettingsBlackList } from "../black-list";
 
 import cl from "./index.module.scss";
 
-import { useSettingsContext } from "../../lib/useSettingsContext";
-
 import { IoIosArrowBack } from "react-icons/io";
 import { useRouter } from "next/navigation";
 
+import { useSettingsStore } from "../../model/store";
+
 const SettingsBody = () => {
-	const { activeChapter } = useSettingsContext();
+	const { activeChapter } = useSettingsStore();
 
 	switch (activeChapter) {
 		case "Account":
@@ -30,16 +30,27 @@ export const SettingsWrapper = () => {
 	const router = useRouter();
 	const goBack = () => router.back();
 
+	const { toggleModal } = useSettingsStore();
+
 	return (
 		<div className={cl.root}>
-			<button
-				className={cl.root__arrow}
-				onClick={goBack}>
-				<IoIosArrowBack
-					color="#a9aeba"
-					size="25px"
-				/>
-			</button>
+			<div className={cl.root__buttons}>
+				<button
+					className={cl.root__buttons__arrow}
+					onClick={goBack}>
+					<IoIosArrowBack
+						color="#a9aeba"
+						size="25px"
+					/>
+				</button>
+				<button
+					className={cl.root__buttons__label_menu}
+					onClick={toggleModal}>
+					<span />
+					<span />
+					<span />
+				</button>
+			</div>
 			<SettingsBody />
 		</div>
 	);
