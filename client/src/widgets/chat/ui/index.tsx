@@ -15,9 +15,15 @@ import { useChatsStore } from "@/entities/chat";
 
 import { ChatInfo } from "./chat-info";
 
+import { useMessagesStore } from "@/entities/message";
+
+import { ChatMessagesPanel } from "./messages-panel";
+
 import { useRef } from "react";
 
 export const Chat = () => {
+	const { selectedMessages } = useMessagesStore();
+
 	const params = useParams<{ login: string }>();
 
 	const messagesContainer = useRef<HTMLElement | null>(null);
@@ -45,6 +51,7 @@ export const Chat = () => {
 
 	return (
 		<div className={cl.root}>
+			{selectedMessages.length > 0 && <ChatMessagesPanel chat={chat} />}
 			<ChatInfo
 				user={user}
 				chat={chat}

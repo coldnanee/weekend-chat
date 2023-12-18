@@ -13,7 +13,8 @@ import {
 	newChatHandler,
 	sendMessageHandler,
 	entryChatHandler,
-	deleteChatHandler
+	deleteChatHandler,
+	deleteMessageHandler
 } from "@/entities/chat";
 import { newOnlineUserHandler } from "@/entities/user";
 import { newOfflineUserHandler } from "@/entities/user";
@@ -47,6 +48,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 	newChatHandler(socket);
 	entryChatHandler(socket);
 	deleteChatHandler(socket);
+	deleteMessageHandler(socket);
 
 	return (
 		<SocketContext.Provider value={{ socket: socket }}>

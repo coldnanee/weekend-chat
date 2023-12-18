@@ -5,7 +5,7 @@ export const leaveChatHandler = (
 	socket: Socket,
 	usersIntoChats: Map<string, string>
 ) => {
-	socket.on("leave-chat", async () => {
+	socket.on("leave-chat", () => {
 		const userId = connectionQueryWrapper(socket.handshake.query.user);
 		usersIntoChats.delete(userId);
 	});

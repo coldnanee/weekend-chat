@@ -8,7 +8,8 @@ import {
 	endTypingMessageHandler,
 	entryChatHandler,
 	leaveChatHandler,
-	deleteChatHandler
+	deleteChatHandler,
+	deleteMessageHandler
 } from "./socket";
 
 import express from "express";
@@ -95,6 +96,7 @@ const start = async () => {
 			entryChatHandler(io, socket, onlineUsers, usersIntoChats);
 			leaveChatHandler(socket, usersIntoChats);
 			deleteChatHandler(io, socket, onlineUsers);
+			deleteMessageHandler(io, socket, onlineUsers);
 		});
 
 		await connectDB();

@@ -10,6 +10,8 @@ import { DefaultAvatar } from "@/shared";
 
 import { getMessageDate } from "../lib/getMessageDate";
 
+import { useMessagesStore } from "@/entities/message";
+
 export const ChatMessage = ({
 	message,
 	user
@@ -17,10 +19,24 @@ export const ChatMessage = ({
 	message: TMessage;
 	user: TUser;
 }) => {
+	const { selectedMessages, toggleMessage } = useMessagesStore();
+
 	const isMyMessage = user._id !== message.user;
 
+	const rootClasses = [cl.root];
+
+	if (isMyMessage) {
+		rootClasses.push(cl.root_my);
+	}
+
+	if (selectedMessages.includes(message._id)) {
+		rootClasses.push(cl.root_active);
+	}
+
 	return (
-		<li className={isMyMessage ? [cl.root, cl.root_my].join(" ") : cl.root}>
+		<li
+			onClick={() => toggleMessage(message._id)}
+			className={rootClasses.join(" ")}>
 			<DefaultAvatar
 				width={30}
 				height={30}

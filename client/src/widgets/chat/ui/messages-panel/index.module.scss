@@ -1,0 +1,17 @@
+.root {
+	@apply h-[50px] bg-[#262b35] absolute top-0 left-0 w-full text-[#a9aeba] text-[16px];
+	&__body {
+		@apply flex justify-between items-center h-full px-[20px];
+		&__info {
+			@apply flex items-center gap-x-[10px];
+			&__text {
+				p {
+					@apply inline ml-[5px];
+				}
+			}
+			&__image {
+				@apply cursor-pointer;
+			}
+		}
+	}
+}
