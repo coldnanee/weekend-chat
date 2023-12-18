@@ -15,8 +15,6 @@ import { useFormContext } from "react-hook-form";
 
 import { AiFillDelete } from "react-icons/ai";
 
-import { SettingsButton } from "../button";
-
 export const SettingsAvatar = () => {
 	const [previewAvatarPath, setPreviewAvatarPath] = useState<string>("");
 
@@ -70,13 +68,13 @@ export const SettingsAvatar = () => {
 				id="#settings-avatar"
 			/>
 			<div className={cl.root__buttons}>
-				{(profile?.avatar || previewAvatarPath) && (
+				{/* {(profile?.avatar || previewAvatarPath) && (
 					<SettingsButton
 						onClick={removeAvatar}
 						border={false}>
 						<AiFillDelete size="20px" />
 					</SettingsButton>
-				)}
+				)} */}
 			</div>
 		</div>
 	);

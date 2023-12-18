@@ -214,6 +214,29 @@ class ChatsService {
 
 		return userDto;
 	}
+
+	async deleteChat(chatId: string) {
+		const chat = await ChatModel.findById(chatId);
+		if (!chat) {
+			return;
+		}
+
+		const deleteUsersChat = chat.members.map(async (u) => {
+			const user = await UserModel.findById(u);
+			if (!user) {
+				return;
+			}
+			const updatedChats = user.chats.filter((chat) => chat !== chatId);
+
+			user.chats = updatedChats;
+
+			await user.save();
+		});
+
+		await MessageModel.deleteMany({ _id: { $in: chat.messages } });
+		await ChatModel.deleteOne({ _id: chatId });
+		await Promise.all(deleteUsersChat);
+	}
 }
 
 export default new ChatsService();

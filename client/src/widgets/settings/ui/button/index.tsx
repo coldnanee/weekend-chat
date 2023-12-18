@@ -2,24 +2,19 @@ import cl from "./index.module.scss";
 
 import type { ReactNode } from "react";
 
-export const SettingsButton = ({
+export const SettingsSaveButton = ({
 	children,
-	type,
-	border,
-	onClick
+	onClick,
+	className
 }: {
 	children: ReactNode;
-	type?: "submit";
-	border: boolean;
-	onClick?: (...args: unknown[]) => void;
+	onClick?: () => void;
+	className: string;
 }) => {
-	const rootCl = [cl.root, cl.root_border];
-
 	return (
 		<button
 			onClick={onClick}
-			type={type || "button"}
-			className={border ? rootCl.join(" ") : cl.root}>
+			className={[cl.root, className].join(" ")}>
 			{children}
 		</button>
 	);

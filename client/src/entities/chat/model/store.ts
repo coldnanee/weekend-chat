@@ -7,7 +7,7 @@ import { immer } from "zustand/middleware/immer";
 import type { TChat, TChatRes } from "./types";
 import type { AxiosError } from "axios";
 import { useProfileStore } from "@/entities/profile";
-import type { TMessage } from "@/entities/message";
+import { type TMessage, useMessagesStore } from "@/entities/message";
 
 type TChatsStore = {
 	chats: TChat[];
@@ -20,6 +20,7 @@ type TChatsStore = {
 	newMessage: (message: TMessage) => void;
 	newChat: (chat: TChatRes) => void;
 	sendMessage: (message: TMessage) => void;
+	deleteMessage: (chatId: string, messagesId: string[]) => void;
 };
 
 export const useChatsStore = create<TChatsStore>()(
@@ -97,7 +98,9 @@ export const useChatsStore = create<TChatsStore>()(
 				const chats = [...state.chats];
 				const chat = chats.find((chat) => chat._id === message.chat);
 				if (chat) {
-					chat.unread = chat.unread + 1;
+					if (!message.isRead) {
+						chat.unread = chat.unread + 1;
+					}
 					chat.messages.push(message);
 					const chatIndex = chats.indexOf(chat);
 
@@ -121,6 +124,17 @@ export const useChatsStore = create<TChatsStore>()(
 			set((state) => {
 				const chat = state.chats.find((chat) => chat._id === message.chat);
 				chat?.messages.push(message);
+			}),
+		deleteMessage: (chatId, messagesId) =>
+			set((state) => {
+				const chat = state.chats.find((c) => c._id === chatId);
+
+				if (chat) {
+					chat.messages = chat.messages.filter(
+						(m) => !messagesId.includes(m._id)
+					);
+					useMessagesStore.getState().clearSelectedMessages();
+				}
 			})
 	}))
 );

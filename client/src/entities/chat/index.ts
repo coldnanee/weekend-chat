@@ -5,6 +5,7 @@ export { newChatHandler } from "./model/newChatHandler";
 export { sendMessageHandler } from "./model/sendMessageHandler";
 export { getMessageHandler } from "./model/getMessageHandler";
 export { deleteChatHandler } from "./model/deleteChatHandler";
+export { deleteMessageHandler } from "./model/deleteMessageHandler";
 export type { TChat } from "./model/types";
 export { ChatList } from "./ui/list";
 export { ChatSkeleton } from "./ui/skeleton";

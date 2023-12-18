@@ -15,11 +15,15 @@ import Image from "next/image";
 import PinnedImage from "../images/pinned.svg";
 import Link from "next/link";
 import { useSocketContext } from "@/widgets/socket";
-import { useState, useRef } from "react";
+import { useState } from "react";
 
 import { useOnlineUsersStore } from "@/entities/user";
 
 export const Chat = ({ chat }: { chat: TChat }) => {
+	if (chat.messages.length === 0) {
+		return <></>;
+	}
+
 	const { socket } = useSocketContext();
 
 	const [isTyping, setIsTyping] = useState<boolean>(false);

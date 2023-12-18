@@ -5,6 +5,8 @@ import UserModel from "../../db/models/UserModel";
 import MessageModel from "../../db/models/MessageModel";
 import { connectionQueryWrapper, getKeyByValueMap } from "../../libs";
 
+import ChatsService from "../../chats/chats.service";
+
 export const deleteChatHandler = (
 	io: Server,
 	socket: Socket,
@@ -19,31 +21,13 @@ export const deleteChatHandler = (
 			return;
 		}
 
-		const { members, messages } = chat;
-
-		const recipientId = members.find((id) => id !== userId);
+		const recipientId = chat.members.find((id) => id !== userId);
 
 		if (!recipientId) {
 			return;
 		}
 
-		const deleteUsersChat = members.map(async (userId) => {
-			const user = await UserModel.findById(userId);
-
-			if (!user) {
-				return;
-			}
-
-			const updatedChats = user.chats.filter((chat) => chat !== chatId);
-
-			user.chats = updatedChats;
-
-			await user.save();
-		});
-
-		await MessageModel.deleteMany({ _id: { $in: messages } });
-		await ChatModel.deleteOne({ _id: chatId });
-		await Promise.all(deleteUsersChat);
+		await ChatsService.deleteChat(chatId);
 
 		const recipientSocketId = getKeyByValueMap(onlineUsers, recipientId);
 

@@ -1,9 +1,12 @@
 .root {
-	@apply flex items-end gap-[10px];
+	@apply flex items-end gap-[10px] cursor-pointer p-[5px];
 	&_my {
 		@media (max-width: 800px) {
 			@apply flex-row-reverse;
 		}
+	}
+	&_active {
+		@apply bg-[#3e444e];
 	}
 	&__avatar {
 		@media (max-width: 700px) {

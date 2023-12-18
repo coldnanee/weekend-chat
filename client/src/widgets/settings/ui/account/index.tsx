@@ -7,6 +7,8 @@ import type { TSettingsForm } from "../..";
 import { useProfileStore } from "@/entities/profile";
 import { useFormContext } from "react-hook-form";
 
+import { SettingsSaveButton } from "../button";
+
 import { convertToBase64 } from "../../lib/convertToBase64";
 export const SettingsAccount = () => {
 	const { updateProfile } = useProfileStore();
@@ -26,8 +28,11 @@ export const SettingsAccount = () => {
 		<form
 			className={cl.root}
 			onSubmit={handleSubmit(onSubmit)}>
-			<SettingsAvatar />
-			<SettingsFieldsList />
+			<div className={cl.root__body}>
+				<SettingsAvatar />
+				<SettingsFieldsList />
+			</div>
+			<SettingsSaveButton className={cl.root__button}>Save</SettingsSaveButton>
 		</form>
 	);
 };

@@ -9,12 +9,13 @@ export const SettingsCategoriesItem = ({
 }: {
 	category: TSettingsCategoriesItem;
 }) => {
-	const { setActiveChapter, activeChapter, toggleModal } = useSettingsStore();
+	const { setActiveChapter, activeChapter, changeVisibilityModal } =
+		useSettingsStore();
 
 	const rootClasses = [cl.root, cl.root_active];
 
 	const onClick = () => {
-		toggleModal();
+		changeVisibilityModal(false);
 		setActiveChapter(label);
 	};
 
