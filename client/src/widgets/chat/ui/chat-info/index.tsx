@@ -30,11 +30,13 @@ export const ChatInfo = ({ user, chat }: { user: TUser; chat?: TChat }) => {
 	return (
 		<div className={cl.root}>
 			<div className={cl.root__body}>
-				<Link href="/">
+				<Link
+					href="/"
+					className={cl.root__body__link}>
 					<IoIosArrowBack
 						size="25px"
 						color="#6C6F75"
-						className={cl.root__body__arrow}
+						className={cl.root__body__link__arrow}
 					/>
 				</Link>
 				<p className={cl.root__body__name}>{user.login}</p>

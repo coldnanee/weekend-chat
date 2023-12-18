@@ -5,7 +5,7 @@
 		&__info {
 			@apply flex gap-x-[20px] items-center;
 		}
-		&__arrow {
+		&__link {
 			@media (min-width: 581px) {
 				@apply hidden;
 			}

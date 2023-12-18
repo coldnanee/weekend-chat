@@ -39,7 +39,10 @@ export const useChatsStore = create<TChatsStore>()(
 
 				if (data) {
 					useChatsStore.setState((state) => {
-						state.chats = data.chats.map((chat) => ({ ...chat, unread: 0 }));
+						state.chats = data.chats.map((chat) => {
+							const unread = chat.messages.filter((m) => !m.isRead).length;
+							return { ...chat, unread };
+						});
 						state.isLoading = false;
 					});
 				}
@@ -104,10 +107,9 @@ export const useChatsStore = create<TChatsStore>()(
 			}),
 		newChat: (chat) =>
 			set((state) => {
-				const unread = chat.messages.map((msg) => {
-					console.log(msg.user !== useProfileStore.getState().profile?._id);
-					return msg.user !== useProfileStore.getState().profile?._id;
-				}).length;
+				const unread = chat.messages.filter(
+					(msg) => msg.user !== useProfileStore.getState().profile?._id
+				).length;
 
 				state.chats = [{ ...chat, unread }, ...state.chats];
 			}),
