@@ -13,7 +13,7 @@ import { IconContext } from "react-icons";
 import { useSettingsStore } from "../../model/store";
 
 export const SettingsCategories = () => {
-	const { isModalShow, toggleModal } = useSettingsStore();
+	const { isModalShow, changeVisibilityModal } = useSettingsStore();
 
 	const rootAdaptiveClasses = [cl.adaptive];
 
@@ -30,7 +30,7 @@ export const SettingsCategories = () => {
 			<SettingsCategoriesList className={cl.root} />
 			<div
 				className={rootAdaptiveClasses.join(" ")}
-				onClick={toggleModal}>
+				onClick={() => changeVisibilityModal(false)}>
 				<div
 					className={cl.adaptive__body}
 					onClick={(e) => e.stopPropagation()}>
@@ -38,7 +38,7 @@ export const SettingsCategories = () => {
 						className={cl.adaptive__body__cross}
 						color="#a9aeba"
 						size="30"
-						onClick={toggleModal}
+						onClick={() => changeVisibilityModal(false)}
 					/>
 					<SettingsCategoriesList className={cl.adaptive__body__list} />
 				</div>

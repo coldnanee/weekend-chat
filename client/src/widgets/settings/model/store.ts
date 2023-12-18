@@ -6,7 +6,7 @@ import { immer } from "zustand/middleware/immer";
 
 type TSettingsModalStore = {
 	isModalShow: boolean;
-	toggleModal: () => void;
+	changeVisibilityModal: (v: boolean) => void;
 	activeChapter: string;
 	setActiveChapter: (c: string) => void;
 };
@@ -14,9 +14,9 @@ type TSettingsModalStore = {
 export const useSettingsStore = create<TSettingsModalStore>()(
 	immer((set) => ({
 		isModalShow: false,
-		toggleModal: () =>
+		changeVisibilityModal: (visibility) =>
 			set((state) => {
-				state.isModalShow = !state.isModalShow;
+				state.isModalShow = visibility;
 			}),
 		activeChapter: settingsCategoriesArr[0].label,
 		setActiveChapter: (chapter) =>

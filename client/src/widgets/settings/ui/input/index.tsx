@@ -21,24 +21,37 @@ export const SettingsInput = ({
 }) => {
 	const {
 		register,
-		formState: { errors }
+		formState: { errors },
+		watch
 	} = useFormContext<TSettingsForm>();
 
 	const { profile } = useProfileStore();
 
 	const error = errors[name];
 
+	const inputValue = watch(name);
+
 	return (
 		<div className={cl.root}>
 			<input
 				className={cl.root__input}
 				type={type}
-				placeholder={name}
 				required={required}
 				{...register(name, validation)}
+				autoComplete="false"
 				defaultValue={name === "login" ? profile?.login : ""}
+				id={`#${name}`}
 			/>
 			{error && <p className={cl.root__error}>{error.message}</p>}
+			<label
+				className={
+					inputValue
+						? [cl.root__label, cl.root__label_hidden].join(" ")
+						: cl.root__label
+				}
+				htmlFor={`#${name}`}>
+				{name}
+			</label>
 		</div>
 	);
 };

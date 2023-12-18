@@ -30,7 +30,7 @@ export const SettingsWrapper = () => {
 	const router = useRouter();
 	const goBack = () => router.back();
 
-	const { toggleModal } = useSettingsStore();
+	const { changeVisibilityModal } = useSettingsStore();
 
 	return (
 		<div className={cl.root}>
@@ -45,7 +45,7 @@ export const SettingsWrapper = () => {
 				</button>
 				<button
 					className={cl.root__buttons__label_menu}
-					onClick={toggleModal}>
+					onClick={() => changeVisibilityModal(true)}>
 					<span />
 					<span />
 					<span />

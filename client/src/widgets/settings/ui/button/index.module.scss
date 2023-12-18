@@ -1,6 +1,7 @@
 .root {
-    @apply text-[#a6abb7] p-[5px] font-bold;
-    &_border {
-        @apply bg-[#a6abb7] text-[#202329] py-[10px] px-[15px];
-    }
+	@apply text-[#a9aeba] py-[10px] px-[15px] font-bold text-[16px] rounded-[5px];
+	background: rgba(255, 255, 255, 0.1);
+	@media (max-width: 490px) {
+		@apply px-[30px];
+	}
 }

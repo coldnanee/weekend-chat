@@ -1,9 +1,20 @@
 .root {
-	@apply flex flex-col items-center;
+	@apply flex flex-col items-center relative pt-[10px];
 	&__input {
-		@apply bg-transparent border-b border-[#a9aeba] border-solid p-[5px] w-[250px] block text-[#a9aeba] uppercase;
-		&::placeholder {
-			@apply uppercase opacity-40;
+		@apply bg-transparent border-b border-[#a9aeba] border-solid p-[5px] w-[250px] block text-[#a9aeba] lowercase;
+		&:focus + .root__label {
+			@apply top-0 text-[#a9aeba] left-0 opacity-100;
+		}
+	}
+	&__label {
+		@apply absolute top-[50%] left-[5px] text-[#5c5e5e];
+		transform: translateY(-20%);
+		transition: all 0.1s linear;
+		&::first-letter {
+			@apply uppercase;
+		}
+		&_hidden {
+			@apply opacity-0;
 		}
 	}
 	&__error {
