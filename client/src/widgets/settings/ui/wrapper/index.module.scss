@@ -1,5 +1,8 @@
 .root {
 	@apply bg-[#202329] p-[10px] rounded-[10px];
+	@media (max-width: 800px) {
+		min-height: calc(100dvh - 40px);
+	}
 	flex: 0 1 75%;
 	&__buttons {
 		@apply flex justify-between items-center;

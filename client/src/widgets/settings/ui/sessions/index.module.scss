@@ -33,7 +33,8 @@
 }
 
 .loader {
-	section {
+	@apply mt-[30px];
+	div {
 		@apply bg-transparent;
 	}
 }
