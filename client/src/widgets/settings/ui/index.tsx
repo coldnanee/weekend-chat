@@ -10,8 +10,6 @@ import type { TSettingsForm } from "../model/types";
 
 import { FormProvider, useForm } from "react-hook-form";
 
-import { SettingsContextProvider } from "./chapter-provider";
-
 import { ReactQueryProvider } from "@/shared";
 
 export const Settings = () => {
@@ -20,16 +18,14 @@ export const Settings = () => {
 	return (
 		<ReactQueryProvider>
 			<FormProvider {...params}>
-				<SettingsContextProvider>
-					<div className={cl.root}>
-						<div className="container">
-							<div className={cl.root__body}>
-								<SettingsWrapper />
-								<SettingsCategories />
-							</div>
+				<div className={cl.root}>
+					<div className="container">
+						<div className={cl.root__body}>
+							<SettingsWrapper />
+							<SettingsCategories />
 						</div>
 					</div>
-				</SettingsContextProvider>
+				</div>
 			</FormProvider>
 		</ReactQueryProvider>
 	);

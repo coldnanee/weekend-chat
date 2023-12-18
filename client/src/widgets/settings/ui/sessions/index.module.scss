@@ -1,5 +1,10 @@
 .root {
-	@apply p-[10px];
+	@media (min-width: 381px) {
+		@apply p-[10px];
+	}
+	@media (max-width: 380px) {
+		@apply mt-[10px];
+	}
 	&__select_panel {
 		@apply mb-[10px] pl-[9px] flex items-center justify-between;
 		&__body {
@@ -24,16 +29,10 @@
 		&__reload {
 			@apply cursor-pointer;
 		}
-		&__loader {
-			section {
-				@apply bg-transparent;
-			}
-		}
 	}
 }
 
 .loader {
-	@apply px-[10px];
 	section {
 		@apply bg-transparent;
 	}

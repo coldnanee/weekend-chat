@@ -85,6 +85,7 @@ export const ChatInput = ({
 					className={cl.root__wrapper__input}
 					placeholder="Write a message..."
 					value={message}
+					type="text"
 				/>
 				{message && (
 					<HiOutlinePaperAirplane

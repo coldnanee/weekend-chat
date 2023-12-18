@@ -36,6 +36,14 @@ export const SettingsSessions = () => {
 		fetchSessions();
 	}, []);
 
+	if (isSessionsLoading) {
+		return (
+			<div className={cl.loader}>
+				<Loader />
+			</div>
+		);
+	}
+
 	return (
 		<div className={cl.root}>
 			<div className={cl.root__select_panel}>
@@ -45,7 +53,8 @@ export const SettingsSessions = () => {
 							type="text"
 							id="#settings-session-all"
 							checked={isAllSelected}
-							onChange={toggleAllSession}
+							onChange={() => {}}
+							onClick={toggleAllSession}
 						/>
 						<div className={rootClChecked.join(" ")}>
 							{isAllSelected && (
@@ -78,13 +87,7 @@ export const SettingsSessions = () => {
 					onClick={fetchSessions}
 				/>
 			</div>
-			{isSessionsLoading ? (
-				<div className={cl.root__select_panel__loader}>
-					<Loader />
-				</div>
-			) : (
-				<SessionList sessions={sessions || []} />
-			)}
+			<SessionList sessions={sessions || []} />
 		</div>
 	);
 };

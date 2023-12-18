@@ -1,7 +1,27 @@
 .root {
-	@apply bg-[#202329] rounded-[10px] p-[10px] flex flex-col gap-y-[3px];
 	flex: 0 1 25%;
 	@media (max-width: 800px) {
-		@apply order-1 flex-row overflow-x-scroll;
+		@apply hidden;
 	}
+}
+
+.adaptive {
+	@apply fixed top-0 left-0 right-0 bottom-0 hidden;
+	background: rgb(0, 0, 0, 0.7);
+	@media (min-width: 801px) {
+		@apply hidden;
+	}
+	&__body {
+		@apply min-w-[300px] bg-[#202329] p-[10px] flex flex-col;
+		&__cross {
+			@apply self-end;
+		}
+		&__list {
+			@apply gap-y-[10px];
+		}
+	}
+}
+
+.adaptive.show {
+	@apply flex justify-center items-center;
 }
