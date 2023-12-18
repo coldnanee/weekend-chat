@@ -40,7 +40,11 @@ export const useChatsStore = create<TChatsStore>()(
 				if (data) {
 					useChatsStore.setState((state) => {
 						state.chats = data.chats.map((chat) => {
-							const unread = chat.messages.filter((m) => !m.isRead).length;
+							const unread = chat.messages.filter(
+								(m) =>
+									useProfileStore.getState().profile?._id !== m.user &&
+									!m.isRead
+							).length;
 							return { ...chat, unread };
 						});
 						state.isLoading = false;
