@@ -11,6 +11,7 @@ import { DefaultAvatar } from "@/shared";
 import { getMessageDate } from "../lib/getMessageDate";
 
 import { useMessagesStore } from "@/entities/message";
+import { useProfileStore } from "@/entities/profile";
 
 export const ChatMessage = ({
 	message,
@@ -19,6 +20,8 @@ export const ChatMessage = ({
 	message: TMessage;
 	user: TUser;
 }) => {
+	const { profile } = useProfileStore();
+
 	const { selectedMessages, toggleMessage } = useMessagesStore();
 
 	const isMyMessage = user._id !== message.user;
@@ -42,7 +45,7 @@ export const ChatMessage = ({
 				height={30}
 				alt={user.login}
 				className={cl.root__avatar}
-				src={user.avatar}
+				src={isMyMessage ? profile?.avatar : user.avatar}
 			/>
 			<div
 				className={
