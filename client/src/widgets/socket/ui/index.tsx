@@ -1,12 +1,10 @@
 "use client";
 
-import { createContext, useContext } from "react";
+import { createContext, useContext, type ReactNode, useEffect } from "react";
 
-import { useEffect } from "react";
+import { useRouter, usePathname } from "next/navigation";
 
 import { io, Socket } from "socket.io-client";
-
-import type { ReactNode } from "react";
 
 import {
 	getMessageHandler,
@@ -34,6 +32,9 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 		autoConnect: false
 	});
 
+	const router = useRouter();
+	const path = usePathname();
+
 	useEffect(() => {
 		const isAuth = getCookie("auth");
 		if (isAuth) {
@@ -47,7 +48,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 	newOfflineUserHandler(socket);
 	newChatHandler(socket);
 	entryChatHandler(socket);
-	deleteChatHandler(socket);
+	deleteChatHandler(router, path || "", socket);
 	deleteMessageHandler(socket);
 
 	return (

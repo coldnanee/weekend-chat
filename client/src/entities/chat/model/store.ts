@@ -9,13 +9,15 @@ import type { AxiosError } from "axios";
 import { useProfileStore } from "@/entities/profile";
 import { type TMessage, useMessagesStore } from "@/entities/message";
 
+import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+
 type TChatsStore = {
 	chats: TChat[];
 	error: null | string;
 	isLoading: boolean;
 	readMessagesLocal: (chatId: string) => void;
 	fetchChats: (login: string) => void;
-	deleteChat: (chatId: string) => void;
+	deleteChat: (router: AppRouterInstance, path: string, chatId: string) => void;
 	entryChat: (chatId: string, userId: string) => void;
 	newMessage: (message: TMessage) => void;
 	newChat: (chat: TChatRes) => void;
@@ -71,10 +73,12 @@ export const useChatsStore = create<TChatsStore>()(
 					return chat;
 				});
 			}),
-		deleteChat: (chatId) =>
+		deleteChat: (router, path, chatId) =>
 			set((state) => {
 				state.chats = state.chats.filter((chat) => chat && chat._id !== chatId);
-				if (window) location.replace("/");
+				if (path.includes("chat")) {
+					router.replace("/");
+				}
 			}),
 		entryChat: (chatId, userId) =>
 			set((state) => {
