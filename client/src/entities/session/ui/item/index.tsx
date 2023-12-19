@@ -4,7 +4,7 @@ import Image from "next/image";
 import { TiTick } from "react-icons/ti";
 import { getOsImagePath } from "../../lib";
 import { useSettingsSessionStore } from "../../model";
-import type { TSession } from "../../model";
+import type { TSession } from "../../types";
 
 import cl from "./index.module.scss";
 
