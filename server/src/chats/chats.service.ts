@@ -148,21 +148,14 @@ class ChatsService {
 
 			const messages = await Promise.all(getMessages);
 
-			const userChatDto = {
+			const chatDto = {
 				messages,
 				isPinned: false,
 				_id: newChat._id,
 				user: new UserDto(user)
 			};
 
-			const recipientChatDto = {
-				messages,
-				isPinned: false,
-				_id: newChat._id,
-				user: new UserDto(recipient)
-			};
-
-			return { newMessage, userChatDto, recipientChatDto };
+			return { newMessage, chatDto };
 		}
 
 		const newMessage = new MessageModel({

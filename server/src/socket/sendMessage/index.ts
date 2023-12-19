@@ -36,16 +36,16 @@ export const sendMessageHandler = (
 			);
 
 			if (recipientSocketId) {
-				messageBody?.userChatDto
-					? io.to(recipientSocketId).emit("new-chat", messageBody.userChatDto)
+				messageBody?.chatDto
+					? io.to(recipientSocketId).emit("new-chat", messageBody.chatDto)
 					: io
 							.to(recipientSocketId)
 							.emit("get-message", messageBody?.newMessage);
 			}
 
-			if (messageBody?.recipientChatDto) {
-				io.to(socket.id).emit("new-chat", messageBody.recipientChatDto);
-				usersIntoChats.set(myId, messageBody.recipientChatDto._id.toString());
+			if (messageBody?.chatDto) {
+				io.to(socket.id).emit("new-chat", messageBody.chatDto);
+				usersIntoChats.set(myId, messageBody.chatDto._id.toString());
 			} else {
 				io.to(socket.id).emit("send-message-client", messageBody?.newMessage);
 			}
