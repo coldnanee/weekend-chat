@@ -1,4 +1,4 @@
-import type { TSession } from "../../model";
+import type { TSession } from "../../types";
 import { SessionItem } from "../item";
 
 import cl from "./index.module.scss";

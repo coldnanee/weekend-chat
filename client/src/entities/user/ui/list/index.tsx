@@ -1,6 +1,6 @@
 "use client";
 
-import type { TUser } from "../../model";
+import type { TUser } from "../../types";
 import { ChatUser } from "../item";
 
 import cl from "./index.module.scss";
