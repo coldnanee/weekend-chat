@@ -141,8 +141,6 @@ class ChatsService {
 			await user.save();
 			await recipient.save();
 
-			const userDto = new UserDto(recipient);
-
 			const getMessages = newChat.messages.map(async (id) => {
 				const message = await MessageModel.findById(id);
 				return message || null;
@@ -150,14 +148,21 @@ class ChatsService {
 
 			const messages = await Promise.all(getMessages);
 
-			const chatDto = {
+			const userChatDto = {
 				messages,
 				isPinned: false,
 				_id: newChat._id,
-				user: userDto
+				user: new UserDto(user)
 			};
 
-			return { newMessage, newChat: chatDto };
+			const recipientChatDto = {
+				messages,
+				isPinned: false,
+				_id: newChat._id,
+				user: new UserDto(recipient)
+			};
+
+			return { newMessage, userChatDto, recipientChatDto };
 		}
 
 		const newMessage = new MessageModel({

@@ -18,11 +18,11 @@ class UsersService {
 
 		const usersDto = users.map((user) => new UserDto(user));
 
-		// const filteredUsers = usersDto.filter(
-		// 	(user) => user._id !== profile._id.toString() // toString() т.к. по факту _id ObjectId тип
-		// );
+		const filteredUsers = usersDto.filter(
+			(user) => user._id !== profile._id.toString() // toString() т.к. по факту _id ObjectId тип
+		);
 
-		return usersDto;
+		return filteredUsers;
 	}
 }
 
