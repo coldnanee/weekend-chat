@@ -1,16 +1,11 @@
 "use client";
 
-import { useState } from "react";
-
-import cl from "./index.module.scss";
-
-import { SettingsCategoriesList } from "../categories-list";
-
+import { IconContext } from "react-icons";
 import { RxCross2 } from "react-icons/rx";
 
-import { IconContext } from "react-icons";
-
-import { useSettingsStore } from "../../model/store";
+import { useSettingsStore } from "../../model";
+import { SettingsCategoriesList } from "../categories-list";
+import cl from "./index.module.scss";
 
 export const SettingsCategories = () => {
 	const { isModalShow, changeVisibilityModal } = useSettingsStore();

@@ -1,8 +1,7 @@
-import $axios from "@/shared";
-
 import type { AxiosError } from "axios";
 
 import type { TUser } from "@/entities/user";
+import $axios from "@/shared";
 
 export const fetchUserByLogin = async (login: string) => {
 	try {

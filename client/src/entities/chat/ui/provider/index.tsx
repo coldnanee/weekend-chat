@@ -1,9 +1,8 @@
 "use client";
 
-import { useChatsStore } from "@/entities/chat";
-import { useEffect, type ReactNode } from "react";
-
 import { getCookie } from "cookies-next";
+import { useEffect, type ReactNode } from "react";
+import { useChatsStore } from "@/entities/chat";
 
 export const ChatsProvider = ({ children }: { children: ReactNode }) => {
 	const { fetchChats } = useChatsStore();
@@ -13,7 +12,7 @@ export const ChatsProvider = ({ children }: { children: ReactNode }) => {
 		if (isAuth) {
 			fetchChats("");
 		}
-	}, []);
+	}, []); // eslint-disable-line
 
 	return <>{children}</>;
 };

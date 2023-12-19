@@ -1,10 +1,9 @@
 "use client";
 
+import type { TUser } from "../../model";
+import { ChatUser } from "../item";
+
 import cl from "./index.module.scss";
-
-import { ChatUser } from "..";
-
-import type { TUser } from "../..";
 
 export const ChatUsers = ({ users }: { users?: TUser[] | null }) => {
 	if (!users) {

@@ -1,25 +1,14 @@
 "use client";
 
-import { ChatInput } from "./input";
-import { ChatMessages } from "@/entities/message";
-import { UserNotFound } from "./user-not-found";
-
-import { ChatLoader } from "./loader";
-
-import cl from "./index.module.scss";
-
 import { useParams } from "next/navigation";
-import { useGetUserByLogin } from "../lib/useGetUserByLogin";
-
-import { useChatsStore } from "@/entities/chat";
-
-import { ChatInfo } from "./chat-info";
-
-import { useMessagesStore } from "@/entities/message";
-
-import { ChatMessagesPanel } from "./messages-panel";
-
 import { useRef } from "react";
+import { ChatInfo, ChatInput, ChatMessagesPanel } from "@/features/chat";
+import { useChatsStore } from "@/entities/chat";
+import { ChatMessages, useMessagesStore } from "@/entities/message";
+import { useGetUserByLogin } from "../model";
+import cl from "./index.module.scss";
+import { ChatLoader } from "./loader";
+import { UserNotFound } from "./user-not-found";
 
 export const Chat = () => {
 	const { selectedMessages } = useMessagesStore();

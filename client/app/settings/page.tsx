@@ -1,6 +1,6 @@
-import { createMetadata } from "@/shared";
-
 import SettingsPage from "@/pages/settings-page";
+
+import { createMetadata } from "@/shared";
 
 export const metadata = createMetadata("Settings");
 

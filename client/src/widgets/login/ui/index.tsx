@@ -2,11 +2,10 @@
 
 import { useEffect } from "react";
 
-import { LoginForm } from "./form";
-
 import { FormProvider, useForm } from "react-hook-form";
 
-import type { TAuthForm } from "@/features/auth";
+import type { TAuthForm } from "@/entities/auth";
+import { LoginForm } from "./form";
 
 export const Login = () => {
 	const form = useForm<TAuthForm>();
@@ -19,7 +18,7 @@ export const Login = () => {
 		}
 
 		return () => localStorage.removeItem("user");
-	}, []);
+	}, []); //eslint-disable-line
 
 	return (
 		<FormProvider {...form}>

@@ -1,23 +1,22 @@
+import type { AxiosError } from "axios";
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
-import type { TSession } from "./types";
-
-import type { AxiosError } from "axios";
 import $axios from "@/shared";
+import type { TSession } from "../types";
 
 type TSettingsSession = {
 	sessions: TSession[];
 	isSessionsLoading: boolean;
 	sessionsError: null | string;
 	selectedSessions: string[];
-	toggleSession: (id: string) => void;
+	toggleSession: (id: string) => void; // eslint-disable-line no-unused-vars
 	toggleAllSession: () => void;
 	killSessions: () => void;
 	fetchSessions: () => void;
 };
 
-export const useSettingsSession = create<TSettingsSession>()(
+export const useSettingsSessionStore = create<TSettingsSession>()(
 	immer((set, get) => ({
 		sessions: [],
 		selectedSessions: [],

@@ -1,12 +1,10 @@
-import cl from "./index.module.scss";
-
+import Link from "next/link";
 import { AuthButton, AuthInput, AuthForm } from "@/features/auth";
 
-import { fieldsLoginArr } from "../../model/fields";
-
-import Link from "next/link";
-
 import { useProfileStore } from "@/entities/profile";
+import { fieldsLoginArr } from "./fields";
+
+import cl from "./index.module.scss";
 
 export const LoginForm = () => {
 	const { loginUser } = useProfileStore();

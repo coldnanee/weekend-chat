@@ -1,6 +1,5 @@
-import cl from "./index.module.scss";
-
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import cl from "./index.module.scss";
 
 export const Loader = () => {
 	return (

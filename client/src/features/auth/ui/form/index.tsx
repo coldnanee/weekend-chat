@@ -2,15 +2,13 @@
 
 import { useRouter } from "next/navigation";
 
-import cl from "./index.module.scss";
-
 import type { ReactNode } from "react";
-
-import type { TAuthForm } from "../..";
 
 import { useFormContext } from "react-hook-form";
 
+import type { TAuthForm } from "@/entities/auth";
 import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import cl from "./index.module.scss";
 
 export function AuthForm({
 	children,
@@ -18,7 +16,7 @@ export function AuthForm({
 	title
 }: {
 	children: ReactNode;
-	thunk: (user: TAuthForm, router: AppRouterInstance) => void;
+	thunk: (user: TAuthForm, router: AppRouterInstance) => void; // eslint-disable-line no-unused-vars
 	title: string;
 }) {
 	const { handleSubmit } = useFormContext<TAuthForm>();

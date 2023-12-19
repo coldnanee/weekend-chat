@@ -1,6 +1,6 @@
-import AndroidImage from "../../images/android.svg";
-import LinuxImage from "../../images/linux.svg";
-import WindowsImage from "../../images/windows.svg";
+import AndroidImage from "./android.svg";
+import LinuxImage from "./linux.svg";
+import WindowsImage from "./windows.svg";
 
 export const getOsImagePath = (os: string): string => {
 	switch (os) {

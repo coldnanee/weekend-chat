@@ -1,0 +1,1 @@
+export { asideImagesDataArr } from "./images";

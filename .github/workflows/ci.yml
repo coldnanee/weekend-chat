@@ -26,6 +26,9 @@ jobs:
 
     - name: prettier formatting
       run: npm run prettier:fix
+    
+    - name: linting
+      run: npm run lint
 
   server_ci:
     runs-on: ubuntu-latest

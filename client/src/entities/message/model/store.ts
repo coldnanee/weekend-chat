@@ -4,7 +4,7 @@ import { immer } from "zustand/middleware/immer";
 
 type TMessagesStore = {
 	selectedMessages: string[];
-	toggleMessage: (id: string) => void;
+	toggleMessage: (id: string) => void; // eslint-disable-line no-unused-vars
 	clearSelectedMessages: () => void;
 };
 

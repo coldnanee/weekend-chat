@@ -1,2 +1,2 @@
-export { useSettingsSession } from "./model/store";
-export { SessionList } from "./ui/list";
+export { useSettingsSessionStore } from "./model";
+export { SessionList } from "./ui";

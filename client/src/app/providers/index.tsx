@@ -1,10 +1,11 @@
 "use client";
 
-import { SocketProvider } from "@/widgets/socket";
-import { ProfileProvider } from "@/entities/profile";
+import type { ReactNode } from "react";
+
 import { ChatsProvider } from "@/entities/chat";
 
-import type { ReactNode } from "react";
+import { ProfileProvider } from "@/entities/profile";
+import { SocketProvider } from "@/layout"; // eslint-disable-line import/order
 
 export const Providers = ({ children }: { children: ReactNode }) => {
 	return (

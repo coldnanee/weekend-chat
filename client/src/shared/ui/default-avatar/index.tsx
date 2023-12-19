@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import AvatarImage from "../../images/default-avatar.svg";
+import AvatarImage from "./default-avatar.svg";
 
 import cl from "./index.module.scss";
 

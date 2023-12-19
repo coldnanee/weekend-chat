@@ -1,26 +1,25 @@
+import type { AxiosError } from "axios";
 import { create } from "zustand";
 
+import { immer } from "zustand/middleware/immer";
+import { type TMessage, useMessagesStore } from "@/entities/message"; // eslint-disable-line boundaries/element-types
+import { useProfileStore } from "@/entities/profile"; // eslint-disable-line boundaries/element-types
 import $axios from "@/shared";
 
-import { immer } from "zustand/middleware/immer";
-
-import type { TChat, TChatRes } from "./types";
-import type { AxiosError } from "axios";
-import { useProfileStore } from "@/entities/profile";
-import { type TMessage, useMessagesStore } from "@/entities/message";
+import type { TChat, TChatRes } from "../types";
 
 type TChatsStore = {
 	chats: TChat[];
 	error: null | string;
 	isLoading: boolean;
-	readMessagesLocal: (chatId: string) => void;
-	fetchChats: (login: string) => void;
-	deleteChat: (chatId: string) => void;
-	entryChat: (chatId: string, userId: string) => void;
-	newMessage: (message: TMessage) => void;
-	newChat: (chat: TChatRes) => void;
-	sendMessage: (message: TMessage) => void;
-	deleteMessage: (chatId: string, messagesId: string[]) => void;
+	readMessagesLocal: (chatId: string) => void; // eslint-disable-line no-unused-vars
+	fetchChats: (login: string) => void; // eslint-disable-line no-unused-vars
+	deleteChat: (chatId: string) => void; // eslint-disable-line no-unused-vars
+	entryChat: (chatId: string, userId: string) => void; // eslint-disable-line no-unused-vars
+	newMessage: (message: TMessage) => void; // eslint-disable-line no-unused-vars
+	newChat: (chat: TChatRes) => void; // eslint-disable-line no-unused-vars
+	sendMessage: (message: TMessage) => void; // eslint-disable-line no-unused-vars
+	deleteMessage: (chatId: string, messagesId: string[]) => void; // eslint-disable-line no-unused-vars
 };
 
 export const useChatsStore = create<TChatsStore>()(

@@ -1,6 +1,5 @@
-import cl from "./index.module.scss";
-
 import type { ReactNode } from "react";
+import cl from "./index.module.scss";
 
 export const SettingsSaveButton = ({
 	children,

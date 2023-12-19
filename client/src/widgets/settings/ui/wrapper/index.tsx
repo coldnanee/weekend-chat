@@ -1,15 +1,13 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { IoIosArrowBack } from "react-icons/io";
+import { useSettingsStore } from "../../model";
 import { SettingsAccount } from "../account";
-import { SettingsSessions } from "../sessions";
 import { SettingsBlackList } from "../black-list";
+import { SettingsSessions } from "../sessions";
 
 import cl from "./index.module.scss";
-
-import { IoIosArrowBack } from "react-icons/io";
-import { useRouter } from "next/navigation";
-
-import { useSettingsStore } from "../../model/store";
 
 const SettingsBody = () => {
 	const { activeChapter } = useSettingsStore();

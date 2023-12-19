@@ -1,16 +1,12 @@
 "use client";
 
+import { FormProvider, useForm } from "react-hook-form";
+import type { TSettingsForm } from "@/entities/settings";
+import { ReactQueryProvider } from "@/shared";
+import { SettingsCategories } from "./categories";
 import cl from "./index.module.scss";
 
-import { SettingsCategories } from "./categories";
-
 import { SettingsWrapper } from "./wrapper";
-
-import type { TSettingsForm } from "../model/types";
-
-import { FormProvider, useForm } from "react-hook-form";
-
-import { ReactQueryProvider } from "@/shared";
 
 export const Settings = () => {
 	const params = useForm<TSettingsForm>();

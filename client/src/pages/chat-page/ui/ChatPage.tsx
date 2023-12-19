@@ -1,8 +1,7 @@
-import { Chat } from "@/widgets/chat";
+import { Chat } from "@/widgets/chat"; // eslint-disable-line import/order
+import { Layout } from "@/layout"; // eslint-disable-line import/order
 
 import "./ChatPage.scss";
-
-import { Layout } from "@/layout";
 
 const ChatPage = () => {
 	return (

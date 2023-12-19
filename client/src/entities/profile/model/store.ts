@@ -1,15 +1,12 @@
+import type { AxiosError } from "axios";
 import { create } from "zustand";
-
-import $axios from "@/shared";
-
 import { immer } from "zustand/middleware/immer";
 
-import { IProfile } from "./types";
-import type { AxiosError } from "axios";
-
-import type { TSettingsProfile } from "@/widgets/settings";
-import type { TAuthForm } from "@/features/auth";
+import type { TAuthForm } from "@/entities/auth"; // eslint-disable-line boundaries/element-types
+import type { TSettingsProfile } from "@/entities/settings"; // eslint-disable-line boundaries/element-types
+import $axios from "@/shared";
 import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { IProfile } from "../types";
 
 type TProfileStore = {
 	profile: IProfile | null;
@@ -18,12 +15,10 @@ type TProfileStore = {
 	removeProfileAvatar: () => void;
 	fetchProfile: () => Promise<void>;
 	logoutUser: () => void;
-	updateProfile: (user: TSettingsProfile) => Promise<void>;
-	loginUser: (user: TAuthForm, router: AppRouterInstance) => void;
-	registrationUser: (
-		user: TAuthForm,
-		router: AppRouterInstance
-	) => Promise<void>;
+	updateProfile: (user: TSettingsProfile) => Promise<void>; // eslint-disable-line no-unused-vars
+	loginUser: (user: TAuthForm, router: AppRouterInstance) => void; // eslint-disable-line no-unused-vars
+	// prettier-ignore
+	registrationUser: (user: TAuthForm, router: AppRouterInstance) => Promise<void>; // eslint-disable-line no-unused-vars
 };
 
 const handleProfileStoreError = (e: unknown) => {
@@ -61,7 +56,7 @@ export const useProfileStore = create<TProfileStore>()(
 			try {
 				const { data } = await $axios.post<IProfile>("/token/refresh");
 				set({ profile: data });
-			} catch (e: any) {
+			} catch (e) {
 				handleProfileStoreError(e);
 			} finally {
 				set({ isLoading: false });
@@ -93,7 +88,7 @@ export const useProfileStore = create<TProfileStore>()(
 				set({ isLoading: false });
 			}
 		},
-		loginUser: async (user, router) => {
+		loginUser: async (user) => {
 			preFetchFn();
 			try {
 				const { status } = await $axios.post("/auth/login", {

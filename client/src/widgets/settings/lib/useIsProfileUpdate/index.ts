@@ -1,17 +1,18 @@
 import { useMemo } from "react";
 
+import { useFormContext } from "react-hook-form";
 import { useProfileStore } from "@/entities/profile";
 
-import type { TSettingsForm } from "../..";
-
-import { useFormContext } from "react-hook-form";
+import type { TSettingsForm } from "@/entities/settings";
 
 export const useIsProfileUpdate = (): { isUpdated: boolean } => {
 	const { profile } = useProfileStore();
 
 	const { watch } = useFormContext<TSettingsForm>();
 
-	const watchingForm: TSettingsForm = {
+	//prettier-ignore
+
+	const watchingForm: TSettingsForm = { //eslint-disable-line
 		login: watch("login"),
 		password: watch("password"),
 		avatar: watch("avatar")
@@ -42,7 +43,7 @@ export const useIsProfileUpdate = (): { isUpdated: boolean } => {
 		}
 
 		return false;
-	}, [watchingForm]);
+	}, [watchingForm, profile]);
 
 	return { isUpdated };
 };

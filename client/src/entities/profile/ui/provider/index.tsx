@@ -1,12 +1,10 @@
 "use client";
 
+import { getCookie } from "cookies-next";
 import { ReactNode, useEffect, useState } from "react";
 
-import { useProfileStore } from "../../model/store";
-
 import { Loader } from "@/shared";
-
-import { getCookie } from "cookies-next";
+import { useProfileStore } from "../../model";
 
 export const ProfileProvider = ({ children }: { children: ReactNode }) => {
 	const [isFetched, setIsFetched] = useState<boolean>(false);
@@ -20,7 +18,7 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
 		}
 
 		setIsFetched(true);
-	}, []);
+	}, []); // eslint-disable-line
 
 	return <>{!isFetched || isLoading ? <Loader /> : children}</>;
 };

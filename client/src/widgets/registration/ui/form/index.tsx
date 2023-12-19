@@ -1,12 +1,10 @@
-import cl from "./index.module.scss";
-
+import Link from "next/link";
 import { AuthButton, AuthInput, AuthForm } from "@/features/auth";
 
-import Link from "next/link";
-
-import { fieldsRegistrationArr } from "../../model/fields";
-
 import { useProfileStore } from "@/entities/profile";
+import { fieldsRegistrationArr } from "./fields";
+
+import cl from "./index.module.scss";
 
 export const RegistrationForm = () => {
 	const { registrationUser } = useProfileStore();

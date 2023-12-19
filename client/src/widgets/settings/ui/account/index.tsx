@@ -1,15 +1,12 @@
-import cl from "./index.module.scss";
-
-import { SettingsAvatar } from "../avatar";
+import { useFormContext } from "react-hook-form";
+import { SettingsAvatar } from "@/features/settings";
+import { useProfileStore } from "@/entities/profile";
+import type { TSettingsForm } from "@/entities/settings";
+import { convertToBase64 } from "../../lib";
+import { SettingsSaveButton } from "../button";
 import { SettingsFieldsList } from "../fields-list";
 
-import type { TSettingsForm } from "../..";
-import { useProfileStore } from "@/entities/profile";
-import { useFormContext } from "react-hook-form";
-
-import { SettingsSaveButton } from "../button";
-
-import { convertToBase64 } from "../../lib/convertToBase64";
+import cl from "./index.module.scss";
 export const SettingsAccount = () => {
 	const { updateProfile } = useProfileStore();
 

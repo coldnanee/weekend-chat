@@ -1,20 +1,19 @@
-import type { TSettingsCategoriesItem } from "./types";
-
-import { MdAccountCircle } from "react-icons/md";
 import { HiMiniComputerDesktop } from "react-icons/hi2";
 import { ImBlocked } from "react-icons/im";
+import { MdAccountCircle } from "react-icons/md";
+import type { TSettingsCategoriesItem } from "@/entities/settings";
 
 export const settingsCategoriesArr: TSettingsCategoriesItem[] = [
 	{
 		label: "Account",
-		Image: MdAccountCircle
+		Picture: MdAccountCircle
 	},
 	{
 		label: "Sessions",
-		Image: HiMiniComputerDesktop
+		Picture: HiMiniComputerDesktop
 	},
 	{
 		label: "Black List",
-		Image: ImBlocked
+		Picture: ImBlocked
 	}
 ];

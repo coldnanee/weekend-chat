@@ -1,6 +1,3 @@
-export { useOnlineUsersStore } from "./model/store";
-export { useChatUsersQuery } from "./lib/useChatUsersQuery";
-export { newOnlineUserHandler } from "./model/newOnlineUserHandler";
-export { newOfflineUserHandler } from "./model/newOfflineUserHandler";
-export { ChatUsers } from "./ui/list";
-export type { TUser } from "./model/types";
+export { useOnlineUsersStore, useChatUsersQuery } from "./model";
+export { ChatUsers } from "./ui";
+export { type TUser } from "./types";

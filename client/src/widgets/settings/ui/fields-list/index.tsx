@@ -1,8 +1,7 @@
-import { fieldsSettingsArr } from "../../model/fields";
+import { SettingsInput } from "@/features/settings";
+import { fieldsSettingsArr } from "./fields";
 
 import cl from "./index.module.scss";
-
-import { SettingsInput } from "../input";
 
 export const SettingsFieldsList = () => {
 	return (

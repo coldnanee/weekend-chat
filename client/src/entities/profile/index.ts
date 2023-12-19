@@ -1,2 +1,2 @@
-export { useProfileStore } from "./model/store";
-export { ProfileProvider } from "./ui/provider";
+export { useProfileStore } from "./model";
+export { ProfileProvider } from "./ui";

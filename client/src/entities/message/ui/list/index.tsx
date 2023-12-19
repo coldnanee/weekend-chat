@@ -1,20 +1,16 @@
 "use client";
 
-import { StartChat } from "../start-chat";
-
 import { useParams } from "next/navigation";
-
-import { useChatsStore, type TChat } from "@/entities/chat";
 
 import { useEffect, useState, type MutableRefObject } from "react";
 
+import { useChatsStore, type TChat } from "@/entities/chat"; // eslint-disable-line boundaries/element-types
+
+import { useOnlineUsersStore } from "@/entities/user"; // eslint-disable-line boundaries/element-types
+import { ChatMessage } from "../item";
+import { StartChat } from "../start-chat";
 import cl from "./index.module.scss";
-
-import { ChatMessage } from "..";
-
-import { useSocketContext } from "@/widgets/socket";
-
-import { useOnlineUsersStore } from "@/entities/user";
+import { useSocketContext } from "@/layout"; // eslint-disable-line import/order
 
 export const ChatMessages = ({
 	chat,
@@ -37,7 +33,7 @@ export const ChatMessages = ({
 			messagesContainer.current.scrollTop =
 				messagesContainer.current.scrollHeight;
 		}
-	}, [chat]);
+	}, [chat]); //eslint-disable-line
 
 	useEffect(() => {
 		readMessagesLocal(chat?._id || "");
@@ -46,7 +42,7 @@ export const ChatMessages = ({
 		return () => {
 			socket?.emit("leave-chat");
 		};
-	}, []);
+	}, []); //eslint-disable-line
 
 	if (!chat) {
 		return <StartChat name={params?.login || ""} />;

@@ -1,10 +1,10 @@
-import type { ReactNode } from "react";
-
-import { createMetadata } from "@/shared";
-
 import { Titillium_Web } from "next/font/google";
 
+import type { ReactNode } from "react";
+
 import { Providers } from "@/app/providers";
+
+import { createMetadata } from "@/shared";
 
 import "@/app/styles/index.scss";
 

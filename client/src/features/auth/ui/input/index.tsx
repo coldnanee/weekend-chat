@@ -1,10 +1,9 @@
-import cl from "./index.module.scss";
-
 import { useFormContext } from "react-hook-form";
 
-import type { TAuthForm, TAuthFormField } from "../../model/types";
-
 import type { RegisterOptions } from "react-hook-form";
+import type { TAuthForm, TAuthFormField } from "@/entities/auth";
+
+import cl from "./index.module.scss";
 
 export const AuthInput = ({
 	className,

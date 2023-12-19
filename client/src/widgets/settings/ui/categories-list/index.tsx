@@ -1,8 +1,7 @@
-import cl from "./index.module.scss";
-
-import { settingsCategoriesArr } from "../../model/categories";
-
+import { settingsCategoriesArr } from "../../model";
 import { SettingsCategoriesItem } from "../categories-item";
+
+import cl from "./index.module.scss";
 
 export const SettingsCategoriesList = ({
 	className

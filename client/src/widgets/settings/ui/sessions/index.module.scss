@@ -5,31 +5,6 @@
 	@media (max-width: 380px) {
 		@apply mt-[10px];
 	}
-	&__select_panel {
-		@apply mb-[10px] pl-[9px] flex items-center justify-between;
-		&__body {
-			@apply flex items-center gap-x-[10px];
-			&__checkbox {
-				@apply cursor-pointer flex gap-x-[3px] items-center;
-				input {
-					@apply hidden;
-				}
-				&__body {
-					@apply w-[16px] h-[16px] bg-[#a9aeba] flex justify-center items-center;
-					&_checked {
-						@apply bg-[#64beda];
-					}
-				}
-			}
-			&__delete {
-				@apply text-[#a9aeba] text-[16px] p-[5px];
-			}
-		}
-
-		&__reload {
-			@apply cursor-pointer;
-		}
-	}
 }
 
 .loader {

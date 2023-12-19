@@ -1,14 +1,13 @@
 import { create } from "zustand";
 
-import { settingsCategoriesArr } from "./categories";
-
 import { immer } from "zustand/middleware/immer";
+import { settingsCategoriesArr } from "./categories";
 
 type TSettingsModalStore = {
 	isModalShow: boolean;
-	changeVisibilityModal: (v: boolean) => void;
+	changeVisibilityModal: (v: boolean) => void; // eslint-disable-line no-unused-vars
 	activeChapter: string;
-	setActiveChapter: (c: string) => void;
+	setActiveChapter: (c: string) => void; // eslint-disable-line no-unused-vars
 };
 
 export const useSettingsStore = create<TSettingsModalStore>()(

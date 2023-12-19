@@ -10,6 +10,7 @@ import { Types } from "mongoose";
 class ChatsService {
 	async getAllChats(userId: string) {
 		const user = await UserModel.findById(userId);
+
 		if (!user) {
 			throw ApiError.unAuthorizedError();
 		}
@@ -22,9 +23,11 @@ class ChatsService {
 			const messages = await MessageModel.find({
 				_id: { $in: chat.messages }
 			});
+
 			const memberId = chat.members
 				.filter((member) => member !== userId)
 				.join("");
+
 			const user = await UserModel.findById(memberId);
 
 			if (!user) {

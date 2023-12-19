@@ -1,6 +1,5 @@
-import $axios from "@/shared";
-
 import type { TUser } from "@/entities/user";
+import $axios from "@/shared";
 
 export const fetchUsersByLogin = async (login: string) => {
 	if (login) {

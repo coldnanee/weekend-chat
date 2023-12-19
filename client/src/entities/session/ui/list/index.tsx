@@ -1,8 +1,7 @@
+import type { TSession } from "../../model";
+import { SessionItem } from "../item";
+
 import cl from "./index.module.scss";
-
-import { SessionItem } from "..";
-
-import type { TSession } from "../../model/types";
 
 export const SessionList = ({ sessions }: { sessions: TSession[] }) => {
 	return (

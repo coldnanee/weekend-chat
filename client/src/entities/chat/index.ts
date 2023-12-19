@@ -1,11 +1,3 @@
-export { ChatsProvider } from "./ui/provider";
-export { useChatsStore } from "./model/store";
-export { entryChatHandler } from "./model/entryChatHandler";
-export { newChatHandler } from "./model/newChatHandler";
-export { sendMessageHandler } from "./model/sendMessageHandler";
-export { getMessageHandler } from "./model/getMessageHandler";
-export { deleteChatHandler } from "./model/deleteChatHandler";
-export { deleteMessageHandler } from "./model/deleteMessageHandler";
-export type { TChat } from "./model/types";
-export { ChatList } from "./ui/list";
-export { ChatSkeleton } from "./ui/skeleton";
+export { ChatsProvider, ChatList, ChatSkeleton } from "./ui";
+export { useChatsStore } from "./model";
+export type { TChat, TChatRes } from "./types";

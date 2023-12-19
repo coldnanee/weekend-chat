@@ -1,0 +1,1 @@
+export { getOsImagePath } from "./getOsImagePath";
