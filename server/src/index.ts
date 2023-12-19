@@ -76,9 +76,9 @@ const start = async () => {
 
 		server.listen(PORT);
 
-		let onlineUsers = new Map<string, string>();
+		const onlineUsers = new Map<string, string>();
 
-		let usersIntoChats = new Map<string, string>(); // userId - chatId
+		const usersIntoChats = new Map<string, string>(); // userId - chatId
 
 		io.on("connection", (socket) => {
 			checkAuthForSocket(socket);
@@ -101,7 +101,7 @@ const start = async () => {
 
 		await connectDB();
 	} catch (e) {
-		console.log(e);
+		console.log(e); // eslint-disable-line no-console
 	}
 };
 

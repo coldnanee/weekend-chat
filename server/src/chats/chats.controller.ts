@@ -13,7 +13,6 @@ class ChatsController {
 
 			return res.json({ chats });
 		} catch (e) {
-			console.log(e);
 			next(e);
 		}
 	}

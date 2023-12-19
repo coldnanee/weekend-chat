@@ -1,8 +1,6 @@
 import type { Socket, Server } from "socket.io";
 
 import ChatModel from "../../db/models/ChatModel";
-import UserModel from "../../db/models/UserModel";
-import MessageModel from "../../db/models/MessageModel";
 import { connectionQueryWrapper, getKeyByValueMap } from "../../libs";
 
 import ChatsService from "../../chats/chats.service";

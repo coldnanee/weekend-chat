@@ -7,7 +7,7 @@ export const errorsMiddleware = (
 	err: ApiError,
 	req: Request,
 	res: Response,
-	next: NextFunction
+	next: NextFunction // eslint-disable-line @typescript-eslint/no-unused-vars
 ) => {
 	if (err instanceof ApiError) {
 		const { status, message } = err;

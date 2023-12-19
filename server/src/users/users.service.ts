@@ -1,7 +1,5 @@
 import UserModel from "../db/models/UserModel";
 
-import { TUser } from "../types";
-
 import { ApiError } from "../errors";
 
 import { UserDto } from "../dtos/user.dto";
@@ -20,9 +18,9 @@ class UsersService {
 
 		const usersDto = users.map((user) => new UserDto(user));
 
-		const filteredUsers = usersDto.filter(
-			(user) => user._id !== profile._id.toString() // toString() т.к. по факту _id ObjectId тип
-		);
+		// const filteredUsers = usersDto.filter(
+		// 	(user) => user._id !== profile._id.toString() // toString() т.к. по факту _id ObjectId тип
+		// );
 
 		return usersDto;
 	}
