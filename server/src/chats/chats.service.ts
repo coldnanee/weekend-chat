@@ -98,7 +98,7 @@ class ChatsService {
 	}
 
 	async saveMessageToDb(
-		userId: string,
+		myId: string,
 		recipientId: string,
 		text: string,
 		isRead: boolean
@@ -106,16 +106,16 @@ class ChatsService {
 		const date = getDateForMessage();
 
 		const chat = await ChatModel.findOne({
-			members: { $all: [userId, recipientId] }
+			members: { $all: [myId, recipientId] }
 		});
 
 		if (!chat) {
 			const newChat = new ChatModel({
-				members: [userId, recipientId]
+				members: [myId, recipientId]
 			});
 
 			const newMessage = new MessageModel({
-				user: new Types.ObjectId(userId),
+				user: new Types.ObjectId(myId),
 				text,
 				date,
 				chat: newChat._id,
@@ -128,7 +128,7 @@ class ChatsService {
 
 			await newChat.save();
 
-			const user = await UserModel.findById(userId);
+			const user = await UserModel.findById(myId);
 			const recipient = await UserModel.findById(recipientId);
 
 			if (!user || !recipient) {
@@ -148,18 +148,25 @@ class ChatsService {
 
 			const messages = await Promise.all(getMessages);
 
-			const chatDto = {
+			const myDto = {
+				messages,
+				isPinned: false,
+				_id: newChat._id,
+				user: new UserDto(recipient)
+			};
+
+			const recipientDto = {
 				messages,
 				isPinned: false,
 				_id: newChat._id,
 				user: new UserDto(user)
 			};
 
-			return { newMessage, chatDto };
+			return { newMessage, myDto, recipientDto };
 		}
 
 		const newMessage = new MessageModel({
-			user: new Types.ObjectId(userId),
+			user: new Types.ObjectId(myId),
 			text,
 			date,
 			chat: chat._id,
