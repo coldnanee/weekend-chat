@@ -3,7 +3,7 @@ import { RxCross2 } from "react-icons/rx";
 import type { TChat } from "@/entities/chat";
 import { useMessagesStore } from "@/entities/message";
 import cl from "./index.module.scss";
-import { useSocketContext } from "@/layout"; // eslint-disable-line import/order
+import { useSocketContext } from "@/shared"; // eslint-disable-line import/order
 
 export const ChatMessagesPanel = ({ chat }: { chat?: TChat }) => {
 	const { selectedMessages, clearSelectedMessages } = useMessagesStore();

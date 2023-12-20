@@ -14,8 +14,8 @@ import {
 	entryChatHandler,
 	deleteChatHandler,
 	deleteMessageHandler
-} from "@/features/chat";
-import { newOnlineUserHandler, newOfflineUserHandler } from "@/features/user";
+} from "@/features/chat"; // eslint-disable-line boundaries/element-types
+import { newOnlineUserHandler, newOfflineUserHandler } from "@/features/user"; // eslint-disable-line boundaries/element-types
 
 export const SocketContext = createContext<{ socket?: Socket }>({
 	socket: undefined

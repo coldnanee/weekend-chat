@@ -10,7 +10,7 @@ import { useOnlineUsersStore } from "@/entities/user"; // eslint-disable-line bo
 import { ChatMessage } from "../item";
 import { StartChat } from "../start-chat";
 import cl from "./index.module.scss";
-import { useSocketContext } from "@/layout"; // eslint-disable-line import/order
+import { useSocketContext } from "@/shared"; // eslint-disable-line import/order
 
 export const ChatMessages = ({
 	chat,
