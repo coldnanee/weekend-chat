@@ -6,6 +6,7 @@ import { type TMessage, useMessagesStore } from "@/entities/message"; // eslint-
 import { useProfileStore } from "@/entities/profile"; // eslint-disable-line boundaries/element-types
 import $axios from "@/shared";
 
+import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import type { TChat, TChatRes } from "../types";
 
 type TChatsStore = {
@@ -14,7 +15,7 @@ type TChatsStore = {
 	isLoading: boolean;
 	readMessagesLocal: (chatId: string) => void; // eslint-disable-line no-unused-vars
 	fetchChats: (login: string) => void; // eslint-disable-line no-unused-vars
-	deleteChat: (chatId: string) => void; // eslint-disable-line no-unused-vars
+	deleteChat: (router: AppRouterInstance, path: string, chatId: string) => void; // eslint-disable-line no-unused-vars
 	entryChat: (chatId: string, userId: string) => void; // eslint-disable-line no-unused-vars
 	newMessage: (message: TMessage) => void; // eslint-disable-line no-unused-vars
 	newChat: (chat: TChatRes) => void; // eslint-disable-line no-unused-vars
@@ -70,10 +71,12 @@ export const useChatsStore = create<TChatsStore>()(
 					return chat;
 				});
 			}),
-		deleteChat: (chatId) =>
+		deleteChat: (router, path, chatId) =>
 			set((state) => {
 				state.chats = state.chats.filter((chat) => chat && chat._id !== chatId);
-				if (window) location.replace("/");
+				if (path.includes("chat")) {
+					router.replace("/");
+				}
 			}),
 		entryChat: (chatId, userId) =>
 			set((state) => {
