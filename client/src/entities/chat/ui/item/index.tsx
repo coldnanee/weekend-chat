@@ -7,11 +7,11 @@ import { useProfileStore } from "@/entities/profile"; // eslint-disable-line bou
 
 import { useOnlineUsersStore } from "@/entities/user"; // eslint-disable-line boundaries/element-types
 import { DefaultAvatar } from "@/shared";
+import { useSocketContext } from "@/shared";
 import { getMessageDate, getSlicedMessage } from "../../lib";
 import type { TChat } from "../../types";
 import cl from "./index.module.scss";
 import PinnedImage from "./pinned.svg";
-import { useSocketContext } from "@/layout"; // eslint-disable-line import/order
 
 export const ChatItem = ({ chat }: { chat: TChat }) => {
 	const { socket } = useSocketContext();

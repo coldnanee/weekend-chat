@@ -5,8 +5,8 @@ import { ChatUserOnlineStatus } from "@/features/chat";
 import type { TChat } from "@/entities/chat";
 import { type TUser } from "@/entities/user";
 import { DefaultAvatar } from "@/shared";
+import { useSocketContext } from "@/shared";
 import cl from "./index.module.scss";
-import { useSocketContext } from "@/layout"; // eslint-disable-line import/order
 
 export const ChatInfo = ({ user, chat }: { user: TUser; chat?: TChat }) => {
 	const { socket } = useSocketContext();
