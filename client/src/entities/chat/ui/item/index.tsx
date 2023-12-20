@@ -13,6 +13,8 @@ import type { TChat } from "../../types";
 import cl from "./index.module.scss";
 import PinnedImage from "./pinned.svg";
 
+import { useSocketContext } from "@/shared"; // eslint-disable-line import/order
+
 export const ChatItem = ({ chat }: { chat: TChat }) => {
 	const { socket } = useSocketContext();
 

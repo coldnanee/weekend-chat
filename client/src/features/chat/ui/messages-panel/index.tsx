@@ -5,6 +5,8 @@ import { useMessagesStore } from "@/entities/message";
 import { useSocketContext } from "@/shared";
 import cl from "./index.module.scss";
 
+import { useSocketContext } from "@/shared"; // eslint-disable-line import/order
+
 export const ChatMessagesPanel = ({ chat }: { chat?: TChat }) => {
 	const { selectedMessages, clearSelectedMessages } = useMessagesStore();
 

@@ -8,6 +8,8 @@ import { DefaultAvatar } from "@/shared";
 import { useSocketContext } from "@/shared";
 import cl from "./index.module.scss";
 
+import { useSocketContext } from "@/shared"; // eslint-disable-line import/order
+
 export const ChatInfo = ({ user, chat }: { user: TUser; chat?: TChat }) => {
 	const { socket } = useSocketContext();
 

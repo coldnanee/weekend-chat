@@ -14,6 +14,8 @@ import { HiOutlinePaperAirplane } from "react-icons/hi2";
 import { useSocketContext } from "@/shared";
 import cl from "./index.module.scss";
 
+import { useSocketContext } from "@/shared"; // eslint-disable-line import/order
+
 export const ChatInput = ({
 	recipientId,
 	messagesContainer

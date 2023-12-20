@@ -11,6 +11,7 @@ import { useSocketContext } from "@/shared";
 import { ChatMessage } from "../item";
 import { StartChat } from "../start-chat";
 import cl from "./index.module.scss";
+import { useSocketContext } from "@/shared"; // eslint-disable-line import/order
 
 export const ChatMessages = ({
 	chat,
