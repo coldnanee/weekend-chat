@@ -10,7 +10,6 @@ import {
 	getMessageHandler,
 	newChatHandler,
 	sendMessageHandler,
-	entryChatHandler,
 	deleteChatHandler,
 	deleteMessageHandler
 } from "@/features/chat"; // eslint-disable-line boundaries/element-types
@@ -41,7 +40,6 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 	newOnlineUserHandler(socket);
 	newOfflineUserHandler(socket);
 	newChatHandler(socket);
-	entryChatHandler(socket);
 	deleteChatHandler(socket);
 	deleteMessageHandler(socket);
 
