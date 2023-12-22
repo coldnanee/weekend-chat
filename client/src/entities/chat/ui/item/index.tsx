@@ -83,11 +83,6 @@ export const ChatItem = ({ chat }: { chat: TChat }) => {
 					</div>
 				</div>
 				<div className={cl.root__info}>
-					{chat.isPinned && chat.unread > 0 && (
-						<div className={cl.root__info__counter}>
-							<p>{chat.unread}</p>
-						</div>
-					)}
 					<div className={cl.root__info__body}>
 						<p className={cl.root__info__date}>{messageDate}</p>
 						{chat.isPinned && (
@@ -97,11 +92,6 @@ export const ChatItem = ({ chat }: { chat: TChat }) => {
 								width={15}
 								height={15}
 							/>
-						)}
-						{!chat.isPinned && chat.unread > 0 && (
-							<div className={cl.root__info__counter}>
-								<p>{chat.unread}</p>
-							</div>
 						)}
 					</div>
 				</div>

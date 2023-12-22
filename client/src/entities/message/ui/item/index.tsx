@@ -1,5 +1,3 @@
-import { PiChecksBold } from "react-icons/pi";
-import { PiCheckBold } from "react-icons/pi";
 import { useProfileStore } from "@/entities/profile"; // eslint-disable-line boundaries/element-types
 import type { TUser } from "@/entities/user"; // eslint-disable-line boundaries/element-types
 
@@ -52,21 +50,6 @@ export const ChatMessage = ({
 				}>
 				<p className={cl.root__message__text}>{message.text}</p>
 				<div className={cl.root__message__info}>
-					{user._id !== message.user && (
-						<>
-							{message.isRead ? (
-								<PiChecksBold
-									color="#fff"
-									size="16px"
-								/>
-							) : (
-								<PiCheckBold
-									color="#fff"
-									size="16px"
-								/>
-							)}
-						</>
-					)}
 					<p className={cl.root__message__date}>
 						{getMessageDate(message.date)}
 					</p>

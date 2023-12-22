@@ -3,13 +3,11 @@ import type { Socket, Server } from "socket.io";
 import { connectionQueryWrapper, getKeyByValueMap } from "../../libs";
 
 import ChatsService from "../../chats/chats.service";
-import ChatModel from "../../db/models/ChatModel";
 
 export const sendMessageHandler = (
 	io: Server,
 	socket: Socket,
-	users: Map<string, string>,
-	usersIntoChats: Map<string, string>
+	users: Map<string, string>
 ) => {
 	socket.on(
 		"send-message",
@@ -18,21 +16,12 @@ export const sendMessageHandler = (
 
 			const myId = connectionQueryWrapper(socket.handshake.query.user);
 
-			const chat = await ChatModel.findOne({
-				members: { $all: [recipientId, myId] }
-			});
-
 			const recipientSocketId = getKeyByValueMap(users, recipientId);
-
-			const isMessageRead = !!(
-				chat?._id && usersIntoChats.get(recipientId) === chat?._id.toString()
-			);
 
 			const messageBody = await ChatsService.saveMessageToDb(
 				myId,
 				recipientId,
-				message,
-				isMessageRead
+				message
 			);
 
 			if (recipientSocketId) {
@@ -45,7 +34,6 @@ export const sendMessageHandler = (
 
 			if (messageBody?.myDto) {
 				io.to(socket.id).emit("new-chat", messageBody.myDto);
-				usersIntoChats.set(myId, messageBody.myDto._id.toString());
 			} else {
 				io.to(socket.id).emit("send-message-client", messageBody?.newMessage);
 			}

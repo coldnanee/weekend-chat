@@ -3,20 +3,17 @@ import { create } from "zustand";
 
 import { immer } from "zustand/middleware/immer";
 import { type TMessage, useMessagesStore } from "@/entities/message"; // eslint-disable-line boundaries/element-types
-import { useProfileStore } from "@/entities/profile"; // eslint-disable-line boundaries/element-types
 import $axios from "@/shared";
-import type { TChat, TChatRes } from "../types";
+import type { TChat } from "../types";
 
 type TChatsStore = {
 	chats: TChat[];
 	error: null | string;
 	isLoading: boolean;
-	readMessagesLocal: (chatId: string) => void; // eslint-disable-line no-unused-vars
 	fetchChats: (login: string) => void; // eslint-disable-line no-unused-vars
 	deleteChat: (chatId: string) => void; // eslint-disable-line no-unused-vars
-	entryChat: (chatId: string, userId: string) => void; // eslint-disable-line no-unused-vars
 	newMessage: (message: TMessage) => void; // eslint-disable-line no-unused-vars
-	newChat: (chat: TChatRes) => void; // eslint-disable-line no-unused-vars
+	newChat: (chat: TChat) => void; // eslint-disable-line no-unused-vars
 	sendMessage: (message: TMessage) => void; // eslint-disable-line no-unused-vars
 	deleteMessage: (chatId: string, messagesId: string[]) => void; // eslint-disable-line no-unused-vars
 };
@@ -32,20 +29,13 @@ export const useChatsStore = create<TChatsStore>()(
 				state.isLoading = true;
 			});
 			try {
-				const { data } = await $axios.get<{ chats: TChatRes[] }>("chats", {
+				const { data } = await $axios.get<{ chats: TChat[] }>("chats", {
 					params: { chat }
 				});
 
 				if (data) {
 					useChatsStore.setState((state) => {
-						state.chats = data.chats.map((chat) => {
-							const unread = chat.messages.filter(
-								(m) =>
-									useProfileStore.getState().profile?._id !== m.user &&
-									!m.isRead
-							).length;
-							return { ...chat, unread };
-						});
+						state.chats = data.chats;
 						state.isLoading = false;
 					});
 				}
@@ -60,44 +50,15 @@ export const useChatsStore = create<TChatsStore>()(
 				});
 			}
 		},
-		readMessagesLocal: (chatId) =>
-			set((state) => {
-				state.chats = state.chats.map((chat) => {
-					if (chat._id === chatId) {
-						return { ...chat, unread: 0 };
-					}
-					return chat;
-				});
-			}),
 		deleteChat: (chatId) =>
 			set((state) => {
 				state.chats = state.chats.filter((chat) => chat && chat._id !== chatId);
-			}),
-		entryChat: (chatId, userId) =>
-			set((state) => {
-				state.chats = state.chats.map((chat) => {
-					if (chat._id === chatId) {
-						const readMessages = chat.messages.map((message) => {
-							if (message.user !== userId && !message.isRead) {
-								return { ...message, isRead: true };
-							}
-							return message;
-						});
-
-						return { ...chat, messages: readMessages };
-					}
-
-					return chat;
-				});
 			}),
 		newMessage: (message) =>
 			set((state) => {
 				const chats = [...state.chats];
 				const chat = chats.find((chat) => chat._id === message.chat);
 				if (chat) {
-					if (!message.isRead) {
-						chat.unread = chat.unread + 1;
-					}
 					chat.messages.push(message);
 					const chatIndex = chats.indexOf(chat);
 
@@ -111,11 +72,7 @@ export const useChatsStore = create<TChatsStore>()(
 			}),
 		newChat: (chat) =>
 			set((state) => {
-				const unread = chat.messages.filter(
-					(msg) => msg.user !== useProfileStore.getState().profile?._id
-				).length;
-
-				state.chats = [{ ...chat, unread }, ...state.chats];
+				state.chats = [chat, ...state.chats];
 			}),
 		sendMessage: (message) =>
 			set((state) => {

@@ -7,7 +7,4 @@ export type TChat = {
 	user: TUser;
 	messages: TMessage[];
 	isPinned: boolean;
-	unread: number;
 };
-
-export type TChatRes = Omit<TChat, "unread">;

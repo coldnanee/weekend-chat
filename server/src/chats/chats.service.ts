@@ -97,12 +97,7 @@ class ChatsService {
 		return this.getChatsByLogin(chat, userId);
 	}
 
-	async saveMessageToDb(
-		myId: string,
-		recipientId: string,
-		text: string,
-		isRead: boolean
-	) {
+	async saveMessageToDb(myId: string, recipientId: string, text: string) {
 		const date = getDateForMessage();
 
 		const chat = await ChatModel.findOne({
@@ -118,8 +113,7 @@ class ChatsService {
 				user: new Types.ObjectId(myId),
 				text,
 				date,
-				chat: newChat._id,
-				isRead
+				chat: newChat._id
 			});
 
 			await newMessage.save();
@@ -169,8 +163,7 @@ class ChatsService {
 			user: new Types.ObjectId(myId),
 			text,
 			date,
-			chat: chat._id,
-			isRead
+			chat: chat._id
 		});
 
 		await newMessage.save();

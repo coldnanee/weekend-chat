@@ -6,8 +6,6 @@ import {
 	disconnectHandler,
 	startTypingMessageHandler,
 	endTypingMessageHandler,
-	entryChatHandler,
-	leaveChatHandler,
 	deleteChatHandler,
 	deleteMessageHandler
 } from "./socket";
@@ -78,8 +76,6 @@ const start = async () => {
 
 		const onlineUsers = new Map<string, string>();
 
-		const usersIntoChats = new Map<string, string>(); // userId - chatId
-
 		io.on("connection", (socket) => {
 			checkAuthForSocket(socket);
 
@@ -89,12 +85,10 @@ const start = async () => {
 
 			io.emit("new-online-user", Array.from(onlineUsers.values()));
 
-			sendMessageHandler(io, socket, onlineUsers, usersIntoChats);
+			sendMessageHandler(io, socket, onlineUsers);
 			startTypingMessageHandler(io, socket, onlineUsers);
 			endTypingMessageHandler(io, socket, onlineUsers);
-			disconnectHandler(io, socket, onlineUsers, usersIntoChats);
-			entryChatHandler(io, socket, onlineUsers, usersIntoChats);
-			leaveChatHandler(socket, usersIntoChats);
+			disconnectHandler(io, socket, onlineUsers);
 			deleteChatHandler(io, socket, onlineUsers);
 			deleteMessageHandler(io, socket, onlineUsers);
 		});

@@ -3,6 +3,5 @@ export type TMessage = {
 	user: string;
 	text: string;
 	date: string;
-	isRead: boolean;
 	chat: string;
 };

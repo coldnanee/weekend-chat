@@ -25,7 +25,6 @@ export type TMessage = {
 	user: Schema.Types.ObjectId;
 	text: string;
 	date: string;
-	isRead: boolean;
 	chat: Schema.Types.ObjectId;
 };
 
