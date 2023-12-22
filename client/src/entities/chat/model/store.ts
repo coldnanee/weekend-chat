@@ -16,6 +16,8 @@ type TChatsStore = {
 	newChat: (chat: TChat) => void; // eslint-disable-line no-unused-vars
 	sendMessage: (message: TMessage) => void; // eslint-disable-line no-unused-vars
 	deleteMessage: (chatId: string, messagesId: string[]) => void; // eslint-disable-line no-unused-vars
+	//prettier-ignore
+	editMessage: (data: { messageId: string; updateText: string; chat: string;}) => void; // eslint-disable-line no-unused-vars
 };
 
 export const useChatsStore = create<TChatsStore>()(
@@ -88,6 +90,20 @@ export const useChatsStore = create<TChatsStore>()(
 						(m) => !messagesId.includes(m._id)
 					);
 					useMessagesStore.getState().clearSelectedMessages();
+				}
+			}),
+		editMessage: (data) =>
+			set((state) => {
+				const chat = state.chats.find((c) => c._id === data.chat);
+				if (chat) {
+					chat.messages = chat?.messages.map((m) => {
+						if (m._id === data.messageId) {
+							m.text = data.updateText;
+							m.isUpdated = true;
+						}
+
+						return m;
+					});
 				}
 			})
 	}))

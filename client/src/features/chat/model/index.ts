@@ -3,3 +3,5 @@ export { deleteMessageHandler } from "./deleteMessageHandler";
 export { getMessageHandler } from "./getMessageHandler";
 export { newChatHandler } from "./newChatHandler";
 export { sendMessageHandler } from "./sendMessageHandler";
+export { editMessageHandler } from "./editMessageHandler";
+export { useMessageStore } from "./store";

@@ -20,5 +20,15 @@ export const checkAuthForSocket = (socket: Socket) => {
 
 			socket.handshake.query.user = userId;
 		}
+
+		if (name === "sessionId") {
+			const sessionId = value.replace(";", "");
+
+			if (!sessionId) {
+				return socket.disconnect();
+			}
+
+			socket.handshake.query.session = sessionId;
+		}
 	});
 };

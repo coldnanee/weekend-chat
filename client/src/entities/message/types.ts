@@ -4,4 +4,5 @@ export type TMessage = {
 	text: string;
 	date: string;
 	chat: string;
+	isUpdated: boolean;
 };

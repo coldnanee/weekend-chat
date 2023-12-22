@@ -3,7 +3,6 @@
 import debounce from "lodash.debounce";
 import {
 	KeyboardEvent,
-	useState,
 	type ChangeEvent,
 	useRef,
 	useEffect,
@@ -11,7 +10,9 @@ import {
 } from "react";
 import type { MutableRefObject } from "react";
 import { HiOutlinePaperAirplane } from "react-icons/hi2";
+import { useMessagesStore } from "@/entities/message";
 import { useSocketContext } from "@/shared";
+import { useMessageStore } from "../../model";
 import cl from "./index.module.scss";
 
 export const ChatInput = ({
@@ -25,7 +26,9 @@ export const ChatInput = ({
 
 	const { socket } = useSocketContext();
 
-	const [message, setMessage] = useState<string>("");
+	const { message, editMessage, changeMessageBody, messageBody } =
+		useMessageStore();
+	const { clearSelectedMessages } = useMessagesStore();
 
 	const scrollBottom = () => {
 		if (messagesContainer.current) {
@@ -44,7 +47,9 @@ export const ChatInput = ({
 	);
 
 	const changeInput = (e: ChangeEvent<HTMLInputElement>) => {
-		setMessage(e.target.value);
+		messageBody
+			? changeMessageBody({ ...messageBody, text: e.target.value })
+			: editMessage(e.target.value);
 		socket?.emit("start-typing", recipientId);
 		changeMessage();
 	};
@@ -56,8 +61,19 @@ export const ChatInput = ({
 				message
 			});
 			isFirstTyping.current = true;
-			setMessage("");
+			editMessage("");
 			socket?.emit("stop-typing", recipientId);
+		}
+	};
+
+	const updateMessage = () => {
+		if (socket && messageBody?.text) {
+			socket.emit("edit-message", {
+				messageId: messageBody._id,
+				updateText: messageBody.text
+			});
+			changeMessageBody(null);
+			clearSelectedMessages();
 		}
 	};
 
@@ -82,15 +98,15 @@ export const ChatInput = ({
 					onKeyDown={handlePressEnter}
 					className={cl.root__wrapper__input}
 					placeholder="Write a message..."
-					value={message}
+					value={messageBody ? messageBody.text : message}
 					type="text"
 				/>
-				{message && (
+				{(message || messageBody?.text) && (
 					<HiOutlinePaperAirplane
 						size="25px"
 						color="#5E636C"
 						className={cl.root__wrapper__input__send}
-						onClick={sendMessage}
+						onClick={messageBody ? updateMessage : sendMessage}
 					/>
 				)}
 			</div>

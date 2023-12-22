@@ -1,3 +1,7 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+
 import type { RegisterOptions } from "react-hook-form";
 
 import { useFormContext } from "react-hook-form";
@@ -27,7 +31,24 @@ export const SettingsInput = ({
 
 	const error = errors[name];
 
+	const isChanged = useRef<boolean>(false);
+	const isMounted = useRef<boolean>(false);
+
 	const inputValue = watch(name);
+
+	const wrapperInputValue = isChanged.current
+		? inputValue
+		: name !== "password" && profile && profile[name];
+
+	useEffect(() => {
+		if (isMounted.current) {
+			isChanged.current = true;
+		}
+	}, [inputValue]);
+
+	useEffect(() => {
+		isMounted.current = true;
+	}, []);
 
 	return (
 		<div className={cl.root}>
@@ -43,7 +64,7 @@ export const SettingsInput = ({
 			{error && <p className={cl.root__error}>{error.message}</p>}
 			<label
 				className={
-					inputValue
+					wrapperInputValue
 						? [cl.root__label, cl.root__label_hidden].join(" ")
 						: cl.root__label
 				}

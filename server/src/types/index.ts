@@ -26,6 +26,7 @@ export type TMessage = {
 	text: string;
 	date: string;
 	chat: Schema.Types.ObjectId;
+	isUpdated: boolean;
 };
 
 export type TChat = {

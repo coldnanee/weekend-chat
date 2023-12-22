@@ -1,0 +1,1 @@
+export { logoutHandler } from "./logoutHandler";

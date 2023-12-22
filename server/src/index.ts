@@ -7,7 +7,9 @@ import {
 	startTypingMessageHandler,
 	endTypingMessageHandler,
 	deleteChatHandler,
-	deleteMessageHandler
+	deleteMessageHandler,
+	logoutHandler,
+	editMessageHandler
 } from "./socket";
 
 import express from "express";
@@ -76,12 +78,16 @@ const start = async () => {
 
 		const onlineUsers = new Map<string, string>();
 
+		const usersSessions = new Map<string, string>();
+
 		io.on("connection", (socket) => {
 			checkAuthForSocket(socket);
 
 			const user = connectionQueryWrapper(socket.handshake.query.user);
+			const session = connectionQueryWrapper(socket.handshake.query.session);
 
 			onlineUsers.set(socket.id, user);
+			usersSessions.set(socket.id, session);
 
 			io.emit("new-online-user", Array.from(onlineUsers.values()));
 
@@ -91,6 +97,8 @@ const start = async () => {
 			disconnectHandler(io, socket, onlineUsers);
 			deleteChatHandler(io, socket, onlineUsers);
 			deleteMessageHandler(io, socket, onlineUsers);
+			logoutHandler(io, socket, usersSessions);
+			editMessageHandler(io, socket, onlineUsers);
 		});
 
 		await connectDB();
