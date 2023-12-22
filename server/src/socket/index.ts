@@ -6,3 +6,5 @@ export { deleteChatHandler } from "./deleteChat";
 export { deleteMessageHandler } from "./deleteMessage";
 export { logoutHandler } from "./logout";
 export { editMessageHandler } from "./editMessage";
+export { pinChatHandler } from "./pinChat";
+export { unpinChatHandler } from "./unpinChat";

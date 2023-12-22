@@ -1,0 +1,7 @@
+.root {
+	@apply p-[10px] cursor-pointer flex items-center gap-x-[7px];
+	&__text {
+		@apply text-[#a9aeba] text-[16px];
+		white-space: nowrap;
+	}
+}

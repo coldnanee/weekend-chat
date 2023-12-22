@@ -4,9 +4,12 @@
 	@media (max-width: 1115px) {
 		flex: 0 1 100%;
 	}
-	&:hover {
-		background: rgba(255, 255, 255, 0.08);
+	@media (hover: hover) {
+		&:hover {
+			background: rgba(255, 255, 255, 0.08);
+		}
 	}
+
 	&_check {
 		background: rgba(255, 255, 255, 0.08);
 	}

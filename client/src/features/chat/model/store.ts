@@ -11,6 +11,8 @@ type TMessageStore = {
 	changeMessageBody: (m: TMessage | null) => void; // eslint-disable-line no-unused-vars
 	isEdit: boolean;
 	changeIsEdit: (e: boolean) => void; // eslint-disable-line no-unused-vars
+	isMenuShow: boolean;
+	setMenuShow: (s: boolean) => void; // eslint-disable-line no-unused-vars
 };
 
 export const useMessageStore = create<TMessageStore>()(
@@ -18,6 +20,11 @@ export const useMessageStore = create<TMessageStore>()(
 		message: "",
 		isEdit: false,
 		messageBody: null,
+		isMenuShow: false,
+		setMenuShow: (s) =>
+			set((state) => {
+				state.isMenuShow = s;
+			}),
 		editMessage: (message) =>
 			set((state) => {
 				state.message = message;
