@@ -7,14 +7,10 @@ import { useEffect, useState, type MutableRefObject } from "react";
 import { useChatsStore, type TChat } from "@/entities/chat"; // eslint-disable-line boundaries/element-types
 
 import { useOnlineUsersStore } from "@/entities/user"; // eslint-disable-line boundaries/element-types
-import { useSocketContext } from "@/shared";
 import { ChatMessage } from "../item";
 import { StartChat } from "../start-chat";
 import cl from "./index.module.scss";
-<<<<<<< HEAD
-=======
 import { useSocketContext } from "@/shared"; // eslint-disable-line import/order
->>>>>>> master
 
 export const ChatMessages = ({
 	chat,
