@@ -27,11 +27,7 @@
 			word-wrap: break-word;
 		}
 		&__info {
-			@apply flex justify-between text-[10px] items-center mt-[10px];
-		}
-		&__date {
-			@apply text-right;
-			flex: 1 1 auto;
+			@apply flex justify-end text-[10px] items-center mt-[10px] gap-x-[10px];
 		}
 	}
 }

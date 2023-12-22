@@ -9,7 +9,8 @@ export {
 	newChatHandler,
 	deleteChatHandler,
 	deleteMessageHandler,
-	entryChatHandler,
 	getMessageHandler,
-	sendMessageHandler
+	sendMessageHandler,
+	editMessageHandler,
+	useMessageStore
 } from "./model";

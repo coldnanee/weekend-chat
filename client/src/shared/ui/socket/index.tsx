@@ -10,10 +10,11 @@ import {
 	getMessageHandler,
 	newChatHandler,
 	sendMessageHandler,
-	entryChatHandler,
 	deleteChatHandler,
-	deleteMessageHandler
+	deleteMessageHandler,
+	editMessageHandler
 } from "@/features/chat"; // eslint-disable-line boundaries/element-types
+import { logoutHandler } from "@/features/profile"; // eslint-disable-line boundaries/element-types
 import { newOnlineUserHandler, newOfflineUserHandler } from "@/features/user"; // eslint-disable-line boundaries/element-types
 
 export const SocketContext = createContext<{ socket?: Socket }>({
@@ -41,9 +42,10 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 	newOnlineUserHandler(socket);
 	newOfflineUserHandler(socket);
 	newChatHandler(socket);
-	entryChatHandler(socket);
 	deleteChatHandler(socket);
 	deleteMessageHandler(socket);
+	logoutHandler(socket);
+	editMessageHandler(socket);
 
 	return (
 		<SocketContext.Provider value={{ socket: socket }}>

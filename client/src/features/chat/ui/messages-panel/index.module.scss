@@ -13,5 +13,8 @@
 				@apply cursor-pointer;
 			}
 		}
+		&__buttons {
+			@apply flex justify-between gap-x-[20px];
+		}
 	}
 }

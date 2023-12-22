@@ -2,6 +2,7 @@ import { IoMdArrowDropdown } from "react-icons/io";
 import { TbReload } from "react-icons/tb";
 import { TiTick } from "react-icons/ti";
 import { useSettingsSessionStore } from "@/entities/session";
+import { useSocketContext } from "@/shared";
 import cl from "./index.module.scss";
 
 export const SettingsSessionsPanel = () => {
@@ -13,6 +14,8 @@ export const SettingsSessionsPanel = () => {
 		fetchSessions
 	} = useSettingsSessionStore();
 
+	const { socket } = useSocketContext();
+
 	const isAllSelected = selectedSessions.length === sessions.length;
 
 	const rootClChecked = [cl.root__body__checkbox__body];
@@ -20,6 +23,11 @@ export const SettingsSessionsPanel = () => {
 	if (isAllSelected) {
 		rootClChecked.push(cl.root__body__checkbox__body_checked);
 	}
+
+	const killSessionsWrapper = () => {
+		killSessions();
+		socket?.emit("logout", selectedSessions);
+	};
 
 	return (
 		<div className={cl.root}>
@@ -51,7 +59,7 @@ export const SettingsSessionsPanel = () => {
 				{selectedSessions.length > 0 && (
 					<button
 						className={cl.root__body__delete}
-						onClick={killSessions}>
+						onClick={killSessionsWrapper}>
 						Delete
 					</button>
 				)}

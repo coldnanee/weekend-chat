@@ -1,45 +1,39 @@
 .root {
-    @apply flex justify-between p-[10px] items-end;
-    &_active {
-        @apply bg-[#2e333d] rounded-[15px];
-    }
-    &__avatar {
-        @apply relative;
-    }
-    &__status {
-        @apply bg-[green] w-[12px] h-[12px] rounded-[50%] block absolute bottom-0 right-0;
-    }
-    &__body {
-        @apply flex gap-x-[10px];
-        &__chat {
-            @apply py-[4px];
-            &__name {
-                @apply text-[#e7e9ea] mb-[7px];
-            }
-            &__message {
-                @apply text-[#6c6f75];
-                span {
-                    @apply text-[#9d9d9e] font-bold inline-block mr-[7px];
-                }
-                p {
-                    @apply inline;
-                }
-            }
-        }
-    }
-    &__info {
-        @apply py-[4px] flex gap-x-[7px] items-end;
-        &__counter {
-            @apply bg-[#6b89fc] rounded-[50%] w-[20px] h-[20px] flex items-center justify-center;
-            p {
-                @apply text-[#fff] font-bold;
-            }
-        }
-        &__date {
-            @apply text-[#6c6f75] mb-[7px];
-        }
-        &__body {
-            @apply flex flex-col items-center;
-        }
-    }
+	@apply flex justify-between p-[10px] items-end;
+	&_active {
+		@apply bg-[#2e333d] rounded-[15px];
+	}
+	&__avatar {
+		@apply relative;
+	}
+	&__status {
+		@apply bg-[green] w-[12px] h-[12px] rounded-[50%] block absolute bottom-0 right-0;
+	}
+	&__body {
+		@apply flex gap-x-[10px];
+		&__chat {
+			@apply py-[4px];
+			&__name {
+				@apply text-[#e7e9ea] mb-[7px];
+			}
+			&__message {
+				@apply text-[#6c6f75];
+				span {
+					@apply text-[#9d9d9e] font-bold inline-block mr-[7px];
+				}
+				p {
+					@apply inline;
+				}
+			}
+		}
+	}
+	&__info {
+		@apply py-[4px] flex gap-x-[7px] items-end;
+		&__date {
+			@apply text-[#6c6f75] mb-[7px];
+		}
+		&__body {
+			@apply flex flex-col items-center;
+		}
+	}
 }

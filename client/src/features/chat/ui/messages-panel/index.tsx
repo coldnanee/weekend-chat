@@ -2,16 +2,31 @@ import { RxCross2 } from "react-icons/rx";
 
 import type { TChat } from "@/entities/chat";
 import { useMessagesStore } from "@/entities/message";
+import { useProfileStore } from "@/entities/profile";
 import { useSocketContext } from "@/shared";
+import { useMessageStore } from "../../model";
 import cl from "./index.module.scss";
 
 export const ChatMessagesPanel = ({ chat }: { chat?: TChat }) => {
 	const { selectedMessages, clearSelectedMessages } = useMessagesStore();
 
+	const { changeMessageBody, changeIsEdit } = useMessageStore();
+	const { profile } = useProfileStore();
 	const { socket } = useSocketContext();
 
 	const deleteMessages = () => {
 		socket?.emit("delete-message", chat?._id, selectedMessages);
+	};
+
+	const message = chat?.messages.filter((m) =>
+		selectedMessages.includes(m._id)
+	)[0];
+
+	const changeMessage = () => {
+		if (message) {
+			changeMessageBody(message);
+			changeIsEdit(true);
+		}
 	};
 
 	return (
@@ -29,11 +44,20 @@ export const ChatMessagesPanel = ({ chat }: { chat?: TChat }) => {
 						<p>Messages</p>
 					</div>
 				</div>
-				<button
-					className={cl.root__body__button}
-					onClick={deleteMessages}>
-					Delete
-				</button>
+				<div className={cl.root__body__buttons}>
+					{selectedMessages.length === 1 && profile?._id === message?.user && (
+						<button
+							className={cl.root__body__buttons__button}
+							onClick={changeMessage}>
+							Edit
+						</button>
+					)}
+					<button
+						className={cl.root__body__buttons__button}
+						onClick={deleteMessages}>
+						Delete
+					</button>
+				</div>
 			</div>
 		</div>
 	);

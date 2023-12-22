@@ -4,7 +4,7 @@ import { useParams } from "next/navigation";
 
 import { useEffect, useState, type MutableRefObject } from "react";
 
-import { useChatsStore, type TChat } from "@/entities/chat"; // eslint-disable-line boundaries/element-types
+import { type TChat } from "@/entities/chat"; // eslint-disable-line boundaries/element-types
 
 import { useOnlineUsersStore } from "@/entities/user"; // eslint-disable-line boundaries/element-types
 import { ChatMessage } from "../item";
@@ -20,7 +20,6 @@ export const ChatMessages = ({
 	messagesContainer: MutableRefObject<HTMLElement | null>;
 }) => {
 	const params = useParams<{ login: string }>();
-	const { readMessagesLocal } = useChatsStore();
 
 	const users = useOnlineUsersStore((state) => state.users);
 
@@ -34,15 +33,6 @@ export const ChatMessages = ({
 				messagesContainer.current.scrollHeight;
 		}
 	}, [chat]); //eslint-disable-line
-
-	useEffect(() => {
-		readMessagesLocal(chat?._id || "");
-		socket?.emit("entry-chat", chat?._id);
-
-		return () => {
-			socket?.emit("leave-chat");
-		};
-	}, []); //eslint-disable-line
 
 	if (!chat) {
 		return <StartChat name={params?.login || ""} />;
