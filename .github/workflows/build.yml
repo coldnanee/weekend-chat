@@ -3,6 +3,8 @@ name: Weekend-Chat-BUILD
 on:
     push:
       branches: [ "deploy" ]
+    pull_request:
+      branches: [ "deploy" ]
 
 env:
     LOGIN: ${{ secrets.DOCKER_LOGIN }}

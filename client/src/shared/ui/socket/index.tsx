@@ -2,7 +2,6 @@
 
 import { getCookie } from "cookies-next";
 
-import { useRouter, usePathname } from "next/navigation";
 import { createContext, useContext, type ReactNode, useEffect } from "react";
 
 import { io, Socket } from "socket.io-client";
@@ -30,9 +29,6 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 		autoConnect: false
 	});
 
-	const router = useRouter();
-	const path = usePathname();
-
 	useEffect(() => {
 		const isAuth = getCookie("auth");
 		if (isAuth) {
@@ -46,7 +42,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 	newOfflineUserHandler(socket);
 	newChatHandler(socket);
 	entryChatHandler(socket);
-	deleteChatHandler(router, path || "", socket);
+	deleteChatHandler(socket);
 	deleteMessageHandler(socket);
 
 	return (

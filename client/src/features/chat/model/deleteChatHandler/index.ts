@@ -2,14 +2,8 @@ import type { Socket } from "socket.io-client";
 
 import { useChatsStore } from "@/entities/chat";
 
-import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-
-export const deleteChatHandler = (
-	router: AppRouterInstance,
-	path: string,
-	socket: Socket
-) => {
+export const deleteChatHandler = (socket: Socket) => {
 	socket.on("delete-chat-client", ({ chatId }: { chatId: string }) => {
-		useChatsStore.getState().deleteChat(router, path, chatId);
+		useChatsStore.getState().deleteChat(chatId);
 	});
 };
