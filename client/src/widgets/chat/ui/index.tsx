@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { useRef, useMemo } from "react";
+import { useRef, useEffect } from "react";
 import { ChatInfo, ChatInput, ChatMessagesPanel } from "@/features/chat";
 import { useMessageStore } from "@/features/chat";
 import { useChatsStore } from "@/entities/chat";
@@ -15,14 +15,17 @@ export const Chat = () => {
 	const { selectedMessages } = useMessagesStore();
 	const { setMenuShow } = useMessageStore();
 
+	const isTouchDevice = useRef<boolean | number>(false);
+
 	const params = useParams<{ login: string }>();
 
 	const messagesContainer = useRef<HTMLElement | null>(null);
 
 	const { chats, isLoading: isChatsLoading } = useChatsStore();
 
-	const isTouchDevice = useMemo(() => {
-		return "ontouchstart" in window || navigator.maxTouchPoints;
+	useEffect(() => {
+		isTouchDevice.current =
+			"ontouchstart" in window || navigator.maxTouchPoints;
 	}, []);
 
 	const {
@@ -46,7 +49,7 @@ export const Chat = () => {
 	const chat = chats.find((chat) => chat.user.login === params?.login);
 
 	const closeMenu = () => {
-		if (!isTouchDevice) {
+		if (!isTouchDevice.current) {
 			return;
 		}
 

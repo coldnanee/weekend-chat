@@ -1,7 +1,6 @@
 "use client";
 
-import { type MouseEvent, useMemo } from "react";
-
+import { type MouseEvent, useEffect, useRef } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import { BsFillPinFill as PinImage } from "react-icons/bs";
 import { BsPin as UnpinImage } from "react-icons/bs";
@@ -19,13 +18,17 @@ export const ChatMenu = ({ chat }: { chat?: TChat }) => {
 	const { socket } = useSocketContext();
 	const { isMenuShow, setMenuShow } = useMessageStore();
 
+	const isTouchDevice = useRef<number | boolean>(false);
+
 	const rootClasses = [cl.root__body];
 
 	if (isMenuShow) {
 		rootClasses.push(cl.root__body_visible);
 	}
-	const isTouchDevice = useMemo(() => {
-		return "ontouchstart" in window || navigator.maxTouchPoints;
+
+	useEffect(() => {
+		isTouchDevice.current =
+			"ontouchstart" in window || navigator.maxTouchPoints;
 	}, []);
 
 	const deleteChat = () => {
@@ -56,7 +59,7 @@ export const ChatMenu = ({ chat }: { chat?: TChat }) => {
 	];
 
 	const toggleShowMenu = (e: MouseEvent<HTMLButtonElement>) => {
-		if (!isTouchDevice) {
+		if (!isTouchDevice.current) {
 			return;
 		}
 		e.stopPropagation();
