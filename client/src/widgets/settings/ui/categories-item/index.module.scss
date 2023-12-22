@@ -6,8 +6,10 @@
 	&_active {
 		background: rgba(255, 255, 255, 0.08);
 	}
-	&:hover {
-		background: rgba(255, 255, 255, 0.08);
+	@media (hover: hover) {
+		&:hover {
+			background: rgba(255, 255, 255, 0.08);
+		}
 	}
 	&__text {
 		@apply text-[#a9aeba] text-[16px];

@@ -9,7 +9,9 @@ import {
 	deleteChatHandler,
 	deleteMessageHandler,
 	logoutHandler,
-	editMessageHandler
+	editMessageHandler,
+	pinChatHandler,
+	unpinChatHandler
 } from "./socket";
 
 import express from "express";
@@ -99,6 +101,8 @@ const start = async () => {
 			deleteMessageHandler(io, socket, onlineUsers);
 			logoutHandler(io, socket, usersSessions);
 			editMessageHandler(io, socket, onlineUsers);
+			pinChatHandler(io, socket, usersSessions);
+			unpinChatHandler(io, socket, usersSessions);
 		});
 
 		await connectDB();
