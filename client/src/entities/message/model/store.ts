@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 import { immer } from "zustand/middleware/immer";
 
-import { useMessageStore } from "@/features/chat";
+import { useMessageStore } from "@/features/chat"; // eslint-disable-line boundaries/element-types
 
 type TMessagesStore = {
 	selectedMessages: string[];
