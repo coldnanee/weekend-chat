@@ -12,5 +12,7 @@ export {
 	getMessageHandler,
 	sendMessageHandler,
 	editMessageHandler,
-	useMessageStore
+	useMessageStore,
+	pinChatHandler,
+	unpinChatHandler
 } from "./model";

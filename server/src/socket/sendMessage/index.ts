@@ -2,12 +2,14 @@ import type { Socket, Server } from "socket.io";
 
 import { connectionQueryWrapper, getKeyByValueMap } from "../../libs";
 
+import SessionModel from "../../db/models/SessionModel";
+
 import ChatsService from "../../chats/chats.service";
 
 export const sendMessageHandler = (
 	io: Server,
 	socket: Socket,
-	users: Map<string, string>
+	usersSessions: Map<string, string>
 ) => {
 	socket.on(
 		"send-message",
@@ -16,26 +18,60 @@ export const sendMessageHandler = (
 
 			const myId = connectionQueryWrapper(socket.handshake.query.user);
 
-			const recipientSocketId = getKeyByValueMap(users, recipientId);
-
 			const messageBody = await ChatsService.saveMessageToDb(
 				myId,
 				recipientId,
 				message
 			);
 
-			if (recipientSocketId) {
-				messageBody?.recipientDto
-					? io.to(recipientSocketId).emit("new-chat", messageBody.recipientDto)
-					: io
-							.to(recipientSocketId)
-							.emit("get-message", messageBody?.newMessage);
+			const mySessions = await SessionModel.find({ user: myId });
+			const recipientSessions = await SessionModel.find({ user: recipientId });
+
+			if (messageBody?.recipientDto) {
+				recipientSessions.map((s) => {
+					const sessionSocketId = getKeyByValueMap(
+						usersSessions,
+						s._id.toString()
+					);
+					if (sessionSocketId) {
+						io.to(sessionSocketId).emit("new-chat", messageBody.recipientDto);
+					}
+				});
+			} else {
+				recipientSessions.map((s) => {
+					const sessionSocketId = getKeyByValueMap(
+						usersSessions,
+						s._id.toString()
+					);
+					if (sessionSocketId) {
+						io.to(sessionSocketId).emit("get-message", messageBody?.newMessage);
+					}
+				});
 			}
 
 			if (messageBody?.myDto) {
-				io.to(socket.id).emit("new-chat", messageBody.myDto);
+				mySessions.map((s) => {
+					const sessionSocketId = getKeyByValueMap(
+						usersSessions,
+						s._id.toString()
+					);
+					if (sessionSocketId) {
+						io.to(sessionSocketId).emit("new-chat", messageBody.myDto);
+					}
+				});
 			} else {
-				io.to(socket.id).emit("send-message-client", messageBody?.newMessage);
+				mySessions.map((s) => {
+					const sessionSocketId = getKeyByValueMap(
+						usersSessions,
+						s._id.toString()
+					);
+					if (sessionSocketId) {
+						io.to(sessionSocketId).emit(
+							"send-message-client",
+							messageBody?.newMessage
+						);
+					}
+				});
 			}
 		}
 	);

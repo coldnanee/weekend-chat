@@ -28,7 +28,7 @@ export const unpinChatHandler = (
 		await chat.save();
 
 		sessions.map((s) => {
-			const sessionSocketId = getKeyByValueMap(usersSessions, s._id);
+			const sessionSocketId = getKeyByValueMap(usersSessions, s._id.toString());
 			if (sessionSocketId) {
 				io.to(sessionSocketId).emit("unpin-chat-client", chatId);
 			}

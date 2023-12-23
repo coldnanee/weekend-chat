@@ -12,7 +12,9 @@ import {
 	sendMessageHandler,
 	deleteChatHandler,
 	deleteMessageHandler,
-	editMessageHandler
+	editMessageHandler,
+	pinChatHandler,
+	unpinChatHandler
 } from "@/features/chat"; // eslint-disable-line boundaries/element-types
 import { logoutHandler } from "@/features/profile"; // eslint-disable-line boundaries/element-types
 import { newOnlineUserHandler, newOfflineUserHandler } from "@/features/user"; // eslint-disable-line boundaries/element-types
@@ -46,6 +48,8 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 	deleteMessageHandler(socket);
 	logoutHandler(socket);
 	editMessageHandler(socket);
+	pinChatHandler(socket);
+	unpinChatHandler(socket);
 
 	return (
 		<SocketContext.Provider value={{ socket: socket }}>

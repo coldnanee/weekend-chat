@@ -31,7 +31,9 @@ export const ChatInfo = ({ user, chat }: { user: TUser; chat?: TChat }) => {
 					<ChatUserOnlineStatus userId={user._id} />
 				</div>
 				<div className={cl.root__body__info}>
-					<ChatMenu chat={chat} />
+					{chat?.messages && chat?.messages.length > 0 && (
+						<ChatMenu chat={chat} />
+					)}
 					<DefaultAvatar
 						src={user?.avatar}
 						width={30}

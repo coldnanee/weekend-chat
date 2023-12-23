@@ -1,14 +1,19 @@
 .root {
-	@apply relative;
+	@media (min-width: 801px) {
+		@apply relative;
+	}
 	@media (hover: hover) {
 		&:hover .root__body {
 			@apply opacity-100 block;
 		}
 	}
 	&__body {
-		@apply absolute top-[20px] right-0 bg-[#262b35] min-w-full opacity-0 hidden;
+		@apply absolute top-[20px] right-0 bg-[#262b35] opacity-0 hidden;
 		transition: all 0.15s linear 0s;
 		border-radius: 0 0 5px 5px;
+		@media (max-width: 800px) {
+			@apply top-0;
+		}
 		&_visible {
 			@apply opacity-100 block;
 		}
