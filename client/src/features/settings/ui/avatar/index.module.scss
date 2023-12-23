@@ -1,12 +1,20 @@
 .root {
-    @apply flex flex-col items-center;
-    &__avatar {
-        @apply cursor-pointer;
-    }
-    &__input {
-        @apply hidden;
-    }
-    &__buttons {
-        @apply flex justify-between gap-x-[10px] mt-[10px] mb-[20px];
-    }
+	@apply flex flex-col items-center relative pb-[10px];
+	@media (hover: hover) {
+		&:hover .root__menu {
+			@apply opacity-100 block;
+		}
+	}
+	&__avatar {
+		@apply cursor-pointer;
+	}
+	&__input {
+		@apply hidden;
+	}
+	&__menu {
+		@apply absolute top-[100%] left-0 rounded-[5px] z-10 bg-[#31343a] hidden opacity-0 pt-[5px];
+		&_visible {
+			@apply opacity-100 block;
+		}
+	}
 }
