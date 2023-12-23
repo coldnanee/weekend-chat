@@ -5,8 +5,6 @@ import { connectionQueryWrapper } from "../../libs";
 import SessionModel from "../../db/models/SessionModel";
 import ChatModel from "../../db/models/ChatModel";
 
-import { getKeyByValueMap } from "../../libs";
-
 export const unpinChatHandler = (
 	io: Server,
 	socket: Socket,
@@ -28,7 +26,7 @@ export const unpinChatHandler = (
 		await chat.save();
 
 		sessions.map((s) => {
-			const sessionSocketId = getKeyByValueMap(usersSessions, s._id.toString());
+			const sessionSocketId = usersSessions.get(s._id.toString());
 			if (sessionSocketId) {
 				io.to(sessionSocketId).emit("unpin-chat-client", chatId);
 			}

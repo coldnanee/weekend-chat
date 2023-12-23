@@ -1,7 +1,7 @@
 import type { Socket, Server } from "socket.io";
 
 import ChatModel from "../../db/models/ChatModel";
-import { connectionQueryWrapper, getKeyByValueMap } from "../../libs";
+import { connectionQueryWrapper } from "../../libs";
 
 import ChatsService from "../../chats/chats.service";
 import SessionModel from "../../db/models/SessionModel";
@@ -32,14 +32,14 @@ export const deleteChatHandler = (
 		const recipientSessions = await SessionModel.find({ user: recipientId });
 
 		mySessions.map((s) => {
-			const sessionSocketId = getKeyByValueMap(usersSessions, s._id.toString());
+			const sessionSocketId = usersSessions.get(s._id.toString());
 			if (sessionSocketId) {
 				io.to(sessionSocketId).emit("delete-chat-client", { chatId });
 			}
 		});
 
 		recipientSessions.map((s) => {
-			const sessionSocketId = getKeyByValueMap(usersSessions, s._id.toString());
+			const sessionSocketId = usersSessions.get(s._id.toString());
 			if (sessionSocketId) {
 				io.to(sessionSocketId).emit("delete-chat-client", { chatId });
 			}

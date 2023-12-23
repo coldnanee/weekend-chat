@@ -89,14 +89,14 @@ const start = async () => {
 			const session = connectionQueryWrapper(socket.handshake.query.session);
 
 			onlineUsers.set(socket.id, user);
-			usersSessions.set(socket.id, session);
+			usersSessions.set(session, socket.id);
 
 			io.emit("new-online-user", Array.from(onlineUsers.values()));
 
 			sendMessageHandler(io, socket, usersSessions); // []
 			startTypingMessageHandler(io, socket, usersSessions); // [x]
 			endTypingMessageHandler(io, socket, usersSessions); // [x]
-			disconnectHandler(io, socket, onlineUsers); // [x]
+			disconnectHandler(io, socket, onlineUsers, usersSessions); // [x]
 			deleteChatHandler(io, socket, usersSessions); // [x]
 			deleteMessageHandler(io, socket, usersSessions); // [x]
 			logoutHandler(io, socket, usersSessions); // [x]

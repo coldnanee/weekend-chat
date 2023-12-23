@@ -1,4 +1,3 @@
-import { getKeyByValueMap } from "./../../libs/getKeyByValueMap/index";
 import type { Socket, Server } from "socket.io";
 
 import MessageModel from "../../db/models/MessageModel";
@@ -57,10 +56,7 @@ export const deleteMessageHandler = (
 			await ChatsService.deleteChat(chatId);
 
 			mySessions.map((s) => {
-				const sessionSocketId = getKeyByValueMap(
-					usersSessions,
-					s._id.toString()
-				);
+				const sessionSocketId = usersSessions.get(s._id.toString());
 				if (sessionSocketId) {
 					io.to(sessionSocketId).emit("delete-chat-client", {
 						chatId: chat?._id
@@ -69,10 +65,7 @@ export const deleteMessageHandler = (
 			});
 
 			recipientSessions.map((s) => {
-				const sessionSocketId = getKeyByValueMap(
-					usersSessions,
-					s._id.toString()
-				);
+				const sessionSocketId = usersSessions.get(s._id.toString());
 				if (sessionSocketId) {
 					io.to(sessionSocketId).emit("delete-chat-client", {
 						chatId: chat?._id
@@ -84,10 +77,7 @@ export const deleteMessageHandler = (
 				_id: { $in: messagesId }
 			});
 			mySessions.map((s) => {
-				const sessionSocketId = getKeyByValueMap(
-					usersSessions,
-					s._id.toString()
-				);
+				const sessionSocketId = usersSessions.get(s._id.toString());
 				if (sessionSocketId) {
 					io.to(sessionSocketId).emit("delete-message-client", {
 						chatId: chat?._id,
@@ -96,10 +86,7 @@ export const deleteMessageHandler = (
 				}
 			});
 			recipientSessions.map((s) => {
-				const sessionSocketId = getKeyByValueMap(
-					usersSessions,
-					s._id.toString()
-				);
+				const sessionSocketId = usersSessions.get(s._id.toString());
 				if (sessionSocketId) {
 					io.to(sessionSocketId).emit("delete-message-client", {
 						chatId: chat?._id,

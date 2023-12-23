@@ -3,8 +3,6 @@ import type { Server, Socket } from "socket.io";
 
 import SessionModel from "../../db/models/SessionModel";
 
-import { getKeyByValueMap } from "./../../libs";
-
 export const endTypingMessageHandler = (
 	io: Server,
 	socket: Socket,
@@ -16,7 +14,7 @@ export const endTypingMessageHandler = (
 		const recipientSessions = await SessionModel.find({ user: recipientId });
 
 		recipientSessions.map((s) => {
-			const sessionSocketId = getKeyByValueMap(usersSessions, s._id.toString());
+			const sessionSocketId = usersSessions.get(s._id.toString());
 			if (sessionSocketId) {
 				io.to(sessionSocketId).emit("stop-typing-client", userId);
 			}

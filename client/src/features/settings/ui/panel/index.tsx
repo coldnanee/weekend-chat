@@ -25,8 +25,7 @@ export const SettingsSessionsPanel = () => {
 	}
 
 	const killSessionsWrapper = () => {
-		killSessions();
-		socket?.emit("logout", selectedSessions);
+		killSessions(socket);
 	};
 
 	return (

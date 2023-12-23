@@ -3,7 +3,7 @@ import type { Server, Socket } from "socket.io";
 import MessageModel from "../../db/models/MessageModel";
 import ChatModel from "../../db/models/ChatModel";
 
-import { connectionQueryWrapper, getKeyByValueMap } from "../../libs";
+import { connectionQueryWrapper } from "../../libs";
 import SessionModel from "../../db/models/SessionModel";
 
 export const editMessageHandler = (
@@ -44,10 +44,7 @@ export const editMessageHandler = (
 				await message.save();
 
 				mySessions.map((s) => {
-					const sessionSocketId = getKeyByValueMap(
-						usersSessions,
-						s._id.toString()
-					);
+					const sessionSocketId = usersSessions.get(s._id.toString());
 					if (sessionSocketId) {
 						io.to(sessionSocketId).emit("edit-message-client", {
 							...data,
@@ -57,10 +54,7 @@ export const editMessageHandler = (
 				});
 
 				recipientSessions.map((s) => {
-					const sessionSocketId = getKeyByValueMap(
-						usersSessions,
-						s._id.toString()
-					);
+					const sessionSocketId = usersSessions.get(s._id.toString());
 					if (sessionSocketId) {
 						io.to(sessionSocketId).emit("edit-message-client", {
 							...data,

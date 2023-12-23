@@ -1,6 +1,6 @@
 import type { Socket, Server } from "socket.io";
 
-import { connectionQueryWrapper, getKeyByValueMap } from "../../libs";
+import { connectionQueryWrapper } from "../../libs";
 
 import SessionModel from "../../db/models/SessionModel";
 
@@ -29,20 +29,14 @@ export const sendMessageHandler = (
 
 			if (messageBody?.recipientDto) {
 				recipientSessions.map((s) => {
-					const sessionSocketId = getKeyByValueMap(
-						usersSessions,
-						s._id.toString()
-					);
+					const sessionSocketId = usersSessions.get(s._id.toString());
 					if (sessionSocketId) {
 						io.to(sessionSocketId).emit("new-chat", messageBody.recipientDto);
 					}
 				});
 			} else {
 				recipientSessions.map((s) => {
-					const sessionSocketId = getKeyByValueMap(
-						usersSessions,
-						s._id.toString()
-					);
+					const sessionSocketId = usersSessions.get(s._id.toString());
 					if (sessionSocketId) {
 						io.to(sessionSocketId).emit("get-message", messageBody?.newMessage);
 					}
@@ -51,20 +45,14 @@ export const sendMessageHandler = (
 
 			if (messageBody?.myDto) {
 				mySessions.map((s) => {
-					const sessionSocketId = getKeyByValueMap(
-						usersSessions,
-						s._id.toString()
-					);
+					const sessionSocketId = usersSessions.get(s._id.toString());
 					if (sessionSocketId) {
 						io.to(sessionSocketId).emit("new-chat", messageBody.myDto);
 					}
 				});
 			} else {
 				mySessions.map((s) => {
-					const sessionSocketId = getKeyByValueMap(
-						usersSessions,
-						s._id.toString()
-					);
+					const sessionSocketId = usersSessions.get(s._id.toString());
 					if (sessionSocketId) {
 						io.to(sessionSocketId).emit(
 							"send-message-client",
