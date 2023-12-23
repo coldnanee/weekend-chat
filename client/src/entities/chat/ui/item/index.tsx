@@ -7,7 +7,8 @@ import { useProfileStore } from "@/entities/profile"; // eslint-disable-line bou
 
 import { useOnlineUsersStore } from "@/entities/user"; // eslint-disable-line boundaries/element-types
 import { DefaultAvatar } from "@/shared";
-import { getMessageDate, getSlicedMessage } from "../../lib";
+import { getFormattedIsoDate } from "@/shared";
+import { getSlicedMessage } from "../../lib";
 import type { TChat } from "../../types";
 import cl from "./index.module.scss";
 import PinnedImage from "./pinned.svg";
@@ -33,7 +34,7 @@ export const ChatItem = ({ chat }: { chat: TChat }) => {
 
 	const isActive = params?.login === chat.user.login;
 
-	const messageDate = getMessageDate(chatBody.date);
+	const messageDate = getFormattedIsoDate(chatBody.date);
 
 	socket?.on("start-typing-client", (user: string) => {
 		if (chat.user._id === user) {

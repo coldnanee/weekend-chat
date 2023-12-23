@@ -3,7 +3,7 @@ import type { TUser } from "@/entities/user"; // eslint-disable-line boundaries/
 
 import { DefaultAvatar } from "@/shared";
 
-import { getMessageDate } from "../../lib";
+import { getFormattedIsoDate } from "@/shared";
 import { useMessagesStore } from "../../model";
 import type { TMessage } from "../../types";
 import cl from "./index.module.scss";
@@ -54,7 +54,7 @@ export const ChatMessage = ({
 						<p className={cl.root__message__info__updated}>edit</p>
 					)}
 					<p className={cl.root__message__info__date}>
-						{getMessageDate(message.date)}
+						{getFormattedIsoDate(message.date)}
 					</p>
 				</div>
 			</div>
