@@ -8,7 +8,7 @@
 		}
 	}
 	&__body {
-		@apply absolute top-[20px] right-0 bg-[#262b35] opacity-0 hidden;
+		@apply absolute top-[100%] right-0 bg-[#262b35] opacity-0 hidden;
 		transition: all 0.15s linear 0s;
 		border-radius: 0 0 5px 5px;
 		@media (max-width: 800px) {
