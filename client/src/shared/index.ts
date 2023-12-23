@@ -1,3 +1,3 @@
-export { Loader, DefaultAvatar } from "./ui";
 export { createMetadata, default, ReactQueryProvider } from "./lib";
-export { SocketProvider, useSocketContext } from "./ui";
+export { useSocketStore } from "./model";
+export { Loader, DefaultAvatar, SocketProvider } from "./ui";

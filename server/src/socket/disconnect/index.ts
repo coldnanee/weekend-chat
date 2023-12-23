@@ -9,10 +9,14 @@ export const disconnectHandler = (
 	usersSessions: Map<string, string>
 ) => {
 	socket.on("disconnect", () => {
-		const sessionId = connectionQueryWrapper(socket.handshake.query.session);
+		try {
+			const sessionId = connectionQueryWrapper(socket.handshake.query.session);
 
-		onlineUsers.delete(socket.id);
-		usersSessions.delete(sessionId);
-		io.emit("new-offline-user", Array.from(onlineUsers.values()));
+			onlineUsers.delete(socket.id);
+			usersSessions.delete(sessionId);
+			io.emit("new-offline-user", Array.from(onlineUsers.values()));
+		} catch (e) {
+			io.emit("error-client", e);
+		}
 	});
 };

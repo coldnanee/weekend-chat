@@ -12,37 +12,43 @@ export const deleteChatHandler = (
 	usersSessions: Map<string, string>
 ) => {
 	socket.on("delete-chat", async (chatId: string) => {
-		const myId = connectionQueryWrapper(socket.handshake.query.user);
+		try {
+			const myId = connectionQueryWrapper(socket.handshake.query.user);
 
-		const chat = await ChatModel.findById(chatId);
+			const chat = await ChatModel.findById(chatId);
 
-		if (!chat) {
-			return;
-		}
-
-		const recipientId = chat.members.find((id) => id !== myId);
-
-		if (!recipientId) {
-			return;
-		}
-
-		await ChatsService.deleteChat(chatId);
-
-		const mySessions = await SessionModel.find({ user: myId });
-		const recipientSessions = await SessionModel.find({ user: recipientId });
-
-		mySessions.map((s) => {
-			const sessionSocketId = usersSessions.get(s._id.toString());
-			if (sessionSocketId) {
-				io.to(sessionSocketId).emit("delete-chat-client", { chatId });
+			if (!chat) {
+				io.emit("error-client", "Chat not found");
+				return;
 			}
-		});
 
-		recipientSessions.map((s) => {
-			const sessionSocketId = usersSessions.get(s._id.toString());
-			if (sessionSocketId) {
-				io.to(sessionSocketId).emit("delete-chat-client", { chatId });
+			const recipientId = chat.members.find((id) => id !== myId);
+
+			if (!recipientId) {
+				io.emit("error-client", "Recipient not found");
+				return;
 			}
-		});
+
+			await ChatsService.deleteChat(chatId);
+
+			const mySessions = await SessionModel.find({ user: myId });
+			const recipientSessions = await SessionModel.find({ user: recipientId });
+
+			mySessions.map((s) => {
+				const sessionSocketId = usersSessions.get(s._id.toString());
+				if (sessionSocketId) {
+					io.to(sessionSocketId).emit("delete-chat-client", { chatId });
+				}
+			});
+
+			recipientSessions.map((s) => {
+				const sessionSocketId = usersSessions.get(s._id.toString());
+				if (sessionSocketId) {
+					io.to(sessionSocketId).emit("delete-chat-client", { chatId });
+				}
+			});
+		} catch (e) {
+			io.emit("error-client", e);
+		}
 	});
 };

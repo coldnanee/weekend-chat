@@ -12,7 +12,11 @@ export const Chats = () => {
 
 	const [login, setLogin] = useState<string>("");
 
-	const { data: users, isLoading: isUsersLoading } = useChatUsersQuery(login);
+	const {
+		data: users,
+		isLoading: isUsersLoading,
+		error
+	} = useChatUsersQuery(login);
 	const { isLoading: isChatsLoading, fetchChats, chats } = useChatsStore();
 
 	useEffect(() => {
@@ -24,6 +28,11 @@ export const Chats = () => {
 	useEffect(() => {
 		isMounted.current = true;
 	}, []);
+
+	if (error) {
+		alert(error);
+		return <></>;
+	}
 
 	const skeletons = [...new Array(5)];
 

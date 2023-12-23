@@ -11,7 +11,7 @@ import {
 import type { MutableRefObject } from "react";
 import { HiOutlinePaperAirplane } from "react-icons/hi2";
 import { useMessagesStore } from "@/entities/message";
-import { useSocketContext } from "@/shared";
+import { useSocketStore } from "@/shared";
 import { useMessageStore } from "../../model";
 import cl from "./index.module.scss";
 
@@ -24,7 +24,7 @@ export const ChatInput = ({
 }) => {
 	const isFirstTyping = useRef<boolean>(true);
 
-	const { socket } = useSocketContext();
+	const { socket } = useSocketStore();
 
 	const { message, editMessage, changeMessageBody, messageBody } =
 		useMessageStore();

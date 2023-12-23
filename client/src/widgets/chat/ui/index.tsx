@@ -30,7 +30,7 @@ export const Chat = () => {
 
 	const {
 		data: user,
-		isError: userError,
+		error: userError,
 		isLoading: isUserLoading
 	} = useGetUserByLogin(params?.login || "");
 
@@ -43,6 +43,7 @@ export const Chat = () => {
 	}
 
 	if (userError || typeof user === "string") {
+		userError && alert(userError);
 		return <UserNotFound />;
 	}
 
@@ -52,7 +53,6 @@ export const Chat = () => {
 		if (!isTouchDevice.current) {
 			return;
 		}
-
 		setMenuShow(false);
 	};
 

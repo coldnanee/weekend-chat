@@ -1,3 +1,3 @@
-export { DefaultAvatar } from "./default-avatar";
 export { Loader } from "./loader";
-export { SocketProvider, useSocketContext } from "./socket";
+export { DefaultAvatar } from "./default-avatar";
+export { SocketProvider } from "./socket";
