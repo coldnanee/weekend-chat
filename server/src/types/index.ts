@@ -15,6 +15,7 @@ export type TUser = {
 	password: string;
 	avatar: string;
 	chats: string[];
+	lastOnline: string;
 };
 
 export type TProfilePayload = Omit<TUser, "password">;

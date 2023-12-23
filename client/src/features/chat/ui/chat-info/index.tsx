@@ -23,12 +23,12 @@ export const ChatInfo = ({ user, chat }: { user: TUser; chat?: TChat }) => {
 				</Link>
 				<p className={cl.root__body__name}>{user.login}</p>
 				<ChatUserOnlineStatus
-					userId={user._id}
+					user={user}
 					className={cl.root__body__status}
 				/>
 				<div className={cl.root__body__adaptive}>
 					<p className={cl.root__body__adaptive__name}>{user.login}</p>
-					<ChatUserOnlineStatus userId={user._id} />
+					<ChatUserOnlineStatus user={user} />
 				</div>
 				<div className={cl.root__body__info}>
 					{chat?.messages && chat?.messages.length > 0 && (

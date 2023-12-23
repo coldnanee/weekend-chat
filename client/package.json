@@ -28,7 +28,6 @@
   },
   "devDependencies": {
     "@feature-sliced/eslint-config": "^0.1.0-beta.6",
-    "@tanstack/react-query-devtools": "^5.8.4",
     "@types/lodash.debounce": "^4.0.9",
     "@types/node": "^20",
     "@types/react": "^18",

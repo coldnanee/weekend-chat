@@ -1,6 +1,4 @@
-// format: 11:11 11.11.2001
-
-export const getMessageDate = (dateFromMsg: string): string => {
+export const getFormattedIsoDate = (dateFromMsg: string): string => {
 	const specifiedDate = new Date(dateFromMsg);
 	const dateNow = new Date();
 

@@ -1,5 +1,4 @@
-import { getDateForMessage } from "../libs";
-
+import { getIsoDate } from "../libs";
 import MessageModel from "../db/models/MessageModel";
 import ChatModel from "../db/models/ChatModel";
 import UserModel from "../db/models/UserModel";
@@ -98,7 +97,7 @@ class ChatsService {
 	}
 
 	async saveMessageToDb(myId: string, recipientId: string, text: string) {
-		const date = getDateForMessage();
+		const date = getIsoDate();
 
 		const chat = await ChatModel.findOne({
 			members: { $all: [myId, recipientId] }
