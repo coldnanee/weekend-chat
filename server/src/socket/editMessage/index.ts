@@ -4,11 +4,12 @@ import MessageModel from "../../db/models/MessageModel";
 import ChatModel from "../../db/models/ChatModel";
 
 import { connectionQueryWrapper, getKeyByValueMap } from "../../libs";
+import SessionModel from "../../db/models/SessionModel";
 
 export const editMessageHandler = (
 	io: Server,
 	socket: Socket,
-	onlineUsers: Map<string, string>
+	usersSessions: Map<string, string>
 ) => {
 	socket.on(
 		"edit-message",
@@ -32,21 +33,40 @@ export const editMessageHandler = (
 			if (myId === message.user.toString()) {
 				const recipientId = chat.members.filter((m) => m !== myId).join("");
 
-				const recipientSocketId =
-					getKeyByValueMap(onlineUsers, recipientId) || "";
+				const mySessions = await SessionModel.find({ user: myId });
+				const recipientSessions = await SessionModel.find({
+					user: recipientId
+				});
 
 				message.text = updateText;
 				message.isUpdated = true;
 
 				await message.save();
 
-				io.to(socket.id).emit("edit-message-client", {
-					...data,
-					chat: chat._id
+				mySessions.map((s) => {
+					const sessionSocketId = getKeyByValueMap(
+						usersSessions,
+						s._id.toString()
+					);
+					if (sessionSocketId) {
+						io.to(sessionSocketId).emit("edit-message-client", {
+							...data,
+							chat: chat._id
+						});
+					}
 				});
-				io.to(recipientSocketId).emit("edit-message-client", {
-					...data,
-					chat: chat._id
+
+				recipientSessions.map((s) => {
+					const sessionSocketId = getKeyByValueMap(
+						usersSessions,
+						s._id.toString()
+					);
+					if (sessionSocketId) {
+						io.to(sessionSocketId).emit("edit-message-client", {
+							...data,
+							chat: chat._id
+						});
+					}
 				});
 			}
 		}

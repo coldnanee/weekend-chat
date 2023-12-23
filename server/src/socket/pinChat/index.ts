@@ -25,7 +25,7 @@ export const pinChatHandler = (
 		await chat.save();
 
 		sessions.map((s) => {
-			const sessionSocketId = getKeyByValueMap(usersSessions, s._id);
+			const sessionSocketId = getKeyByValueMap(usersSessions, s._id.toString());
 			if (sessionSocketId) {
 				io.to(sessionSocketId).emit("pin-chat-client", chatId);
 			}

@@ -41,9 +41,13 @@ export const ChatMenu = ({ chat }: { chat?: TChat }) => {
 		if (result) deleteChat();
 	};
 
-	const pinChat = () => {};
+	const pinChat = () => {
+		socket?.emit("pin-chat", chat?._id);
+	};
 
-	const unpinChat = () => {};
+	const unpinChat = () => {
+		socket?.emit("unpin-chat", chat?._id);
+	};
 
 	const chatOptionsArr: TChatOptionItem[] = [
 		{

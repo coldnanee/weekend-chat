@@ -7,11 +7,12 @@ import ChatModel from "../../db/models/ChatModel";
 import { connectionQueryWrapper } from "../../libs";
 
 import ChatsService from "../../chats/chats.service";
+import SessionModel from "../../db/models/SessionModel";
 
 export const deleteMessageHandler = (
 	io: Server,
 	socket: Socket,
-	onlineUsers: Map<string, string>
+	usersSessions: Map<string, string>
 ) => {
 	socket.on("delete-message", async (chatId: string, messagesId: string[]) => {
 		const myId = connectionQueryWrapper(socket.handshake.query.user);
@@ -23,8 +24,6 @@ export const deleteMessageHandler = (
 		}
 
 		const recipientId = chat?.members.find((m) => m !== myId) || "";
-
-		const recipientSocketId = getKeyByValueMap(onlineUsers, recipientId);
 
 		const messagesBody = await MessageModel.find({ _id: { $in: messagesId } });
 
@@ -51,31 +50,63 @@ export const deleteMessageHandler = (
 
 		await chat.save();
 
+		const recipientSessions = await SessionModel.find({ user: recipientId });
+		const mySessions = await SessionModel.find({ user: myId });
+
 		if (isChatDelete) {
 			await ChatsService.deleteChat(chatId);
 
-			io.to(socket.id).emit("delete-chat-client", {
-				chatId: chat?._id
+			mySessions.map((s) => {
+				const sessionSocketId = getKeyByValueMap(
+					usersSessions,
+					s._id.toString()
+				);
+				if (sessionSocketId) {
+					io.to(sessionSocketId).emit("delete-chat-client", {
+						chatId: chat?._id
+					});
+				}
 			});
-			if (recipientSocketId) {
-				io.to(recipientSocketId).emit("delete-chat-client", {
-					chatId: chat?._id
-				});
-			}
+
+			recipientSessions.map((s) => {
+				const sessionSocketId = getKeyByValueMap(
+					usersSessions,
+					s._id.toString()
+				);
+				if (sessionSocketId) {
+					io.to(sessionSocketId).emit("delete-chat-client", {
+						chatId: chat?._id
+					});
+				}
+			});
 		} else {
 			await MessageModel.deleteMany({
 				_id: { $in: messagesId }
 			});
-			io.to(socket.id).emit("delete-message-client", {
-				chatId: chat?._id,
-				messagesId: filteredIdMessages
+			mySessions.map((s) => {
+				const sessionSocketId = getKeyByValueMap(
+					usersSessions,
+					s._id.toString()
+				);
+				if (sessionSocketId) {
+					io.to(sessionSocketId).emit("delete-message-client", {
+						chatId: chat?._id,
+						messagesId: filteredIdMessages
+					});
+				}
 			});
-			if (recipientSocketId) {
-				io.to(recipientSocketId).emit("delete-message-client", {
-					chatId: chat?._id,
-					messagesId: filteredIdMessages
-				});
-			}
+			recipientSessions.map((s) => {
+				const sessionSocketId = getKeyByValueMap(
+					usersSessions,
+					s._id.toString()
+				);
+				if (sessionSocketId) {
+					io.to(sessionSocketId).emit("delete-message-client", {
+						chatId: chat?._id,
+						messagesId: filteredIdMessages
+					});
+				}
+			});
 		}
 	});
 };

@@ -93,16 +93,16 @@ const start = async () => {
 
 			io.emit("new-online-user", Array.from(onlineUsers.values()));
 
-			sendMessageHandler(io, socket, onlineUsers);
-			startTypingMessageHandler(io, socket, onlineUsers);
-			endTypingMessageHandler(io, socket, onlineUsers);
-			disconnectHandler(io, socket, onlineUsers);
-			deleteChatHandler(io, socket, onlineUsers);
-			deleteMessageHandler(io, socket, onlineUsers);
-			logoutHandler(io, socket, usersSessions);
-			editMessageHandler(io, socket, onlineUsers);
-			pinChatHandler(io, socket, usersSessions);
-			unpinChatHandler(io, socket, usersSessions);
+			sendMessageHandler(io, socket, usersSessions); // []
+			startTypingMessageHandler(io, socket, usersSessions); // [x]
+			endTypingMessageHandler(io, socket, usersSessions); // [x]
+			disconnectHandler(io, socket, onlineUsers); // [x]
+			deleteChatHandler(io, socket, usersSessions); // [x]
+			deleteMessageHandler(io, socket, usersSessions); // [x]
+			logoutHandler(io, socket, usersSessions); // [x]
+			editMessageHandler(io, socket, usersSessions); // [x]
+			pinChatHandler(io, socket, usersSessions); // [x]
+			unpinChatHandler(io, socket, usersSessions); // [x]
 		});
 
 		await connectDB();

@@ -18,6 +18,8 @@ type TChatsStore = {
 	deleteMessage: (chatId: string, messagesId: string[]) => void; // eslint-disable-line no-unused-vars
 	//prettier-ignore
 	editMessage: (data: { messageId: string; updateText: string; chat: string;}) => void; // eslint-disable-line no-unused-vars
+	pinChat: (chatId: string) => void; // eslint-disable-line no-unused-vars
+	unpinChat: (chatId: string) => void; // eslint-disable-line no-unused-vars
 };
 
 export const useChatsStore = create<TChatsStore>()(
@@ -104,6 +106,39 @@ export const useChatsStore = create<TChatsStore>()(
 
 						return m;
 					});
+				}
+			}),
+		pinChat: (chatId) =>
+			set((state) => {
+				const chat = state.chats.find((c) => c._id === chatId);
+				if (chat) {
+					chat.isPinned = true;
+
+					const chatIndex = state.chats.indexOf(chat);
+
+					if (chatIndex !== -1) {
+						state.chats.splice(chatIndex, 1);
+						state.chats.unshift(chat);
+					}
+				}
+			}),
+		unpinChat: (chatId) =>
+			set((state) => {
+				const chat = state.chats.find((c) => c._id === chatId);
+				if (chat) {
+					chat.isPinned = false;
+					const chatIndex = state.chats.indexOf(chat);
+					let lastPinnedChatIndex = 0;
+
+					state.chats.splice(chatIndex, 1);
+
+					state.chats.map((e, i) => {
+						if (e.isPinned) {
+							lastPinnedChatIndex = i;
+						}
+					});
+
+					state.chats.splice(lastPinnedChatIndex + 1, 0, chat);
 				}
 			})
 	}))

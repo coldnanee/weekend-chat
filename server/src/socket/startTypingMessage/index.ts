@@ -3,20 +3,23 @@ import type { Socket, Server } from "socket.io";
 
 import { getKeyByValueMap } from "../../libs";
 
+import SessionModel from "../../db/models/SessionModel";
+
 export const startTypingMessageHandler = (
 	io: Server,
 	socket: Socket,
-	onlineUsers: Map<string, string>
+	usersSessions: Map<string, string>
 ) => {
-	socket.on("start-typing", (recipientId: string) => {
-		const recipientSocketId = getKeyByValueMap(onlineUsers, recipientId);
-
+	socket.on("start-typing", async (recipientId: string) => {
 		const userId = connectionQueryWrapper(socket.handshake.query.user);
 
-		if (!recipientSocketId) {
-			return;
-		}
+		const recipientSessions = await SessionModel.find({ user: recipientId });
 
-		io.to(recipientSocketId).emit("start-typing-client", userId);
+		recipientSessions.map((s) => {
+			const sessionSocketId = getKeyByValueMap(usersSessions, s._id.toString());
+			if (sessionSocketId) {
+				io.to(sessionSocketId).emit("start-typing-client", userId);
+			}
+		});
 	});
 };
