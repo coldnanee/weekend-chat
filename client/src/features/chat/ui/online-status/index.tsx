@@ -3,7 +3,6 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 
-import { useRef } from "react";
 import { useOnlineUsersStore } from "@/entities/user";
 import type { TUser } from "@/entities/user";
 import { getFormattedIsoDate } from "@/shared";
@@ -16,16 +15,14 @@ export const ChatUserOnlineStatus = ({
 	user: TUser;
 	className?: string;
 }) => {
-	const isMounted = useRef<boolean>(false);
-
 	const queryClient = useQueryClient();
 
-	const { users } = useOnlineUsersStore();
+	const { users, offlineUser } = useOnlineUsersStore();
 
 	const isOnline = users.includes(user._id);
 
 	useEffect(() => {
-		if (!isOnline && isMounted.current) {
+		if (offlineUser === user._id) {
 			const date = new Date().toISOString();
 			queryClient.setQueryData(
 				[
@@ -39,9 +36,7 @@ export const ChatUserOnlineStatus = ({
 		}
 	}, [users]); // eslint-disable-line react-hooks/exhaustive-deps
 
-	useEffect(() => {
-		isMounted.current = true;
-	}, []);
+	// продумать этот момент
 
 	return (
 		<div className={[cl.root, className].join(" ")}>
