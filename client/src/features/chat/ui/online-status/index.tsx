@@ -36,8 +36,6 @@ export const ChatUserOnlineStatus = ({
 		}
 	}, [users]); // eslint-disable-line react-hooks/exhaustive-deps
 
-	// продумать этот момент
-
 	return (
 		<div className={[cl.root, className].join(" ")}>
 			{isOnline && <span className={cl.root__icon_online} />}

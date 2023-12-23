@@ -1,0 +1,11 @@
+.root {
+	label {
+		@apply flex items-center gap-x-[10px] cursor-pointer p-[10px];
+	}
+	&__picture {
+	}
+	&__text {
+		@apply text-[#a9aeba] text-[16px];
+		text-wrap: nowrap;
+	}
+}
