@@ -10,7 +10,7 @@ import { useOnlineUsersStore } from "@/entities/user"; // eslint-disable-line bo
 import { ChatMessage } from "../item";
 import { StartChat } from "../start-chat";
 import cl from "./index.module.scss";
-import { useSocketContext } from "@/shared"; // eslint-disable-line import/order
+import { useSocketStore } from "@/shared"; // eslint-disable-line import/order
 
 export const ChatMessages = ({
 	chat,
@@ -23,7 +23,7 @@ export const ChatMessages = ({
 
 	const users = useOnlineUsersStore((state) => state.users);
 
-	const { socket } = useSocketContext();
+	const { socket } = useSocketStore();
 
 	const [isTyping, setIsTyping] = useState<boolean>(false);
 

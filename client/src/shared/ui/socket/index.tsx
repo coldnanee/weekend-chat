@@ -2,9 +2,7 @@
 
 import { getCookie } from "cookies-next";
 
-import { createContext, useContext, type ReactNode, useEffect } from "react";
-
-import { io, Socket } from "socket.io-client";
+import { type ReactNode, useEffect } from "react";
 
 import {
 	getMessageHandler,
@@ -18,19 +16,10 @@ import {
 } from "@/features/chat"; // eslint-disable-line boundaries/element-types
 import { logoutHandler } from "@/features/profile"; // eslint-disable-line boundaries/element-types
 import { newOnlineUserHandler, newOfflineUserHandler } from "@/features/user"; // eslint-disable-line boundaries/element-types
-
-export const SocketContext = createContext<{ socket?: Socket }>({
-	socket: undefined
-});
-
-export const useSocketContext = () => useContext(SocketContext);
+import { useSocketStore, socketErrorHandler } from "../../model";
 
 export const SocketProvider = ({ children }: { children: ReactNode }) => {
-	const socket = io(process.env.NEXT_PUBLIC_SERVER_URL || "", {
-		path: "/ws",
-		transports: ["websocket"],
-		autoConnect: false
-	});
+	const { socket, error, setError } = useSocketStore();
 
 	useEffect(() => {
 		const isAuth = getCookie("auth");
@@ -38,6 +27,11 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 			socket.connect();
 		}
 	}, []); //eslint-disable-line
+
+	if (error) {
+		alert(error);
+		setError(null);
+	}
 
 	getMessageHandler(socket);
 	sendMessageHandler(socket);
@@ -50,10 +44,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 	editMessageHandler(socket);
 	pinChatHandler(socket);
 	unpinChatHandler(socket);
+	socketErrorHandler(socket);
 
-	return (
-		<SocketContext.Provider value={{ socket: socket }}>
-			{children}
-		</SocketContext.Provider>
-	);
+	return <>{children}</>;
 };

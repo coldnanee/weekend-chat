@@ -6,7 +6,7 @@ import { BsFillPinFill as PinImage } from "react-icons/bs";
 import { BsPin as UnpinImage } from "react-icons/bs";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import type { TChat } from "@/entities/chat";
-import { useSocketContext } from "@/shared";
+import { useSocketStore } from "@/shared";
 import { useMessageStore } from "../../model";
 import { TChatOptionItem } from "../../types";
 
@@ -15,7 +15,7 @@ import { ChatMenuItem } from "../menu-item";
 import cl from "./index.module.scss";
 
 export const ChatMenu = ({ chat }: { chat?: TChat }) => {
-	const { socket } = useSocketContext();
+	const { socket } = useSocketStore();
 	const { isMenuShow, setMenuShow } = useMessageStore();
 
 	const isTouchDevice = useRef<number | boolean>(false);

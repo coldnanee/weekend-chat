@@ -2,7 +2,7 @@ import { IoMdArrowDropdown } from "react-icons/io";
 import { TbReload } from "react-icons/tb";
 import { TiTick } from "react-icons/ti";
 import { useSettingsSessionStore } from "@/entities/session";
-import { useSocketContext } from "@/shared";
+import { useSocketStore } from "@/shared";
 import cl from "./index.module.scss";
 
 export const SettingsSessionsPanel = () => {
@@ -14,7 +14,7 @@ export const SettingsSessionsPanel = () => {
 		fetchSessions
 	} = useSettingsSessionStore();
 
-	const { socket } = useSocketContext();
+	const { socket } = useSocketStore();
 
 	const isAllSelected = selectedSessions.length === sessions.length;
 
@@ -25,8 +25,7 @@ export const SettingsSessionsPanel = () => {
 	}
 
 	const killSessionsWrapper = () => {
-		killSessions();
-		socket?.emit("logout", selectedSessions);
+		killSessions(socket);
 	};
 
 	return (

@@ -3,7 +3,7 @@ import { RxCross2 } from "react-icons/rx";
 import type { TChat } from "@/entities/chat";
 import { useMessagesStore } from "@/entities/message";
 import { useProfileStore } from "@/entities/profile";
-import { useSocketContext } from "@/shared";
+import { useSocketStore } from "@/shared";
 import { useMessageStore } from "../../model";
 import cl from "./index.module.scss";
 
@@ -12,7 +12,7 @@ export const ChatMessagesPanel = ({ chat }: { chat?: TChat }) => {
 
 	const { changeMessageBody, changeIsEdit } = useMessageStore();
 	const { profile } = useProfileStore();
-	const { socket } = useSocketContext();
+	const { socket } = useSocketStore();
 
 	const deleteMessages = () => {
 		socket?.emit("delete-message", chat?._id, selectedMessages);
