@@ -25,6 +25,7 @@ export const DefaultAvatar = ({
 			height={height}
 			alt={alt}
 			priority
+			style={{ width, height }}
 		/>
 	);
 };

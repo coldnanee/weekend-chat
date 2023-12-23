@@ -1,12 +1,13 @@
 "use client";
 
 import { type MouseEvent, useEffect, useRef } from "react";
-import { BsThreeDots } from "react-icons/bs";
 import { BsFillPinFill as PinImage } from "react-icons/bs";
 import { BsPin as UnpinImage } from "react-icons/bs";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import type { TChat } from "@/entities/chat";
+import type { TUser } from "@/entities/user";
 import { useSocketStore } from "@/shared";
+import { DefaultAvatar } from "@/shared";
 import { useMessageStore } from "../../model";
 import { TChatOptionItem } from "../../types";
 
@@ -14,7 +15,7 @@ import { ChatMenuItem } from "../menu-item";
 
 import cl from "./index.module.scss";
 
-export const ChatMenu = ({ chat }: { chat?: TChat }) => {
+export const ChatMenu = ({ chat, user }: { chat?: TChat; user?: TUser }) => {
 	const { socket } = useSocketStore();
 	const { isMenuShow, setMenuShow } = useMessageStore();
 
@@ -72,21 +73,26 @@ export const ChatMenu = ({ chat }: { chat?: TChat }) => {
 
 	return (
 		<div className={cl.root}>
-			<button className={cl.root__label}>
-				<BsThreeDots
-					size="25px"
-					color="#6C6F75"
-					onClick={toggleShowMenu}
+			<button
+				className={cl.root__label}
+				onClick={toggleShowMenu}>
+				<DefaultAvatar
+					src={user?.avatar}
+					width={30}
+					height={30}
+					alt={user?.login || ""}
 				/>
 			</button>
-			<ul className={rootClasses.join(" ")}>
-				{chatOptionsArr.map((i) => (
-					<ChatMenuItem
-						item={i}
-						key={i.label}
-					/>
-				))}
-			</ul>
+			{chat?.messages && chat?.messages.length > 0 && (
+				<ul className={rootClasses.join(" ")}>
+					{chatOptionsArr.map((i) => (
+						<ChatMenuItem
+							item={i}
+							key={i.label}
+						/>
+					))}
+				</ul>
+			)}
 		</div>
 	);
 };

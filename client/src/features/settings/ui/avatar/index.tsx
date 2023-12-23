@@ -68,11 +68,11 @@ export const SettingsAvatar = () => {
 
 				const path = URL.createObjectURL(watchedImage[0]);
 				setPreviewAvatarPath(path);
+				setMenuShow(false);
 			}
 		} catch (e) {
-			alert(e);
-		} finally {
 			setMenuShow(false);
+			alert(e);
 		}
 	}, [watchedImage]); //eslint-disable-line
 
