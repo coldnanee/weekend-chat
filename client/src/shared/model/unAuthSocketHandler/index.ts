@@ -7,13 +7,7 @@ import { useSocketStore } from "@/shared";
 import type { TSocketEvent } from "../types";
 
 export const unAuthSocketHandler = (socket: Socket) => {
-	const {
-		isRefreshLoading,
-		addEventToStack,
-		runEvents,
-		setIsRefreshLoading,
-		socketEvent
-	} = useSocketStore.getState();
+	const { socketEvent } = useSocketStore.getState();
 
 	socket.on("socket-unauth", (event: TSocketEvent) => {
 		// if (isRefreshLoading) {

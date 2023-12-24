@@ -25,8 +25,6 @@ export const startTypingMessageHandler = (
 					accessJwt
 				);
 
-				console.log("start", isAuth);
-
 				if (!isAuth) {
 					return;
 				}
