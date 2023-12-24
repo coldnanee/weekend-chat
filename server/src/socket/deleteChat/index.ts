@@ -6,49 +6,71 @@ import { connectionQueryWrapper } from "../../libs";
 import ChatsService from "../../chats/chats.service";
 import SessionModel from "../../db/models/SessionModel";
 
+import { checkAuthSocket } from "../../libs";
+
 export const deleteChatHandler = (
 	io: Server,
 	socket: Socket,
 	usersSessions: Map<string, string>
 ) => {
-	socket.on("delete-chat", async (chatId: string) => {
-		try {
-			const myId = connectionQueryWrapper(socket.handshake.query.user);
+	socket.on(
+		"delete-chat",
+		async (data: { chatId: string }, accessJwt: string) => {
+			try {
+				const isAuth = checkAuthSocket(
+					socket,
+					{
+						name: "delete-chat",
+						data
+					},
+					accessJwt
+				);
 
-			const chat = await ChatModel.findById(chatId);
-
-			if (!chat) {
-				io.emit("error-client", "Chat not found");
-				return;
-			}
-
-			const recipientId = chat.members.find((id) => id !== myId);
-
-			if (!recipientId) {
-				io.emit("error-client", "Recipient not found");
-				return;
-			}
-
-			await ChatsService.deleteChat(chatId);
-
-			const mySessions = await SessionModel.find({ user: myId });
-			const recipientSessions = await SessionModel.find({ user: recipientId });
-
-			mySessions.map((s) => {
-				const sessionSocketId = usersSessions.get(s._id.toString());
-				if (sessionSocketId) {
-					io.to(sessionSocketId).emit("delete-chat-client", { chatId });
+				if (!isAuth) {
+					return;
 				}
-			});
 
-			recipientSessions.map((s) => {
-				const sessionSocketId = usersSessions.get(s._id.toString());
-				if (sessionSocketId) {
-					io.to(sessionSocketId).emit("delete-chat-client", { chatId });
+				const { chatId } = data;
+
+				const myId = connectionQueryWrapper(socket.handshake.query.user);
+
+				const chat = await ChatModel.findById(chatId);
+
+				if (!chat) {
+					io.emit("error-client", "Chat not found");
+					return;
 				}
-			});
-		} catch (e) {
-			io.emit("error-client", e);
+
+				const recipientId = chat.members.find((id) => id !== myId);
+
+				if (!recipientId) {
+					io.emit("error-client", "Recipient not found");
+					return;
+				}
+
+				await ChatsService.deleteChat(chatId);
+
+				const mySessions = await SessionModel.find({ user: myId });
+				const recipientSessions = await SessionModel.find({
+					user: recipientId
+				});
+
+				mySessions.map((s) => {
+					const sessionSocketId = usersSessions.get(s._id.toString());
+					if (sessionSocketId) {
+						io.to(sessionSocketId).emit("delete-chat-client", { chatId });
+					}
+				});
+
+				recipientSessions.map((s) => {
+					const sessionSocketId = usersSessions.get(s._id.toString());
+					if (sessionSocketId) {
+						io.to(sessionSocketId).emit("delete-chat-client", { chatId });
+					}
+				});
+			} catch (e) {
+				io.emit("error-client", e);
+			}
 		}
-	});
+	);
 };

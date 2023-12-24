@@ -16,7 +16,7 @@ import { ChatMenuItem } from "../menu-item";
 import cl from "./index.module.scss";
 
 export const ChatMenu = ({ chat, user }: { chat?: TChat; user?: TUser }) => {
-	const { socket } = useSocketStore();
+	const { socketEvent } = useSocketStore();
 	const { isMenuShow, setMenuShow } = useMessageStore();
 
 	const isTouchDevice = useRef<number | boolean>(false);
@@ -33,7 +33,7 @@ export const ChatMenu = ({ chat, user }: { chat?: TChat; user?: TUser }) => {
 	}, []);
 
 	const deleteChat = () => {
-		if (chat) socket?.emit("delete-chat", chat._id);
+		if (chat) socketEvent("delete-chat", { chatId: chat._id });
 	};
 
 	const showConfirmWindow = () => {
@@ -43,11 +43,11 @@ export const ChatMenu = ({ chat, user }: { chat?: TChat; user?: TUser }) => {
 	};
 
 	const pinChat = () => {
-		socket?.emit("pin-chat", chat?._id);
+		socketEvent("pin-chat", { chatId: chat?._id });
 	};
 
 	const unpinChat = () => {
-		socket?.emit("unpin-chat", chat?._id);
+		socketEvent("unpin-chat", { chatId: chat?._id });
 	};
 
 	const chatOptionsArr: TChatOptionItem[] = [

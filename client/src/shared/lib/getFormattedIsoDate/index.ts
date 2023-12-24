@@ -31,7 +31,7 @@ export const getFormattedIsoDate = (dateFromMsg: string): string => {
 		case 0:
 			return getTime();
 		case 1:
-			return "Yesterday";
+			return "yesterday";
 		case 7:
 			return "1w.";
 	}

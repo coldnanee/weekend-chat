@@ -16,13 +16,14 @@ import {
 } from "@/features/chat"; // eslint-disable-line boundaries/element-types
 import { logoutHandler } from "@/features/profile"; // eslint-disable-line boundaries/element-types
 import { newOnlineUserHandler, newOfflineUserHandler } from "@/features/user"; // eslint-disable-line boundaries/element-types
+import { unAuthSocketHandler } from "@/shared"; // eslint-disable-line boundaries/element-types
 import { useSocketStore, socketErrorHandler } from "../../model";
 
 export const SocketProvider = ({ children }: { children: ReactNode }) => {
 	const { socket, error, setError } = useSocketStore();
 
 	useEffect(() => {
-		const isAuth = getCookie("auth");
+		const isAuth = getCookie("accessJwt");
 		if (isAuth) {
 			socket.connect();
 		}
@@ -45,6 +46,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 	pinChatHandler(socket);
 	unpinChatHandler(socket);
 	socketErrorHandler(socket);
+	unAuthSocketHandler(socket);
 
 	return <>{children}</>;
 };

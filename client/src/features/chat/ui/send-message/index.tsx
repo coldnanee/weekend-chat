@@ -24,7 +24,7 @@ export const ChatInput = ({
 }) => {
 	const isFirstTyping = useRef<boolean>(true);
 
-	const { socket } = useSocketStore();
+	const { socketEvent } = useSocketStore();
 
 	const { message, editMessage, changeMessageBody, messageBody } =
 		useMessageStore();
@@ -41,7 +41,7 @@ export const ChatInput = ({
 
 	const changeMessage = useCallback( // eslint-disable-line
 		debounce(() => {
-			socket?.emit("stop-typing", recipientId);
+			socketEvent("stop-typing", {recipientId});
 		}, 500),
 		[]
 	);
@@ -50,25 +50,25 @@ export const ChatInput = ({
 		messageBody
 			? changeMessageBody({ ...messageBody, text: e.target.value })
 			: editMessage(e.target.value);
-		socket?.emit("start-typing", recipientId);
+		socketEvent("start-typing", { recipientId });
 		changeMessage();
 	};
 
-	const sendMessage = () => {
-		if (socket && message) {
-			socket.emit("send-message", {
+	const sendMessage = async () => {
+		if (message) {
+			socketEvent("send-message", {
 				recipientId,
 				message
 			});
 			isFirstTyping.current = true;
 			editMessage("");
-			socket?.emit("stop-typing", recipientId);
+			socketEvent("stop-typing", { recipientId });
 		}
 	};
 
 	const updateMessage = () => {
-		if (socket && messageBody?.text) {
-			socket.emit("edit-message", {
+		if (messageBody?.text) {
+			socketEvent("edit-message", {
 				messageId: messageBody._id,
 				updateText: messageBody.text
 			});
@@ -85,7 +85,7 @@ export const ChatInput = ({
 
 	useEffect(() => {
 		return () => {
-			socket?.emit("stop-typing", recipientId);
+			socketEvent("stop-typing", recipientId);
 		};
 	}, []); //eslint-disable-line
 

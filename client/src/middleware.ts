@@ -19,12 +19,6 @@ export default function middleware(req: NextRequest) {
 		return NextResponse.redirect(new URL("/login", req.url));
 	}
 
-	response.cookies.set("auth", isAuth ? "auth" : "");
-
-	if (!isAuth) {
-		response.cookies.delete("auth");
-	}
-
 	return response;
 }
 

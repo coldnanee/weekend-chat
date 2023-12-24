@@ -36,13 +36,13 @@ export const ChatItem = ({ chat }: { chat: TChat }) => {
 
 	const messageDate = getFormattedIsoDate(chatBody.date);
 
-	socket?.on("start-typing-client", (user: string) => {
+	socket.on("start-typing-client", (user: string) => {
 		if (chat.user._id === user) {
 			setIsTyping(true);
 		}
 	});
 
-	socket?.on("stop-typing-client", (user: string) => {
+	socket.on("stop-typing-client", (user: string) => {
 		if (chat.user._id === user) {
 			setIsTyping(false);
 		}

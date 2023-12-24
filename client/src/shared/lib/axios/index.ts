@@ -1,19 +1,6 @@
 import axios from "axios";
 
-const refreshToken = async () => {
-	try {
-		await axios.post(
-			`${process.env.NEXT_PUBLIC_API_URL}/token/refresh`,
-			{},
-			{
-				withCredentials: true
-			}
-		);
-		return true;
-	} catch (e) {
-		return null;
-	}
-};
+import { refreshToken } from "../refreshToken";
 
 const $axios = axios.create({
 	withCredentials: true,

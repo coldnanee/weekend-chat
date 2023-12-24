@@ -12,10 +12,10 @@ export const ChatMessagesPanel = ({ chat }: { chat?: TChat }) => {
 
 	const { changeMessageBody, changeIsEdit } = useMessageStore();
 	const { profile } = useProfileStore();
-	const { socket } = useSocketStore();
+	const { socketEvent } = useSocketStore();
 
 	const deleteMessages = () => {
-		socket?.emit("delete-message", chat?._id, selectedMessages);
+		socketEvent("delete-message", { chatId: chat?._id, selectedMessages });
 	};
 
 	const message = chat?.messages.filter((m) =>

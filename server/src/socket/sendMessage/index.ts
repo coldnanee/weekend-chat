@@ -6,6 +6,8 @@ import SessionModel from "../../db/models/SessionModel";
 
 import ChatsService from "../../chats/chats.service";
 
+import { checkAuthSocket } from "../../libs";
+
 export const sendMessageHandler = (
 	io: Server,
 	socket: Socket,
@@ -13,8 +15,24 @@ export const sendMessageHandler = (
 ) => {
 	socket.on(
 		"send-message",
-		async (data: { recipientId: string; message: string }) => {
+		async (
+			data: { recipientId: string; message: string },
+			accessJwt: string
+		) => {
 			try {
+				const isAuth = checkAuthSocket(
+					socket,
+					{
+						name: "send-message",
+						data
+					},
+					accessJwt
+				);
+
+				if (!isAuth) {
+					return;
+				}
+
 				const { recipientId, message } = data;
 
 				const myId = connectionQueryWrapper(socket.handshake.query.user);
