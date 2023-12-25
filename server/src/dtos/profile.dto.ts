@@ -6,11 +6,13 @@ export class ProfileDto {
 	public avatar: string;
 	public chats: string[];
 	public lastOnline: string;
+	public email: string;
 	constructor(profile: TProfilePayload) {
 		this._id = profile._id;
 		this.login = profile.login;
 		this.avatar = profile.avatar;
 		this.chats = profile.chats;
 		this.lastOnline = profile.lastOnline;
+		this.email = profile.email;
 	}
 }

@@ -7,6 +7,8 @@ import { detect } from "detect-browser";
 
 import type { TBrowserInfo } from "../types";
 
+import { authResetPasswordHtml } from "./auth.html";
+
 class AuthController {
 	async login(req: Request, res: Response, next: NextFunction) {
 		try {
@@ -56,6 +58,28 @@ class AuthController {
 			await AuthService.registration(login.toLowerCase(), password);
 
 			return res.json({ message: true });
+		} catch (e) {
+			next(e);
+		}
+	}
+
+	async sendResetMessage(req: Request, res: Response, next: NextFunction) {
+		try {
+			const { email } = req.body as { email: string };
+
+			AuthService.sendResetMessage(email);
+		} catch (e) {
+			next(e);
+		}
+	}
+
+	async resetPassword(req: Request, res: Response, next: NextFunction) {
+		try {
+			const { link } = req.params;
+
+			await AuthService.resetPassword(link);
+
+			return res.send(authResetPasswordHtml);
 		} catch (e) {
 			next(e);
 		}

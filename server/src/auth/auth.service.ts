@@ -8,6 +8,12 @@ import TokenService from "../token/token.service";
 
 import { ProfileDto } from "../dtos/profile.dto";
 
+import EmailModel from "../db/models/EmailModel";
+
+import { v4 as uuid } from "uuid";
+
+import MailerService from "../mailer";
+
 class AuthService {
 	async login(
 		login: string,
@@ -61,6 +67,57 @@ class AuthService {
 		});
 
 		return user.save();
+	}
+
+	async sendResetMessage(email: string) {
+		const user = await UserModel.findOne({ email });
+
+		if (!user) {
+			throw ApiError.badRequestError("Email not found");
+		}
+
+		const link = uuid();
+
+		const emailBody = new EmailModel({ email, link });
+
+		const info = await MailerService.sendMailToUser(
+			email,
+			`<span>For reset password<span/><a href=${process.env.SERVER_URL}/auth/reset/${link}>Click hre</a>`,
+			"Reset password"
+		);
+
+		if (info) {
+			return await emailBody.save();
+		}
+	}
+
+	async resetPassword(link: string) {
+		const email = await EmailModel.findOne({ link });
+		if (!email) {
+			throw ApiError.badRequestError("Link is not valid");
+		}
+
+		const user = await UserModel.findOne({ email: email.email });
+
+		if (!user) {
+			throw ApiError.badRequestError("User not found");
+		}
+
+		const newPassword = await bcrypt.hash(uuid(), 7);
+
+		user.password = newPassword;
+
+		await EmailModel.deleteOne({ email: email.email });
+
+		const info = await MailerService.sendMailToUser(
+			email.email,
+			"<h1>Reset password</h1>",
+			`New password: ${newPassword}`
+		);
+
+		if (info) {
+			return user.save();
+		}
 	}
 }
 
