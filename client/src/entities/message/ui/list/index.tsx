@@ -38,13 +38,13 @@ export const ChatMessages = ({
 		return <StartChat name={params?.login || ""} />;
 	}
 
-	socket?.on("start-typing-client", (user: string) => {
+	socket.on("start-typing-client", (user: string) => {
 		if (chat.user._id === user) {
 			setIsTyping(true);
 		}
 	});
 
-	socket?.on("stop-typing-client", (user: string) => {
+	socket.on("stop-typing-client", (user: string) => {
 		if (chat.user._id === user) {
 			setIsTyping(false);
 		}

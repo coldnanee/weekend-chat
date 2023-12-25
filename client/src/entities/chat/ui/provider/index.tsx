@@ -8,7 +8,7 @@ export const ChatsProvider = ({ children }: { children: ReactNode }) => {
 	const { fetchChats } = useChatsStore();
 
 	useEffect(() => {
-		const isAuth = getCookie("auth");
+		const isAuth = getCookie("accessJwt");
 		if (isAuth) {
 			fetchChats("");
 		}

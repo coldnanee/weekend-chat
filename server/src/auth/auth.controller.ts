@@ -27,7 +27,6 @@ class AuthController {
 
 			res
 				.cookie("accessJwt", tokens.accessToken, {
-					httpOnly: true,
 					maxAge: 60 * 60 * 1000
 				})
 				.cookie("refreshJwt", tokens.refreshToken, {

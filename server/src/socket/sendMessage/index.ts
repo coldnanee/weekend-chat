@@ -6,6 +6,8 @@ import SessionModel from "../../db/models/SessionModel";
 
 import ChatsService from "../../chats/chats.service";
 
+import { checkAuthSocket } from "../../libs";
+
 export const sendMessageHandler = (
 	io: Server,
 	socket: Socket,
@@ -13,8 +15,18 @@ export const sendMessageHandler = (
 ) => {
 	socket.on(
 		"send-message",
-		async (data: { recipientId: string; message: string }) => {
+		async (
+			data: { recipientId: string; message: string },
+			accessJwt: string,
+			cb: (obj: { status: number; message: string }) => void
+		) => {
 			try {
+				const isAuth = checkAuthSocket(accessJwt, cb);
+
+				if (!isAuth) {
+					return;
+				}
+
 				const { recipientId, message } = data;
 
 				const myId = connectionQueryWrapper(socket.handshake.query.user);
@@ -68,7 +80,7 @@ export const sendMessageHandler = (
 					});
 				}
 			} catch (e) {
-				io.emit("error-client", e);
+				cb({ status: 500, message: "Unexpected error" });
 			}
 		}
 	);

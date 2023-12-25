@@ -40,7 +40,7 @@ export const ChatUserOnlineStatus = ({
 		<div className={[cl.root, className].join(" ")}>
 			{isOnline && <span className={cl.root__icon_online} />}
 			{/* prettier-ignore */}
-			<p>{isOnline ? "online" : (user.lastOnline ? `last ${getFormattedIsoDate(user.lastOnline)}` : "last seen recently")}</p>
+			<p>{isOnline ? "online" : (user.lastOnline ? `last seen ${getFormattedIsoDate(user.lastOnline)}` : "last seen recently")}</p>
 		</div>
 	);
 };

@@ -31,7 +31,7 @@ import { router } from "./router";
 
 import { v2 as cloudinary } from "cloudinary";
 
-import { checkAuthForSocket } from "./libs";
+import { handshakeSocket } from "./libs";
 
 const { CLIENT_URL, CLOUD_NAME, CLOUD_API_KEY, CLOUD_API_SECRET_KEY, PORT } =
 	process.env as {
@@ -83,7 +83,7 @@ const start = async () => {
 		const usersSessions = new Map<string, string>();
 
 		io.on("connection", (socket) => {
-			checkAuthForSocket(socket);
+			handshakeSocket(socket);
 
 			const user = connectionQueryWrapper(socket.handshake.query.user);
 			const session = connectionQueryWrapper(socket.handshake.query.session);

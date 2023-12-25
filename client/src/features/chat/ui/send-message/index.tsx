@@ -4,9 +4,9 @@ import debounce from "lodash.debounce";
 import {
 	KeyboardEvent,
 	type ChangeEvent,
-	useRef,
 	useEffect,
-	useCallback
+	useCallback,
+	useState
 } from "react";
 import type { MutableRefObject } from "react";
 import { HiOutlinePaperAirplane } from "react-icons/hi2";
@@ -22,9 +22,9 @@ export const ChatInput = ({
 	recipientId?: string;
 	messagesContainer: MutableRefObject<HTMLElement | null>;
 }) => {
-	const isFirstTyping = useRef<boolean>(true);
+	const [isStartTyping, setIsStartTyping] = useState<boolean>(false);
 
-	const { socket } = useSocketStore();
+	const { socketEvent } = useSocketStore();
 
 	const { message, editMessage, changeMessageBody, messageBody } =
 		useMessageStore();
@@ -41,34 +41,38 @@ export const ChatInput = ({
 
 	const changeMessage = useCallback( // eslint-disable-line
 		debounce(() => {
-			socket?.emit("stop-typing", recipientId);
+			socketEvent("stop-typing", {recipientId});
+			setIsStartTyping(false);
 		}, 500),
 		[]
 	);
 
 	const changeInput = (e: ChangeEvent<HTMLInputElement>) => {
+		if (!isStartTyping) {
+			setIsStartTyping(true);
+			socketEvent("start-typing", { recipientId });
+		}
 		messageBody
 			? changeMessageBody({ ...messageBody, text: e.target.value })
 			: editMessage(e.target.value);
-		socket?.emit("start-typing", recipientId);
+
 		changeMessage();
 	};
 
-	const sendMessage = () => {
-		if (socket && message) {
-			socket.emit("send-message", {
+	const sendMessage = async () => {
+		if (message) {
+			socketEvent("send-message", {
 				recipientId,
 				message
 			});
-			isFirstTyping.current = true;
 			editMessage("");
-			socket?.emit("stop-typing", recipientId);
+			socketEvent("stop-typing", { recipientId });
 		}
 	};
 
 	const updateMessage = () => {
-		if (socket && messageBody?.text) {
-			socket.emit("edit-message", {
+		if (messageBody?.text) {
+			socketEvent("edit-message", {
 				messageId: messageBody._id,
 				updateText: messageBody.text
 			});
@@ -85,7 +89,7 @@ export const ChatInput = ({
 
 	useEffect(() => {
 		return () => {
-			socket?.emit("stop-typing", recipientId);
+			socketEvent("stop-typing", recipientId);
 		};
 	}, []); //eslint-disable-line
 

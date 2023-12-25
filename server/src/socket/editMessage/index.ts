@@ -6,6 +6,8 @@ import ChatModel from "../../db/models/ChatModel";
 import { connectionQueryWrapper } from "../../libs";
 import SessionModel from "../../db/models/SessionModel";
 
+import { checkAuthSocket } from "../../libs";
+
 export const editMessageHandler = (
 	io: Server,
 	socket: Socket,
@@ -13,8 +15,18 @@ export const editMessageHandler = (
 ) => {
 	socket.on(
 		"edit-message",
-		async (data: { messageId: string; updateText: string }) => {
+		async (
+			data: { messageId: string; updateText: string },
+			accessJwt: string,
+			cb: (err: { status: number; message: string }) => void
+		) => {
 			try {
+				const isAuth = checkAuthSocket(accessJwt, cb);
+
+				if (!isAuth) {
+					return;
+				}
+
 				const { messageId, updateText } = data;
 
 				const myId = connectionQueryWrapper(socket.handshake.query.user);
@@ -22,15 +34,13 @@ export const editMessageHandler = (
 				const message = await MessageModel.findById(messageId);
 
 				if (!message) {
-					io.emit("error-client", "Message not found");
-					return;
+					return cb({ status: 400, message: "Message not found" });
 				}
 
 				const chat = await ChatModel.findById(message.chat);
 
 				if (!chat) {
-					io.emit("error-client", "Chat not found");
-					return;
+					return cb({ status: 400, message: "Chat not found" });
 				}
 
 				if (myId === message.user.toString()) {
@@ -67,7 +77,7 @@ export const editMessageHandler = (
 					});
 				}
 			} catch (e) {
-				io.emit("error-client", e);
+				cb({ status: 500, message: "Unexpected error" });
 			}
 		}
 	);

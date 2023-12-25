@@ -1,7 +1,8 @@
 import type { AxiosError } from "axios";
-import type { Socket } from "socket.io-client";
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
+
+import { useSocketStore } from "@/shared";
 
 import $axios from "@/shared";
 import type { TSession } from "../types";
@@ -13,7 +14,7 @@ type TSettingsSession = {
 	selectedSessions: string[];
 	toggleSession: (id: string) => void; // eslint-disable-line no-unused-vars
 	toggleAllSession: () => void;
-	killSessions: (socket?: Socket) => void; // eslint-disable-line no-unused-vars
+	killSessions: () => void;
 	fetchSessions: () => void;
 };
 
@@ -41,7 +42,7 @@ export const useSettingsSessionStore = create<TSettingsSession>()(
 					state.selectedSessions = state.sessions.map((s) => s._id);
 				}
 			}),
-		killSessions: async (socket) => {
+		killSessions: async () => {
 			set({ isSessionsLoading: true, sessionsError: null });
 			try {
 				let sessions = "";
@@ -58,7 +59,9 @@ export const useSettingsSessionStore = create<TSettingsSession>()(
 
 				if (status == 200) {
 					set((state) => {
-						socket?.emit("logout", state.selectedSessions);
+						useSocketStore
+							.getState()
+							.socketEvent("logout", { sessionsId: state.selectedSessions });
 						state.sessions = state.sessions.filter(
 							(s) => !sessions.includes(s._id)
 						);
