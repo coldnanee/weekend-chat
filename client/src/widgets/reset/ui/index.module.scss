@@ -1,0 +1,6 @@
+.root {
+	@apply bg-[#131313] h-[100dvh] flex justify-center items-center;
+	&__body {
+		@apply bg-[#202329] p-[30px] rounded-[10px] w-[300px] flex justify-center items-center flex-col;
+	}
+}

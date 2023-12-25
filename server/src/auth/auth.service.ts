@@ -78,17 +78,23 @@ class AuthService {
 
 		const link = uuid();
 
-		const emailBody = new EmailModel({ email, link });
+		const candidate = await EmailModel.findOne({ email });
+
+		if (!candidate) {
+			const emailBody = new EmailModel({ email, link });
+			await emailBody.save();
+		} else {
+			candidate.link = link;
+			await candidate.save();
+		}
 
 		const info = await MailerService.sendMailToUser(
 			email,
-			`<span>For reset password<span/><a href=${process.env.SERVER_URL}/auth/reset/${link}>Click hre</a>`,
+			`<span>For reset password<span/> <a href=${process.env.SERVER_URL}/auth/reset/${link}>click here</a>`,
 			"Reset password"
 		);
 
-		if (info) {
-			return await emailBody.save();
-		}
+		return info;
 	}
 
 	async resetPassword(link: string) {
@@ -103,16 +109,18 @@ class AuthService {
 			throw ApiError.badRequestError("User not found");
 		}
 
-		const newPassword = await bcrypt.hash(uuid(), 7);
+		const newPassword = uuid();
 
-		user.password = newPassword;
+		const newHashPassword = await bcrypt.hash(newPassword, 7);
+
+		user.password = newHashPassword;
 
 		await EmailModel.deleteOne({ email: email.email });
 
 		const info = await MailerService.sendMailToUser(
 			email.email,
-			"<h1>Reset password</h1>",
-			`New password: ${newPassword}`
+			`<p>New password: <span>${newPassword}<span/><p>`,
+			"New password"
 		);
 
 		if (info) {

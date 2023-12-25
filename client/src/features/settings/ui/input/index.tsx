@@ -58,7 +58,11 @@ export const SettingsInput = ({
 				required={required}
 				{...register(name, validation)}
 				autoComplete="false"
-				defaultValue={name === "login" ? profile?.login : ""}
+				defaultValue={
+					name !== "avatar" && name !== "password" && profile
+						? profile[name]
+						: ""
+				}
 				id={`#${name}`}
 			/>
 			{error && <p className={cl.root__error}>{error.message}</p>}

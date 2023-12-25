@@ -23,11 +23,18 @@ export const LoginForm = () => {
 				/>
 			))}
 			<AuthButton className={cl.root__button}>LOGIN</AuthButton>
-			<Link
-				className={cl.root__link}
-				href="/registration">
-				Registration
-			</Link>
+			<div className={cl.root__links}>
+				<Link
+					className={cl.root__link}
+					href="/registration">
+					Registration
+				</Link>
+				<Link
+					className={cl.root__link}
+					href="/login/reset">
+					Reset password
+				</Link>
+			</div>
 		</AuthForm>
 	);
 };

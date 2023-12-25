@@ -10,4 +10,7 @@
 	&__link {
 		@apply underline inline-block mt-[15px];
 	}
+	&__links {
+		@apply flex items-center justify-between w-full;
+	}
 }

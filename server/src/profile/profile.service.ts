@@ -10,7 +10,8 @@ class ProfileService {
 		login: string,
 		password: string,
 		avatar: string,
-		id: string
+		id: string,
+		email: string
 	) {
 		const candidate = await UserModel.findById(id);
 
@@ -24,6 +25,7 @@ class ProfileService {
 		}
 
 		candidate.login = login;
+		candidate.email = email;
 
 		if (avatar === "null") {
 			await cloudinary.uploader.destroy(

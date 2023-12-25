@@ -8,6 +8,7 @@ import { detect } from "detect-browser";
 import type { TBrowserInfo } from "../types";
 
 import { authResetPasswordHtml } from "./auth.html";
+import { ApiError } from "../errors";
 
 class AuthController {
 	async login(req: Request, res: Response, next: NextFunction) {
@@ -67,7 +68,13 @@ class AuthController {
 		try {
 			const { email } = req.body as { email: string };
 
-			AuthService.sendResetMessage(email);
+			const isSend = await AuthService.sendResetMessage(email);
+
+			if (!isSend) {
+				throw ApiError.badRequestError("The email has not been sent");
+			}
+
+			return res.status(200).send();
 		} catch (e) {
 			next(e);
 		}

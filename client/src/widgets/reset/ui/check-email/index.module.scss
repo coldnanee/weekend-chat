@@ -1,0 +1,12 @@
+.root {
+	@apply flex justify-center items-center flex-col text-[#a9aeba];
+	&__image {
+		@apply mb-[20px];
+	}
+	&__title {
+		@apply text-[20px] mb-[10px];
+	}
+	&__link {
+		@apply underline text-[18px];
+	}
+}

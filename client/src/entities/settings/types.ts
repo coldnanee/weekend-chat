@@ -13,13 +13,14 @@ export type TSettingsForm = {
 	login: string;
 	password: string;
 	avatar: File[] | null;
+	email: string;
 };
 
 export type TSettingsProfile = Omit<TSettingsForm, "avatar"> & {
 	avatar: null | string | ArrayBuffer;
 };
 
-export type TSettingsFormField = "login" | "password" | "avatar";
+export type TSettingsFormField = "login" | "password" | "avatar" | "email";
 
 export type TSettingsCategoriesItem = {
 	label: string;
