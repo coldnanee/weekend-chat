@@ -2,4 +2,5 @@ import type { TUser } from "@/entities/user"; // eslint-disable-line boundaries/
 
 export interface IProfile extends TUser {
 	chats: string[];
+	email: string;
 }

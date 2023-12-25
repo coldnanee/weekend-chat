@@ -1,0 +1,48 @@
+.root {
+	@apply flex flex-col items-center justify-center;
+	&__title {
+		@apply text-[20px] text-[#a9aeba] mb-[25px];
+	}
+	&__input {
+		@apply flex flex-col items-center relative pt-[10px] mb-[30px];
+		&__body {
+			@apply bg-transparent border-b border-[#a9aeba] border-solid p-[5px] w-[200px] relative z-10 text-[#a9aeba];
+			&:focus + .root__input__label {
+				@apply top-0 text-[#a9aeba] left-0 opacity-100;
+			}
+		}
+		&__error {
+			@apply p-[5px] text-[#c94444];
+			&:first-letter {
+				@apply uppercase;
+			}
+		}
+		&__label {
+			@apply absolute top-[50%] left-[5px] text-[#5c5e5e];
+			transform: translateY(-20%);
+			transition: all 0.1s linear;
+			&::first-letter {
+				@apply uppercase;
+			}
+			&_hidden {
+				@apply opacity-0;
+			}
+		}
+	}
+	&__button {
+		@apply p-[10px] font-bold text-[#202329] bg-[#a9aeba] rounded-[5px] w-[100px] border border-[#a9aeba] border-solid mb-[20px];
+		transition: all 0.3s linear;
+
+		@media (hover: hover) {
+			&:hover {
+				@apply bg-transparent text-[#a9aeba];
+			}
+		}
+	}
+	&__loader {
+		background: none !important;
+	}
+	&__link {
+		@apply text-[#a9aeba] underline;
+	}
+}

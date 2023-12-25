@@ -16,5 +16,11 @@ export const fieldsSettingsArr: TSettingsFormItem[] = [
 			minLength: { value: 8, message: `Password can't be smaller 8 symbols` }
 		},
 		required: false
+	},
+	{
+		name: "email",
+		type: "text",
+		validation: {},
+		required: true
 	}
 ];

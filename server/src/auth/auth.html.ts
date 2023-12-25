@@ -10,7 +10,7 @@ export const authResetPasswordHtml = `
 	<body>
 		<div class="wrapper">
 			<div class="body">
-				<h1 class="body__title">Password reset!</h1>
+				<h1 class="body__title">Password reset! Check email!</h1>
 				<a class="body__link" href=${process.env.CLIENT_URL}>Go Home!</a>
 			</div>
 		</div>

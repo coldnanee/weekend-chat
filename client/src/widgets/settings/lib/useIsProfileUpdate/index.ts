@@ -15,7 +15,8 @@ export const useIsProfileUpdate = (): { isUpdated: boolean } => {
 	const watchingForm: TSettingsForm = { //eslint-disable-line
 		login: watch("login"),
 		password: watch("password"),
-		avatar: watch("avatar")
+		avatar: watch("avatar"),
+		email: watch("email")
 	};
 
 	const isUpdated = useMemo(() => {

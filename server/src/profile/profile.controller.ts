@@ -11,10 +11,11 @@ class ProfileController {
 		try {
 			getValidationError(req);
 
-			const { login, password, avatar } = req.body as {
+			const { login, password, avatar, email } = req.body as {
 				login: string;
 				password: string;
 				avatar: string;
+				email: string;
 			};
 
 			if (password && password.length < 8) {
@@ -27,7 +28,8 @@ class ProfileController {
 				login.toLowerCase(),
 				password,
 				avatar,
-				id
+				id,
+				email
 			);
 
 			return res.json({ ...user });
