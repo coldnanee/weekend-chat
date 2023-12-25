@@ -17,17 +17,11 @@ export const editMessageHandler = (
 		"edit-message",
 		async (
 			data: { messageId: string; updateText: string },
-			accessJwt: string
+			accessJwt: string,
+			cb: (err: { status: number; message: string }) => void
 		) => {
 			try {
-				const isAuth = checkAuthSocket(
-					socket,
-					{
-						name: "edit-message",
-						data
-					},
-					accessJwt
-				);
+				const isAuth = checkAuthSocket(accessJwt, cb);
 
 				if (!isAuth) {
 					return;
@@ -40,15 +34,13 @@ export const editMessageHandler = (
 				const message = await MessageModel.findById(messageId);
 
 				if (!message) {
-					io.emit("error-client", "Message not found");
-					return;
+					return cb({ status: 400, message: "Message not found" });
 				}
 
 				const chat = await ChatModel.findById(message.chat);
 
 				if (!chat) {
-					io.emit("error-client", "Chat not found");
-					return;
+					return cb({ status: 400, message: "Chat not found" });
 				}
 
 				if (myId === message.user.toString()) {
@@ -85,7 +77,7 @@ export const editMessageHandler = (
 					});
 				}
 			} catch (e) {
-				io.emit("error-client", e);
+				cb({ status: 500, message: "Unexpected error" });
 			}
 		}
 	);

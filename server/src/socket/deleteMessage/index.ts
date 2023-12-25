@@ -19,31 +19,24 @@ export const deleteMessageHandler = (
 		"delete-message",
 		async (
 			data: { chatId: string; selectedMessages: string[] },
-			accessJwt: string
+			accessJwt: string,
+			cb: (err: { status: number; message: string }) => void
 		) => {
 			try {
-				const { chatId, selectedMessages } = data;
-
-				const isAuth = checkAuthSocket(
-					socket,
-					{
-						name: "delete-message",
-						data
-					},
-					accessJwt
-				);
+				const isAuth = checkAuthSocket(accessJwt, cb);
 
 				if (!isAuth) {
 					return;
 				}
+
+				const { chatId, selectedMessages } = data;
 
 				const myId = connectionQueryWrapper(socket.handshake.query.user);
 
 				const chat = await ChatModel.findById(chatId);
 
 				if (!chat) {
-					io.emit("error-client", "Chat not found");
-					return;
+					return cb({ status: 400, message: "Chat not found" });
 				}
 
 				const recipientId = chat?.members.find((m) => m !== myId) || "";
@@ -55,8 +48,7 @@ export const deleteMessageHandler = (
 				const filteredIdMessages: string[] = [];
 
 				if (!messagesBody) {
-					io.emit("error-client", "Message not found");
-					return;
+					return cb({ status: 400, message: "Message not found" });
 				}
 
 				messagesBody.map((m) => {
@@ -125,7 +117,7 @@ export const deleteMessageHandler = (
 					});
 				}
 			} catch (e) {
-				io.emit("error-client", e);
+				cb({ status: 500, message: "Unexpected error" });
 			}
 		}
 	);

@@ -4,9 +4,9 @@ import debounce from "lodash.debounce";
 import {
 	KeyboardEvent,
 	type ChangeEvent,
-	useRef,
 	useEffect,
-	useCallback
+	useCallback,
+	useState
 } from "react";
 import type { MutableRefObject } from "react";
 import { HiOutlinePaperAirplane } from "react-icons/hi2";
@@ -22,7 +22,7 @@ export const ChatInput = ({
 	recipientId?: string;
 	messagesContainer: MutableRefObject<HTMLElement | null>;
 }) => {
-	const isFirstTyping = useRef<boolean>(true);
+	const [isStartTyping, setIsStartTyping] = useState<boolean>(false);
 
 	const { socketEvent } = useSocketStore();
 
@@ -42,15 +42,20 @@ export const ChatInput = ({
 	const changeMessage = useCallback( // eslint-disable-line
 		debounce(() => {
 			socketEvent("stop-typing", {recipientId});
+			setIsStartTyping(false);
 		}, 500),
 		[]
 	);
 
 	const changeInput = (e: ChangeEvent<HTMLInputElement>) => {
+		if (!isStartTyping) {
+			setIsStartTyping(true);
+			socketEvent("start-typing", { recipientId });
+		}
 		messageBody
 			? changeMessageBody({ ...messageBody, text: e.target.value })
 			: editMessage(e.target.value);
-		socketEvent("start-typing", { recipientId });
+
 		changeMessage();
 	};
 
@@ -60,7 +65,6 @@ export const ChatInput = ({
 				recipientId,
 				message
 			});
-			isFirstTyping.current = true;
 			editMessage("");
 			socketEvent("stop-typing", { recipientId });
 		}

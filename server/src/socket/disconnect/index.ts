@@ -31,7 +31,7 @@ export const disconnectHandler = (
 			usersSessions.delete(sessionId);
 			io.emit("new-offline-user", Array.from(onlineUsers.values()));
 		} catch (e) {
-			io.emit("error-client", e);
+			console.log(e); // eslint-disable-line no-console
 		}
 	});
 };

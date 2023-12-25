@@ -14,13 +14,13 @@ export const unpinChatHandler = (
 ) => {
 	socket.on(
 		"unpin-chat",
-		async (data: { chatId: string }, accessJwt: string) => {
+		async (
+			data: { chatId: string },
+			accessJwt: string,
+			cb: (err: { status: number; message: string }) => void
+		) => {
 			try {
-				const isAuth = checkAuthSocket(
-					socket,
-					{ name: "unpin-chat", data },
-					accessJwt
-				);
+				const isAuth = checkAuthSocket(accessJwt, cb);
 
 				if (!isAuth) {
 					return;
@@ -33,8 +33,7 @@ export const unpinChatHandler = (
 				const chat = await ChatModel.findById(chatId);
 
 				if (!chat) {
-					io.emit("error-client", "Chat not found");
-					return;
+					return cb({ status: 400, message: "Chat not found" });
 				}
 
 				const sessions = await SessionModel.find({ user });
@@ -50,7 +49,7 @@ export const unpinChatHandler = (
 					}
 				});
 			} catch (e) {
-				io.emit("error-client", e);
+				cb({ status: 500, message: "Unexpected error" });
 			}
 		}
 	);

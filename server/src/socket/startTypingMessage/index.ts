@@ -12,22 +12,18 @@ export const startTypingMessageHandler = (
 ) => {
 	socket.on(
 		"start-typing",
-		async (data: { recipientId: string }, accessJwt: string) => {
+		async (
+			data: { recipientId: string },
+			accessJwt: string,
+			cb: (err: { status: number; message: string }) => void
+		) => {
 			try {
-				const { recipientId } = data;
-
-				const isAuth = checkAuthSocket(
-					socket,
-					{
-						name: "start-typing",
-						data
-					},
-					accessJwt
-				);
+				const isAuth = checkAuthSocket(accessJwt, cb);
 
 				if (!isAuth) {
 					return;
 				}
+				const { recipientId } = data;
 
 				const userId = connectionQueryWrapper(socket.handshake.query.user);
 
@@ -42,7 +38,7 @@ export const startTypingMessageHandler = (
 					}
 				});
 			} catch (e) {
-				io.emit("error-client", e);
+				cb({ status: 500, message: "Unexpected error" });
 			}
 		}
 	);

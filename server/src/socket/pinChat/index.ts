@@ -11,43 +11,45 @@ export const pinChatHandler = (
 	socket: Socket,
 	usersSessions: Map<string, string>
 ) => {
-	socket.on("pin-chat", async (data: { chatId: string }, accessJwt: string) => {
-		try {
-			const isAuth = checkAuthSocket(
-				socket,
-				{ name: "pin-chat", data },
-				accessJwt
-			);
+	socket.on(
+		"pin-chat",
+		async (
+			data: { chatId: string },
+			accessJwt: string,
+			cb: (err: { status: number; message: string }) => void
+		) => {
+			try {
+				const isAuth = checkAuthSocket(accessJwt, cb);
 
-			if (!isAuth) {
-				return;
-			}
-
-			const { chatId } = data;
-
-			const user = connectionQueryWrapper(socket.handshake.query.user);
-
-			const chat = await ChatModel.findById(chatId);
-
-			if (!chat) {
-				io.emit("error-client", "Chat not found");
-				return;
-			}
-
-			const sessions = await SessionModel.find({ user });
-
-			chat.isPinned = true;
-
-			await chat.save();
-
-			sessions.map((s) => {
-				const sessionSocketId = usersSessions.get(s._id.toString());
-				if (sessionSocketId) {
-					io.to(sessionSocketId).emit("pin-chat-client", chatId);
+				if (!isAuth) {
+					return;
 				}
-			});
-		} catch (e) {
-			io.emit("error-client", e);
+
+				const { chatId } = data;
+
+				const user = connectionQueryWrapper(socket.handshake.query.user);
+
+				const chat = await ChatModel.findById(chatId);
+
+				if (!chat) {
+					return cb({ status: 400, message: "Chat not found" });
+				}
+
+				const sessions = await SessionModel.find({ user });
+
+				chat.isPinned = true;
+
+				await chat.save();
+
+				sessions.map((s) => {
+					const sessionSocketId = usersSessions.get(s._id.toString());
+					if (sessionSocketId) {
+						io.to(sessionSocketId).emit("pin-chat-client", chatId);
+					}
+				});
+			} catch (e) {
+				return cb({ status: 400, message: "Unexpected error" });
+			}
 		}
-	});
+	);
 };

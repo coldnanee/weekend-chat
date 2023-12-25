@@ -17,17 +17,11 @@ export const sendMessageHandler = (
 		"send-message",
 		async (
 			data: { recipientId: string; message: string },
-			accessJwt: string
+			accessJwt: string,
+			cb: (obj: { status: number; message: string }) => void
 		) => {
 			try {
-				const isAuth = checkAuthSocket(
-					socket,
-					{
-						name: "send-message",
-						data
-					},
-					accessJwt
-				);
+				const isAuth = checkAuthSocket(accessJwt, cb);
 
 				if (!isAuth) {
 					return;
@@ -86,7 +80,7 @@ export const sendMessageHandler = (
 					});
 				}
 			} catch (e) {
-				io.emit("error-client", e);
+				cb({ status: 500, message: "Unexpected error" });
 			}
 		}
 	);

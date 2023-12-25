@@ -7,29 +7,32 @@ export const logoutHandler = (
 	socket: Socket,
 	usersSessions: Map<string, string>
 ) => {
-	socket.on("logout", (data: { sessionsId: string[] }, accessJwt: string) => {
-		try {
-			const { sessionsId } = data;
+	socket.on(
+		"logout",
+		(
+			data: { sessionsId: string[] },
+			accessJwt: string,
+			cb: (err: { status: number; message: string }) => void
+		) => {
+			try {
+				const isAuth = checkAuthSocket(accessJwt, cb);
 
-			const isAuth = checkAuthSocket(
-				socket,
-				{ name: "logout", data },
-				accessJwt
-			);
-
-			if (!isAuth) {
-				return;
-			}
-
-			sessionsId.map((s) => {
-				const socketId = usersSessions.get(s);
-				if (socketId) {
-					io.to(socketId).emit("logout-client");
-					usersSessions.delete(s);
+				if (!isAuth) {
+					return;
 				}
-			});
-		} catch (e) {
-			io.emit("error-client", e);
+
+				const { sessionsId } = data;
+
+				sessionsId.map((s) => {
+					const socketId = usersSessions.get(s);
+					if (socketId) {
+						io.to(socketId).emit("logout-client");
+						usersSessions.delete(s);
+					}
+				});
+			} catch (e) {
+				cb({ status: 500, message: "Unexpected error" });
+			}
 		}
-	});
+	);
 };

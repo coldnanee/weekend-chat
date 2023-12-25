@@ -15,16 +15,13 @@ export const deleteChatHandler = (
 ) => {
 	socket.on(
 		"delete-chat",
-		async (data: { chatId: string }, accessJwt: string) => {
+		async (
+			data: { chatId: string },
+			accessJwt: string,
+			cb: (err: { status: number; message: string }) => void
+		) => {
 			try {
-				const isAuth = checkAuthSocket(
-					socket,
-					{
-						name: "delete-chat",
-						data
-					},
-					accessJwt
-				);
+				const isAuth = checkAuthSocket(accessJwt, cb);
 
 				if (!isAuth) {
 					return;
@@ -37,15 +34,13 @@ export const deleteChatHandler = (
 				const chat = await ChatModel.findById(chatId);
 
 				if (!chat) {
-					io.emit("error-client", "Chat not found");
-					return;
+					return cb({ status: 400, message: "Chat not found" });
 				}
 
 				const recipientId = chat.members.find((id) => id !== myId);
 
 				if (!recipientId) {
-					io.emit("error-client", "Recipient not found");
-					return;
+					return cb({ status: 400, message: "Recipient not found" });
 				}
 
 				await ChatsService.deleteChat(chatId);
@@ -69,7 +64,7 @@ export const deleteChatHandler = (
 					}
 				});
 			} catch (e) {
-				io.emit("error-client", e);
+				cb({ status: 500, message: "Unexpected error" });
 			}
 		}
 	);
