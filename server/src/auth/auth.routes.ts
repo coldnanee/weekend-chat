@@ -31,4 +31,7 @@ router.post(
 	controller.login
 );
 
+router.post("/reset", controller.sendResetMessage);
+router.get("/reset/:link", controller.resetPassword);
+
 export const auth = router;

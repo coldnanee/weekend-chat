@@ -1,0 +1,30 @@
+@import url("https://fonts.googleapis.com/css2?family=Titillium+Web&display=swap");
+
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+.wrapper {
+	background: #131313;
+	height: 100dvh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-family: "Titillium Web";
+}
+
+.body {
+	text-align: center;
+}
+
+.body__title {
+	font-size: 25px;
+	color: #a9aeba;
+	margin-bottom: 5px;
+}
+.body__link {
+	color: #a9aeba;
+	font-size: 18px;
+}

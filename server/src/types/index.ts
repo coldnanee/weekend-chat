@@ -16,6 +16,7 @@ export type TUser = {
 	avatar: string;
 	chats: string[];
 	lastOnline: string;
+	email: string;
 };
 
 export type TProfilePayload = Omit<TUser, "password">;
@@ -55,4 +56,10 @@ export type TSession = {
 	refreshToken: string;
 	browser: string;
 	os: string;
+};
+
+export type TEmail = {
+	_id: string;
+	email: string;
+	link: string;
 };
