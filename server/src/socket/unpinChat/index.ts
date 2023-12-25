@@ -10,7 +10,7 @@ import { checkAuthSocket } from "../../libs";
 export const unpinChatHandler = (
 	io: Server,
 	socket: Socket,
-	usersSessions: Map<string, string>
+	usersSessions: Map<string, string[]>
 ) => {
 	socket.on(
 		"unpin-chat",

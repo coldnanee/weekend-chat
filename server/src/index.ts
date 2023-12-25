@@ -80,7 +80,7 @@ const start = async () => {
 
 		const onlineUsers = new Map<string, string>();
 
-		const usersSessions = new Map<string, string>();
+		const usersSessions = new Map<string, string[]>();
 
 		io.on("connection", (socket) => {
 			handshakeSocket(socket);
@@ -89,7 +89,11 @@ const start = async () => {
 			const session = connectionQueryWrapper(socket.handshake.query.session);
 
 			onlineUsers.set(socket.id, user);
-			usersSessions.set(session, socket.id);
+			if (!usersSessions.get(session)) {
+				usersSessions.set(session, [socket.id]);
+			} else {
+				usersSessions.get(session)?.push(socket.id);
+			}
 
 			io.emit("new-online-user", Array.from(onlineUsers.values()));
 

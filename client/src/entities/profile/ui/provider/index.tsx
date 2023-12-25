@@ -13,6 +13,7 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
 
 	useEffect(() => {
 		const isAuth = getCookie("accessJwt");
+
 		if (isAuth) {
 			fetchProfile();
 		}

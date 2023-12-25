@@ -10,7 +10,7 @@ export const disconnectHandler = (
 	io: Server,
 	socket: Socket,
 	onlineUsers: Map<string, string>,
-	usersSessions: Map<string, string>
+	usersSessions: Map<string, string[]>
 ) => {
 	socket.on("disconnect", async () => {
 		try {
@@ -28,7 +28,16 @@ export const disconnectHandler = (
 			await profile.save();
 
 			onlineUsers.delete(socket.id);
-			usersSessions.delete(sessionId);
+
+			const sessions = usersSessions.get(sessionId);
+
+			if (sessions) {
+				usersSessions.set(
+					sessionId,
+					sessions.filter((s) => s !== socket.id)
+				);
+			}
+
 			io.emit("new-offline-user", Array.from(onlineUsers.values()));
 		} catch (e) {
 			console.log(e); // eslint-disable-line no-console

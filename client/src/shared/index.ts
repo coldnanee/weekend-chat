@@ -5,5 +5,5 @@ export {
 	ReactQueryProvider,
 	refreshToken
 } from "./lib";
-export { useSocketStore, unAuthSocketHandler } from "./model";
+export { useSocketStore } from "./model";
 export { Loader, DefaultAvatar, SocketProvider } from "./ui";

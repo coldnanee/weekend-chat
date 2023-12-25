@@ -4,7 +4,11 @@ import { type Socket, io } from "socket.io-client";
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { refreshToken } from "../lib";
-import type { TSocketEvent } from "./types";
+
+type TSocketEvent = {
+	name: string;
+	data: unknown;
+};
 
 type TSocketStore = {
 	socket: Socket;
@@ -56,7 +60,7 @@ export const useSocketStore = create<TSocketStore>()(
 				name,
 				data,
 				getCookie("accessJwt"),
-				(err: { status: number }) => {
+				(err: { status: number; message: string }) => {
 					if (err.status === 401) {
 						addEventToStack({ name, data });
 						if (!isRefreshLoading) {
@@ -69,6 +73,8 @@ export const useSocketStore = create<TSocketStore>()(
 								)
 								.finally(() => setIsRefreshLoading(false));
 						}
+					} else {
+						alert(err.message);
 					}
 				}
 			);

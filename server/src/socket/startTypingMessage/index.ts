@@ -8,7 +8,7 @@ import { checkAuthSocket } from "./../../libs";
 export const startTypingMessageHandler = (
 	io: Server,
 	socket: Socket,
-	usersSessions: Map<string, string>
+	usersSessions: Map<string, string[]>
 ) => {
 	socket.on(
 		"start-typing",
