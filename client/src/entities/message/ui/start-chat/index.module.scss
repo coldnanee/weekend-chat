@@ -1,6 +1,6 @@
 .root {
 	@apply flex justify-center items-center;
-	height: calc(100dvh - 50px);
+	height: calc(100dvh - 52px);
 	&__text {
 		@apply text-[20px] text-[#fff];
 	}

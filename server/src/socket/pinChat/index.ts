@@ -9,7 +9,7 @@ import { checkAuthSocket } from "../../libs";
 export const pinChatHandler = (
 	io: Server,
 	socket: Socket,
-	usersSessions: Map<string, string>
+	usersSessions: Map<string, string[]>
 ) => {
 	socket.on(
 		"pin-chat",

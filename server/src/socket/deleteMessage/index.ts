@@ -13,7 +13,7 @@ import { checkAuthSocket } from "../../libs";
 export const deleteMessageHandler = (
 	io: Server,
 	socket: Socket,
-	usersSessions: Map<string, string>
+	usersSessions: Map<string, string[]>
 ) => {
 	socket.on(
 		"delete-message",
