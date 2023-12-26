@@ -1,19 +1,18 @@
 import jwt from "jsonwebtoken";
 
-import { TUserPayload } from "../types";
-
 import SessionModel from "../db/models/SessionModel";
 
 import type { TUser } from "../types";
 import UserModel from "../db/models/UserModel";
 import { ProfileDto } from "../dtos/profile.dto";
+import type { TTokenPayload } from "../types";
 
 import type { TBrowserInfo } from "../types";
 
 import { getBrowserName } from "../libs/getBrowserName";
 
 class TokenService {
-	generateTokens(user: TUserPayload): {
+	generateTokens(user: TTokenPayload): {
 		accessToken: string;
 		refreshToken: string;
 	} {

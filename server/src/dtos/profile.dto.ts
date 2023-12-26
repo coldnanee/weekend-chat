@@ -7,6 +7,7 @@ export class ProfileDto {
 	public chats: string[];
 	public lastOnline: string;
 	public email: string;
+	public blackList: string[];
 	constructor(profile: TProfilePayload) {
 		this._id = profile._id;
 		this.login = profile.login;
@@ -14,5 +15,6 @@ export class ProfileDto {
 		this.chats = profile.chats;
 		this.lastOnline = profile.lastOnline;
 		this.email = profile.email;
+		this.blackList = profile.blackList;
 	}
 }

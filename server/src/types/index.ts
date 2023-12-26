@@ -17,10 +17,15 @@ export type TUser = {
 	chats: string[];
 	lastOnline: string;
 	email: string;
+	blackList: string[];
 };
 
 export type TProfilePayload = Omit<TUser, "password">;
 export type TUserPayload = Omit<TUser, "password" | "chats">;
+export type TTokenPayload = Omit<
+	TUser,
+	"password" | "chats" | "lastOnline" | "avatar" | "email" | "blackList"
+>;
 
 export type TMessage = {
 	_id: string;
