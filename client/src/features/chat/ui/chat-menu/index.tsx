@@ -3,11 +3,13 @@
 import { type MouseEvent, useEffect, useRef } from "react";
 import { BsFillPinFill as PinImage } from "react-icons/bs";
 import { BsPin as UnpinImage } from "react-icons/bs";
+import { FiMinusCircle } from "react-icons/fi";
+import { MdBlock } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import type { TChat } from "@/entities/chat";
+import { useProfileStore } from "@/entities/profile";
 import type { TUser } from "@/entities/user";
-import { useSocketStore } from "@/shared";
-import { DefaultAvatar } from "@/shared";
+import { useSocketStore, DefaultAvatar } from "@/shared";
 import { useMessageStore } from "../../model";
 import { TChatOptionItem } from "../../types";
 
@@ -18,8 +20,11 @@ import cl from "./index.module.scss";
 export const ChatMenu = ({ chat, user }: { chat?: TChat; user?: TUser }) => {
 	const { socketEvent } = useSocketStore();
 	const { isMenuShow, setMenuShow } = useMessageStore();
+	const { profile } = useProfileStore();
 
 	const isTouchDevice = useRef<number | boolean>(false);
+
+	const isUserBlock = chat?.user && profile?.blackList.includes(chat.user._id);
 
 	const rootClasses = [cl.root__body];
 
@@ -50,6 +55,14 @@ export const ChatMenu = ({ chat, user }: { chat?: TChat; user?: TUser }) => {
 		socketEvent("unpin-chat", { chatId: chat?._id });
 	};
 
+	const blockUser = () => {
+		socketEvent("block-user", { recipientId: chat?.user._id });
+	};
+
+	const unblockUser = () => {
+		socketEvent("unblock-user", { recipientId: chat?.user._id });
+	};
+
 	const chatOptionsArr: TChatOptionItem[] = [
 		{
 			label: chat?.isPinned ? "Unpin chat" : "Pin chat",
@@ -60,6 +73,11 @@ export const ChatMenu = ({ chat, user }: { chat?: TChat; user?: TUser }) => {
 			label: "Delete chat",
 			Picture: RiDeleteBin6Line,
 			cb: showConfirmWindow
+		},
+		{
+			label: isUserBlock ? "Unblock user" : "Block user",
+			Picture: isUserBlock ? FiMinusCircle : MdBlock,
+			cb: isUserBlock ? unblockUser : blockUser
 		}
 	];
 

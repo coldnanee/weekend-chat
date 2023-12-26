@@ -15,3 +15,15 @@
 		}
 	}
 }
+
+.block {
+	@apply h-[41px] bg-[#202329] text-[#a9aeba] flex justify-center items-center;
+	&__body {
+		@apply flex justify-center items-center gap-x-[10px];
+		&__icon {
+		}
+		&__text {
+			@apply text-[16px];
+		}
+	}
+}

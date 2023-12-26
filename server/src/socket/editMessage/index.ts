@@ -12,6 +12,8 @@ import type { TSocketCbError } from "../../types";
 
 import SessionService from "../../session/session.service";
 
+import UserModel from "../../db/models/UserModel";
+
 export const editMessageHandler = (
 	io: Server,
 	socket: Socket,
@@ -20,7 +22,7 @@ export const editMessageHandler = (
 	socket.on(
 		"edit-message",
 		async (
-			data: { messageId: string; updateText: string },
+			data: { messageId: string; updateText: string; recipientId: string },
 			accessJwt: string,
 			cb: TSocketCbError
 		) => {
@@ -31,9 +33,20 @@ export const editMessageHandler = (
 					return;
 				}
 
-				const { messageId, updateText } = data;
+				const { messageId, updateText, recipientId } = data;
 
 				const myId = connectionQueryWrapper(socket.handshake.query.user);
+
+				const user = await UserModel.findById(myId);
+				const recipient = await UserModel.findById(recipientId);
+
+				const isBlock =
+					user?.blackList.includes(recipientId) ||
+					recipient?.blackList.includes(myId);
+
+				if (isBlock) {
+					return cb({ status: 400, message: "User is blocked" });
+				}
 
 				const message = await MessageModel.findById(messageId);
 

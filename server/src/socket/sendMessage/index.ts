@@ -11,6 +11,7 @@ import type { TSocketCbError } from "../../types";
 import { checkAuthSocket } from "../../libs";
 
 import SessionService from "../../session/session.service";
+import UserModel from "../../db/models/UserModel";
 
 export const sendMessageHandler = (
 	io: Server,
@@ -34,6 +35,17 @@ export const sendMessageHandler = (
 				const { recipientId, message } = data;
 
 				const myId = connectionQueryWrapper(socket.handshake.query.user);
+
+				const user = await UserModel.findById(myId);
+				const recipient = await UserModel.findById(recipientId);
+
+				const isBlock =
+					user?.blackList.includes(recipientId) ||
+					recipient?.blackList.includes(myId);
+
+				if (isBlock) {
+					return cb({ status: 400, message: "User is blocked" });
+				}
 
 				const messageBody = await ChatsService.saveMessageToDb(
 					myId,
