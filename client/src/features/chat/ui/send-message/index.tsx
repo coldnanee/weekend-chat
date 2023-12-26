@@ -10,21 +10,28 @@ import {
 } from "react";
 import type { MutableRefObject } from "react";
 import { HiOutlinePaperAirplane } from "react-icons/hi2";
+import { IoInformationCircleSharp } from "react-icons/io5";
+import type { TChat } from "@/entities/chat";
 import { useMessagesStore } from "@/entities/message";
+import { useProfileStore } from "@/entities/profile";
 import { useSocketStore } from "@/shared";
 import { useMessageStore } from "../../model";
 import cl from "./index.module.scss";
 
 export const ChatInput = ({
-	recipientId,
+	chat,
 	messagesContainer
 }: {
-	recipientId?: string;
+	chat?: TChat;
 	messagesContainer: MutableRefObject<HTMLElement | null>;
 }) => {
 	const [isStartTyping, setIsStartTyping] = useState<boolean>(false);
 
 	const { socketEvent } = useSocketStore();
+
+	const { profile } = useProfileStore();
+
+	const isUserBlock = chat && profile?.blackList.includes(chat.user._id);
 
 	const { message, editMessage, changeMessageBody, messageBody } =
 		useMessageStore();
@@ -41,7 +48,7 @@ export const ChatInput = ({
 
 	const changeMessage = useCallback( // eslint-disable-line
 		debounce(() => {
-			socketEvent("stop-typing", {recipientId});
+			socketEvent("stop-typing", {recipientId: chat?.user._id});
 			setIsStartTyping(false);
 		}, 500),
 		[]
@@ -50,7 +57,7 @@ export const ChatInput = ({
 	const changeInput = (e: ChangeEvent<HTMLInputElement>) => {
 		if (!isStartTyping) {
 			setIsStartTyping(true);
-			socketEvent("start-typing", { recipientId });
+			socketEvent("start-typing", { recipientId: chat?.user._id });
 		}
 		messageBody
 			? changeMessageBody({ ...messageBody, text: e.target.value })
@@ -62,11 +69,11 @@ export const ChatInput = ({
 	const sendMessage = async () => {
 		if (message) {
 			socketEvent("send-message", {
-				recipientId,
+				recipientId: chat?.user._id,
 				message
 			});
 			editMessage("");
-			socketEvent("stop-typing", { recipientId });
+			socketEvent("stop-typing", { recipientId: chat?.user._id });
 		}
 	};
 
@@ -74,7 +81,8 @@ export const ChatInput = ({
 		if (messageBody?.text) {
 			socketEvent("edit-message", {
 				messageId: messageBody._id,
-				updateText: messageBody.text
+				updateText: messageBody.text,
+				recipientId: chat?.user._id
 			});
 			changeMessageBody(null);
 			clearSelectedMessages();
@@ -89,9 +97,26 @@ export const ChatInput = ({
 
 	useEffect(() => {
 		return () => {
-			socketEvent("stop-typing", recipientId);
+			socketEvent("stop-typing", chat?.user._id);
 		};
 	}, []); //eslint-disable-line
+
+	if (isUserBlock) {
+		return (
+			<div className={cl.block}>
+				<div className={cl.block__body}>
+					<IoInformationCircleSharp
+						color="#a9aeba"
+						size="20px"
+						className={cl.block__body__icon}
+					/>
+					<p className={cl.block__body__text}>
+						You blocked {chat.user.login}. Unblock him to send a message.
+					</p>
+				</div>
+			</div>
+		);
+	}
 
 	return (
 		<section className={cl.root}>

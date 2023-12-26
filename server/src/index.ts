@@ -100,14 +100,14 @@ const start = async () => {
 
 			io.emit("new-online-user", Array.from(onlineUsers.values()));
 
-			sendMessageHandler(io, socket, usersSessions);
+			sendMessageHandler(io, socket, usersSessions); // ?
 			startTypingMessageHandler(io, socket, usersSessions);
 			endTypingMessageHandler(io, socket, usersSessions);
 			disconnectHandler(io, socket, onlineUsers, usersSessions);
 			deleteChatHandler(io, socket, usersSessions);
 			deleteMessageHandler(io, socket, usersSessions);
 			logoutHandler(io, socket, usersSessions);
-			editMessageHandler(io, socket, usersSessions);
+			editMessageHandler(io, socket, usersSessions); // ?
 			pinChatHandler(io, socket, usersSessions);
 			unpinChatHandler(io, socket, usersSessions);
 			blockUserHandler(io, socket, usersSessions);

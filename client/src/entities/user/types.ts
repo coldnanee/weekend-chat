@@ -3,4 +3,5 @@ export type TUser = {
 	login: string;
 	avatar: string;
 	lastOnline: string;
+	isBlock: boolean;
 };

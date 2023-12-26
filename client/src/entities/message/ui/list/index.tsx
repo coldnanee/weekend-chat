@@ -21,8 +21,7 @@ export const ChatMessages = ({
 }) => {
 	const params = useParams<{ login: string }>();
 
-	const users = useOnlineUsersStore((state) => state.users);
-
+	const { users } = useOnlineUsersStore();
 	const { socket } = useSocketStore();
 
 	const [isTyping, setIsTyping] = useState<boolean>(false);

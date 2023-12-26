@@ -2,8 +2,12 @@
 
 import { useParams } from "next/navigation";
 import { useRef, useEffect } from "react";
-import { ChatInfo, ChatInput, ChatMessagesPanel } from "@/features/chat";
-import { useMessageStore } from "@/features/chat";
+import {
+	ChatInfo,
+	ChatInput,
+	ChatMessagesPanel,
+	useMessageStore
+} from "@/features/chat";
 import { useChatsStore } from "@/entities/chat";
 import { ChatMessages, useMessagesStore } from "@/entities/message";
 import { useGetUserByLogin } from "../model";
@@ -70,7 +74,7 @@ export const Chat = () => {
 				messagesContainer={messagesContainer}
 			/>
 			<ChatInput
-				recipientId={user._id}
+				chat={chat}
 				messagesContainer={messagesContainer}
 			/>
 		</div>

@@ -15,7 +15,12 @@ import {
 	unpinChatHandler
 } from "@/features/chat"; // eslint-disable-line boundaries/element-types
 import { logoutHandler } from "@/features/profile"; // eslint-disable-line boundaries/element-types
-import { newOnlineUserHandler, newOfflineUserHandler } from "@/features/user"; // eslint-disable-line boundaries/element-types
+import {
+	newOnlineUserHandler,
+	newOfflineUserHandler,
+	blockUserHandler,
+	unBlockUserHandler
+} from "@/features/user"; // eslint-disable-line boundaries/element-types
 import { useSocketStore } from "../../model";
 
 export const SocketProvider = ({ children }: { children: ReactNode }) => {
@@ -39,6 +44,8 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 	editMessageHandler(socket);
 	pinChatHandler(socket);
 	unpinChatHandler(socket);
+	blockUserHandler(socket);
+	unBlockUserHandler(socket);
 
 	return <>{children}</>;
 };

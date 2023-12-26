@@ -6,10 +6,10 @@ import type { TAuthForm } from "@/entities/auth"; // eslint-disable-line boundar
 import type { TSettingsProfile } from "@/entities/settings"; // eslint-disable-line boundaries/element-types
 import $axios from "@/shared";
 import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { IProfile } from "../types";
+import { TProfile } from "../types";
 
 type TProfileStore = {
-	profile: IProfile | null;
+	profile: TProfile | null;
 	isLoading: boolean;
 	error: null | string;
 	removeProfileAvatar: () => void;
@@ -19,6 +19,7 @@ type TProfileStore = {
 	loginUser: (user: TAuthForm, router: AppRouterInstance) => void; // eslint-disable-line no-unused-vars
 	// prettier-ignore
 	registrationUser: (user: TAuthForm, router: AppRouterInstance) => Promise<void>; // eslint-disable-line no-unused-vars
+	toggleBlacklist: (userId: string) => void; // eslint-disable-line no-unused-vars
 };
 
 const handleProfileStoreError = (e: unknown) => {
@@ -54,7 +55,7 @@ export const useProfileStore = create<TProfileStore>()(
 		fetchProfile: async () => {
 			preFetchFn();
 			try {
-				const { data } = await $axios.post<IProfile>("/token/refresh");
+				const { data } = await $axios.post<TProfile>("/token/refresh");
 				set({ profile: data });
 			} catch (e) {
 				handleProfileStoreError(e);
@@ -78,7 +79,7 @@ export const useProfileStore = create<TProfileStore>()(
 		updateProfile: async (user) => {
 			preFetchFn();
 			try {
-				const { data } = await $axios.post<IProfile>("/profile/update", {
+				const { data } = await $axios.post<TProfile>("/profile/update", {
 					...user
 				});
 				set({ profile: data });
@@ -121,6 +122,15 @@ export const useProfileStore = create<TProfileStore>()(
 			} finally {
 				set({ isLoading: false });
 			}
-		}
+		},
+		toggleBlacklist: (userId) =>
+			set((state) => {
+				const blackList = state.profile?.blackList;
+				if (blackList?.includes(userId) && state.profile) {
+					state.profile.blackList = blackList.filter((u) => u !== userId);
+				} else {
+					blackList?.push(userId);
+				}
+			})
 	}))
 );
