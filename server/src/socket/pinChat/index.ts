@@ -6,6 +6,8 @@ import SessionModel from "../../db/models/SessionModel";
 
 import { checkAuthSocket } from "../../libs";
 
+import type { TSocketCbError } from "../../types";
+
 export const pinChatHandler = (
 	io: Server,
 	socket: Socket,
@@ -13,11 +15,7 @@ export const pinChatHandler = (
 ) => {
 	socket.on(
 		"pin-chat",
-		async (
-			data: { chatId: string },
-			accessJwt: string,
-			cb: (err: { status: number; message: string }) => void
-		) => {
+		async (data: { chatId: string }, accessJwt: string, cb: TSocketCbError) => {
 			try {
 				const isAuth = checkAuthSocket(accessJwt, cb);
 

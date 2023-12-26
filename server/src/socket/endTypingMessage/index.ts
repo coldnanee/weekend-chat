@@ -5,6 +5,8 @@ import SessionModel from "../../db/models/SessionModel";
 
 import { checkAuthSocket } from "./../../libs";
 
+import type { TSocketCbError } from "../../types";
+
 export const endTypingMessageHandler = (
 	io: Server,
 	socket: Socket,
@@ -15,7 +17,7 @@ export const endTypingMessageHandler = (
 		async (
 			data: { recipientId: string },
 			accessJwt: string,
-			cb: (err: { status: number; message: string }) => void
+			cb: TSocketCbError
 		) => {
 			try {
 				const isAuth = checkAuthSocket(accessJwt, cb);

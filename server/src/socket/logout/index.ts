@@ -2,6 +2,8 @@ import type { Server, Socket } from "socket.io";
 
 import { checkAuthSocket } from "../../libs";
 
+import type { TSocketCbError } from "../../types";
+
 export const logoutHandler = (
 	io: Server,
 	socket: Socket,
@@ -9,11 +11,7 @@ export const logoutHandler = (
 ) => {
 	socket.on(
 		"logout",
-		(
-			data: { sessionsId: string[] },
-			accessJwt: string,
-			cb: (err: { status: number; message: string }) => void
-		) => {
+		(data: { sessionsId: string[] }, accessJwt: string, cb: TSocketCbError) => {
 			try {
 				const isAuth = checkAuthSocket(accessJwt, cb);
 

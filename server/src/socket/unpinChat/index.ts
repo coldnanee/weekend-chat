@@ -5,6 +5,8 @@ import { connectionQueryWrapper } from "../../libs";
 import SessionModel from "../../db/models/SessionModel";
 import ChatModel from "../../db/models/ChatModel";
 
+import type { TSocketCbError } from "../../types";
+
 import { checkAuthSocket } from "../../libs";
 
 export const unpinChatHandler = (
@@ -14,11 +16,7 @@ export const unpinChatHandler = (
 ) => {
 	socket.on(
 		"unpin-chat",
-		async (
-			data: { chatId: string },
-			accessJwt: string,
-			cb: (err: { status: number; message: string }) => void
-		) => {
+		async (data: { chatId: string }, accessJwt: string, cb: TSocketCbError) => {
 			try {
 				const isAuth = checkAuthSocket(accessJwt, cb);
 

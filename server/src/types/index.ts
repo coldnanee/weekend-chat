@@ -68,3 +68,5 @@ export type TEmail = {
 	email: string;
 	link: string;
 };
+
+export type TSocketCbError = (err: { status: number; message: string }) => void;
