@@ -10,6 +10,8 @@ import { connectionQueryWrapper } from "../../libs";
 import ChatsService from "../../chats/chats.service";
 import SessionModel from "../../db/models/SessionModel";
 
+import SessionService from "../../session/session.service";
+
 import { checkAuthSocket } from "../../libs";
 
 export const deleteMessageHandler = (
@@ -78,45 +80,57 @@ export const deleteMessageHandler = (
 				if (isChatDelete) {
 					await ChatsService.deleteChat(chatId);
 
-					mySessions.map((s) => {
-						const sessionSocketId = usersSessions.get(s._id.toString());
-						if (sessionSocketId) {
-							io.to(sessionSocketId).emit("delete-chat-client", {
+					SessionService.emitEventForEachSession(
+						io,
+						mySessions,
+						usersSessions,
+						{
+							name: "delete-chat-client",
+							data: {
 								chatId: chat?._id
-							});
+							}
 						}
-					});
-
-					recipientSessions.map((s) => {
-						const sessionSocketId = usersSessions.get(s._id.toString());
-						if (sessionSocketId) {
-							io.to(sessionSocketId).emit("delete-chat-client", {
+					);
+					SessionService.emitEventForEachSession(
+						io,
+						recipientSessions,
+						usersSessions,
+						{
+							name: "delete-chat-client",
+							data: {
 								chatId: chat?._id
-							});
+							}
 						}
-					});
+					);
 				} else {
 					await MessageModel.deleteMany({
 						_id: { $in: selectedMessages }
 					});
-					mySessions.map((s) => {
-						const sessionSocketId = usersSessions.get(s._id.toString());
-						if (sessionSocketId) {
-							io.to(sessionSocketId).emit("delete-message-client", {
+
+					SessionService.emitEventForEachSession(
+						io,
+						mySessions,
+						usersSessions,
+						{
+							name: "delete-message-client",
+							data: {
 								chatId: chat?._id,
 								messagesId: filteredIdMessages
-							});
+							}
 						}
-					});
-					recipientSessions.map((s) => {
-						const sessionSocketId = usersSessions.get(s._id.toString());
-						if (sessionSocketId) {
-							io.to(sessionSocketId).emit("delete-message-client", {
+					);
+					SessionService.emitEventForEachSession(
+						io,
+						recipientSessions,
+						usersSessions,
+						{
+							name: "delete-message-client",
+							data: {
 								chatId: chat?._id,
 								messagesId: filteredIdMessages
-							});
+							}
 						}
-					});
+					);
 				}
 			} catch (e) {
 				cb({ status: 500, message: "Unexpected error" });

@@ -7,6 +7,8 @@ import { checkAuthSocket } from "./../../libs";
 
 import type { TSocketCbError } from "../../types";
 
+import SessionService from "../../session/session.service";
+
 export const startTypingMessageHandler = (
 	io: Server,
 	socket: Socket,
@@ -33,12 +35,17 @@ export const startTypingMessageHandler = (
 					user: recipientId
 				});
 
-				recipientSessions.map((s) => {
-					const sessionSocketId = usersSessions.get(s._id.toString());
-					if (sessionSocketId) {
-						io.to(sessionSocketId).emit("start-typing-client", userId);
+				SessionService.emitEventForEachSession(
+					io,
+					recipientSessions,
+					usersSessions,
+					{
+						name: "start-typing-client",
+						data: {
+							userId
+						}
 					}
-				});
+				);
 			} catch (e) {
 				cb({ status: 500, message: "Unexpected error" });
 			}

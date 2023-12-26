@@ -8,6 +8,8 @@ import { connectionQueryWrapper } from "../../libs";
 import ChatsService from "../../chats/chats.service";
 import SessionModel from "../../db/models/SessionModel";
 
+import SessionService from "../../session/session.service";
+
 import { checkAuthSocket } from "../../libs";
 
 export const deleteChatHandler = (
@@ -48,19 +50,24 @@ export const deleteChatHandler = (
 					user: recipientId
 				});
 
-				mySessions.map((s) => {
-					const sessionSocketId = usersSessions.get(s._id.toString());
-					if (sessionSocketId) {
-						io.to(sessionSocketId).emit("delete-chat-client", { chatId });
+				SessionService.emitEventForEachSession(io, mySessions, usersSessions, {
+					name: "delete-chat-client",
+					data: {
+						chatId
 					}
 				});
 
-				recipientSessions.map((s) => {
-					const sessionSocketId = usersSessions.get(s._id.toString());
-					if (sessionSocketId) {
-						io.to(sessionSocketId).emit("delete-chat-client", { chatId });
+				SessionService.emitEventForEachSession(
+					io,
+					recipientSessions,
+					usersSessions,
+					{
+						name: "delete-chat-client",
+						data: {
+							chatId
+						}
 					}
-				});
+				);
 			} catch (e) {
 				cb({ status: 500, message: "Unexpected error" });
 			}

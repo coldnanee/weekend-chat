@@ -10,6 +10,8 @@ import type { TSocketCbError } from "../../types";
 
 import { checkAuthSocket } from "../../libs";
 
+import SessionService from "../../session/session.service";
+
 export const sendMessageHandler = (
 	io: Server,
 	socket: Socket,
@@ -45,41 +47,47 @@ export const sendMessageHandler = (
 				});
 
 				if (messageBody?.recipientDto) {
-					recipientSessions.map((s) => {
-						const sessionSocketId = usersSessions.get(s._id.toString());
-						if (sessionSocketId) {
-							io.to(sessionSocketId).emit("new-chat", messageBody.recipientDto);
+					SessionService.emitEventForEachSession(
+						io,
+						recipientSessions,
+						usersSessions,
+						{
+							name: "new-chat",
+							data: messageBody.recipientDto
 						}
-					});
+					);
 				} else {
-					recipientSessions.map((s) => {
-						const sessionSocketId = usersSessions.get(s._id.toString());
-						if (sessionSocketId) {
-							io.to(sessionSocketId).emit(
-								"get-message",
-								messageBody?.newMessage
-							);
+					SessionService.emitEventForEachSession(
+						io,
+						recipientSessions,
+						usersSessions,
+						{
+							name: "get-message",
+							data: messageBody?.newMessage
 						}
-					});
+					);
 				}
 
 				if (messageBody?.myDto) {
-					mySessions.map((s) => {
-						const sessionSocketId = usersSessions.get(s._id.toString());
-						if (sessionSocketId) {
-							io.to(sessionSocketId).emit("new-chat", messageBody.myDto);
+					SessionService.emitEventForEachSession(
+						io,
+						mySessions,
+						usersSessions,
+						{
+							name: "new-chat",
+							data: messageBody.myDto
 						}
-					});
+					);
 				} else {
-					mySessions.map((s) => {
-						const sessionSocketId = usersSessions.get(s._id.toString());
-						if (sessionSocketId) {
-							io.to(sessionSocketId).emit(
-								"send-message-client",
-								messageBody?.newMessage
-							);
+					SessionService.emitEventForEachSession(
+						io,
+						mySessions,
+						usersSessions,
+						{
+							name: "send-message-client",
+							data: messageBody?.newMessage
 						}
-					});
+					);
 				}
 			} catch (e) {
 				cb({ status: 500, message: "Unexpected error" });

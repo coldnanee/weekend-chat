@@ -10,6 +10,8 @@ import { checkAuthSocket } from "../../libs";
 
 import type { TSocketCbError } from "../../types";
 
+import SessionService from "../../session/session.service";
+
 export const editMessageHandler = (
 	io: Server,
 	socket: Socket,
@@ -58,25 +60,31 @@ export const editMessageHandler = (
 
 					await message.save();
 
-					mySessions.map((s) => {
-						const sessionSocketId = usersSessions.get(s._id.toString());
-						if (sessionSocketId) {
-							io.to(sessionSocketId).emit("edit-message-client", {
+					SessionService.emitEventForEachSession(
+						io,
+						mySessions,
+						usersSessions,
+						{
+							name: "edit-message-client",
+							data: {
 								...data,
 								chat: chat._id
-							});
+							}
 						}
-					});
+					);
 
-					recipientSessions.map((s) => {
-						const sessionSocketId = usersSessions.get(s._id.toString());
-						if (sessionSocketId) {
-							io.to(sessionSocketId).emit("edit-message-client", {
+					SessionService.emitEventForEachSession(
+						io,
+						recipientSessions,
+						usersSessions,
+						{
+							name: "edit-message-client",
+							data: {
 								...data,
 								chat: chat._id
-							});
+							}
 						}
-					});
+					);
 				}
 			} catch (e) {
 				cb({ status: 500, message: "Unexpected error" });
