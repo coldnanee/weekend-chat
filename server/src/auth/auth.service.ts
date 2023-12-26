@@ -1,18 +1,15 @@
 import UserModel from "../db/models/UserModel";
+import EmailModel from "../db/models/EmailModel";
 
 import { ApiError } from "../errors";
 
 import bcrypt from "bcrypt";
 
 import TokenService from "../token/token.service";
-
-import { ProfileDto } from "../dtos/profile.dto";
-
-import EmailModel from "../db/models/EmailModel";
+import MailerService from "../mailer";
+import { TokenDto } from "../dtos/token.dto";
 
 import { v4 as uuid } from "uuid";
-
-import MailerService from "../mailer";
 
 class AuthService {
 	async login(
@@ -40,7 +37,7 @@ class AuthService {
 			throw new ApiError(400, "Password is not valid");
 		}
 
-		const tokens = TokenService.generateTokens(new ProfileDto(candidate));
+		const tokens = TokenService.generateTokens(new TokenDto(candidate));
 
 		const session = await TokenService.saveRefreshTokenToDb(
 			"",
