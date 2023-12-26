@@ -1,5 +1,7 @@
 import type { Socket, Server } from "socket.io";
 
+import type { TSocketCbError } from "../../types";
+
 import ChatModel from "../../db/models/ChatModel";
 import { connectionQueryWrapper } from "../../libs";
 
@@ -15,11 +17,7 @@ export const deleteChatHandler = (
 ) => {
 	socket.on(
 		"delete-chat",
-		async (
-			data: { chatId: string },
-			accessJwt: string,
-			cb: (err: { status: number; message: string }) => void
-		) => {
+		async (data: { chatId: string }, accessJwt: string, cb: TSocketCbError) => {
 			try {
 				const isAuth = checkAuthSocket(accessJwt, cb);
 

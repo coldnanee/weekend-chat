@@ -6,6 +6,8 @@ import SessionModel from "../../db/models/SessionModel";
 
 import ChatsService from "../../chats/chats.service";
 
+import type { TSocketCbError } from "../../types";
+
 import { checkAuthSocket } from "../../libs";
 
 export const sendMessageHandler = (
@@ -18,7 +20,7 @@ export const sendMessageHandler = (
 		async (
 			data: { recipientId: string; message: string },
 			accessJwt: string,
-			cb: (obj: { status: number; message: string }) => void
+			cb: TSocketCbError
 		) => {
 			try {
 				const isAuth = checkAuthSocket(accessJwt, cb);

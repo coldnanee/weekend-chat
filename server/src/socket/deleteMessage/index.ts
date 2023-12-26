@@ -3,6 +3,8 @@ import type { Socket, Server } from "socket.io";
 import MessageModel from "../../db/models/MessageModel";
 import ChatModel from "../../db/models/ChatModel";
 
+import type { TSocketCbError } from "../../types";
+
 import { connectionQueryWrapper } from "../../libs";
 
 import ChatsService from "../../chats/chats.service";
@@ -20,7 +22,7 @@ export const deleteMessageHandler = (
 		async (
 			data: { chatId: string; selectedMessages: string[] },
 			accessJwt: string,
-			cb: (err: { status: number; message: string }) => void
+			cb: TSocketCbError
 		) => {
 			try {
 				const isAuth = checkAuthSocket(accessJwt, cb);
