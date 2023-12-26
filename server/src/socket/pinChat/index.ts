@@ -8,6 +8,8 @@ import { checkAuthSocket } from "../../libs";
 
 import type { TSocketCbError } from "../../types";
 
+import SessionService from "../../session/session.service";
+
 export const pinChatHandler = (
 	io: Server,
 	socket: Socket,
@@ -39,10 +41,10 @@ export const pinChatHandler = (
 
 				await chat.save();
 
-				sessions.map((s) => {
-					const sessionSocketId = usersSessions.get(s._id.toString());
-					if (sessionSocketId) {
-						io.to(sessionSocketId).emit("pin-chat-client", chatId);
+				SessionService.emitEventForEachSession(io, sessions, usersSessions, {
+					name: "pin-chat-client",
+					data: {
+						chatId
 					}
 				});
 			} catch (e) {

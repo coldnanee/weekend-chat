@@ -9,6 +9,8 @@ import type { TSocketCbError } from "../../types";
 
 import { checkAuthSocket } from "../../libs";
 
+import SessionService from "../../session/session.service";
+
 export const unpinChatHandler = (
 	io: Server,
 	socket: Socket,
@@ -40,10 +42,10 @@ export const unpinChatHandler = (
 
 				await chat.save();
 
-				sessions.map((s) => {
-					const sessionSocketId = usersSessions.get(s._id.toString());
-					if (sessionSocketId) {
-						io.to(sessionSocketId).emit("unpin-chat-client", chatId);
+				SessionService.emitEventForEachSession(io, sessions, usersSessions, {
+					name: "unpin-chat-client",
+					data: {
+						chatId
 					}
 				});
 			} catch (e) {
