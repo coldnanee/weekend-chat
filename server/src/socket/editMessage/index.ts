@@ -40,12 +40,12 @@ export const editMessageHandler = (
 				const user = await UserModel.findById(myId);
 				const recipient = await UserModel.findById(recipientId);
 
-				const isBlock =
-					user?.blackList.includes(recipientId) ||
-					recipient?.blackList.includes(myId);
-
-				if (isBlock) {
+				if (user?.blackList.includes(recipientId)) {
 					return cb({ status: 400, message: "User is blocked" });
+				}
+
+				if (recipient?.blackList.includes(myId)) {
+					return cb({ status: 400, message: "You're blocked" });
 				}
 
 				const message = await MessageModel.findById(messageId);

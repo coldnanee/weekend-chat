@@ -5,12 +5,14 @@ export class UserDto {
 	public _id: string;
 	public avatar: string;
 	public lastOnline: string;
-	public blackList: string[];
-	constructor(profile: TUserPayload) {
+	public isBlock?: boolean;
+	constructor(profile: TUserPayload, myId?: string) {
 		this._id = profile._id.toString();
 		this.login = profile.login;
 		this.avatar = profile.avatar;
 		this.lastOnline = profile.lastOnline;
-		this.blackList = profile.blackList;
+		if (myId) {
+			this.isBlock = profile.blackList.includes(myId);
+		}
 	}
 }

@@ -3,6 +3,7 @@ import { type Socket, io } from "socket.io-client";
 
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
+import { useAlertStore } from "@/features/alert"; // eslint-disable-line boundaries/element-types
 import { refreshToken } from "../lib";
 
 type TSocketEvent = {
@@ -61,7 +62,9 @@ export const useSocketStore = create<TSocketStore>()(
 				data,
 				getCookie("accessJwt"),
 				(err: { status: number; message: string }) => {
-					if (err.status === 401) {
+					const { status, message } = err;
+
+					if (status === 401) {
 						addEventToStack({ name, data });
 						if (!isRefreshLoading) {
 							setIsRefreshLoading(true);
@@ -74,7 +77,7 @@ export const useSocketStore = create<TSocketStore>()(
 								.finally(() => setIsRefreshLoading(false));
 						}
 					} else {
-						alert(err.message);
+						useAlertStore.getState().setAlert({ message, type: "error" });
 					}
 				}
 			);
