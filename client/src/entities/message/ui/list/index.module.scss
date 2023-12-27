@@ -2,9 +2,6 @@
 	@apply bg-[#202329] flex flex-col p-[20px];
 	height: calc(100dvh - 41px - 52px);
 	overflow-y: auto;
-	@media (max-width: 580px) {
-		height: calc(100dvh - 41px - 52px);
-	}
 	&__list {
 		@apply flex flex-col gap-y-[6px];
 		flex: 1 1 auto;

@@ -5,9 +5,7 @@ const privateRoutesArr = ["/settings", "/", "/support", "/chat"];
 const publicRoutesArr = ["/login", "/registration", "/login/forgot"];
 
 export default function middleware(req: NextRequest) {
-	const { pathname } = req.nextUrl;
-
-	// const pathname = "/" + req.nextUrl.pathname.substring(1).split("/")[0];
+	const pathname = "/" + req.nextUrl.pathname.substring(1).split("/")[0];
 
 	const response = NextResponse.next();
 
