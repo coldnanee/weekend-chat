@@ -10,12 +10,12 @@ import {
 } from "react";
 import type { MutableRefObject } from "react";
 import { HiOutlinePaperAirplane } from "react-icons/hi2";
-import { IoInformationCircleSharp } from "react-icons/io5";
 import type { TChat } from "@/entities/chat";
 import { useMessagesStore } from "@/entities/message";
 import { useProfileStore } from "@/entities/profile";
 import { useSocketStore } from "@/shared";
 import { useMessageStore } from "../../model";
+import { ChatUserBlock } from "../user-block";
 import cl from "./index.module.scss";
 
 export const ChatInput = ({
@@ -101,20 +101,15 @@ export const ChatInput = ({
 		};
 	}, []); //eslint-disable-line
 
+	if (chat?.user.isBlock) {
+		return <ChatUserBlock text={"You're blocked by this user"} />;
+	}
+
 	if (isUserBlock) {
 		return (
-			<div className={cl.block}>
-				<div className={cl.block__body}>
-					<IoInformationCircleSharp
-						color="#a9aeba"
-						size="20px"
-						className={cl.block__body__icon}
-					/>
-					<p className={cl.block__body__text}>
-						You blocked {chat.user.login}. Unblock him to send a message.
-					</p>
-				</div>
-			</div>
+			<ChatUserBlock
+				text={`You blocked ${chat.user.login}. Unblock him to send a message.`}
+			/>
 		);
 	}
 

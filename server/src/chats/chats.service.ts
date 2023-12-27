@@ -33,7 +33,7 @@ class ChatsService {
 				throw ApiError.badRequestError(`Chat profile not found`);
 			}
 
-			const userDto = new UserDto(user);
+			const userDto = new UserDto(user, userId);
 
 			return { messages, user: userDto, _id, isPinned };
 		});
@@ -68,7 +68,7 @@ class ChatsService {
 				throw ApiError.badRequestError(`Chat profile not found`);
 			}
 
-			const userDto = new UserDto(user);
+			const userDto = new UserDto(user, userId);
 
 			const lastMessageId = chat.messages[chat.messages.length - 1];
 
@@ -203,14 +203,14 @@ class ChatsService {
 		return fullChat;
 	}
 
-	async getUserInfo(login: string) {
+	async getUserInfo(login: string, userId: string) {
 		const user = await UserModel.findOne({ login });
 
 		if (!user) {
 			throw ApiError.badRequestError("User not found");
 		}
 
-		const userDto = new UserDto(user);
+		const userDto = new UserDto(user, userId);
 
 		return userDto;
 	}

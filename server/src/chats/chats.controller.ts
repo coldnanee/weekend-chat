@@ -21,7 +21,9 @@ class ChatsController {
 		try {
 			const { login } = req.query as { login: string };
 
-			const user = await ChatsService.getUserInfo(login.toLowerCase());
+			const { userId } = req;
+
+			const user = await ChatsService.getUserInfo(login.toLowerCase(), userId);
 
 			return res.json({ ...user });
 		} catch (e) {
