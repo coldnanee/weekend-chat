@@ -1,0 +1,9 @@
+.root {
+	@apply absolute bottom-[15px] left-[15px] z-20 bg-[#414347];
+	&__body {
+		@apply flex justify-between p-[15px] rounded-[10px] items-center gap-x-[10px];
+		&__text {
+			@apply text-[#a9aeba] text-[16px];
+		}
+	}
+}

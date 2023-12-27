@@ -2,6 +2,7 @@
 
 import type { ReactNode } from "react";
 
+import { Alert } from "@/features/alert";
 import { ChatsProvider } from "@/entities/chat";
 
 import { ProfileProvider } from "@/entities/profile";
@@ -12,7 +13,10 @@ export const Providers = ({ children }: { children: ReactNode }) => {
 	return (
 		<ProfileProvider>
 			<SocketProvider>
-				<ChatsProvider>{children}</ChatsProvider>
+				<ChatsProvider>
+					<Alert />
+					{children}
+				</ChatsProvider>
 			</SocketProvider>
 		</ProfileProvider>
 	);
