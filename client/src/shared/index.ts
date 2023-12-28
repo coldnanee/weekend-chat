@@ -1,9 +1,10 @@
-export { getFormattedIsoDate } from "./lib";
 export {
 	createMetadata,
 	default,
 	ReactQueryProvider,
-	refreshToken
+	refreshToken,
+	i18n,
+	getFormattedIsoDate
 } from "./lib";
 export { useSocketStore } from "./model";
 export { Loader, DefaultAvatar, SocketProvider } from "./ui";

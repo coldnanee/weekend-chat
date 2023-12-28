@@ -26,3 +26,7 @@ export type TSettingsCategoriesItem = {
 	label: string;
 	Picture: IconType;
 };
+
+export type TProfileSettings = {
+	language: string;
+};

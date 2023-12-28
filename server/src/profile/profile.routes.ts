@@ -19,4 +19,7 @@ router.post(
 	controller.updateProfile
 );
 
+router.get("/settings", checkAuth, controller.getProfileSettings);
+router.get("/dictionaries", controller.getDictionaries);
+
 export const profile = router;

@@ -1,0 +1,22 @@
+{
+    "chat": {},
+    "home": {},
+    "login": {
+        "title": "Логин",
+        "login_placeholder": "Логин",
+        "password_placeholder": "Пароль",
+        "button": "ЛОГИН",
+        "registration_link": "Регистрация",
+        "reset_link": "Сбросить пароль"
+    },
+    "registration": {
+        "title": "Регистрация",
+        "login_placeholder": "Логин",
+        "password_placeholder": "Пароль",
+        "button": "Регистрация",
+        "login_link": "Логин"
+    },
+    "reset": {},
+    "settings": {},
+    "support": {}
+}

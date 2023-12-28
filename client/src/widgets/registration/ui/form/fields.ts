@@ -6,13 +6,15 @@ export const fieldsRegistrationArr: TAuthFormItem[] = [
 		type: "text",
 		validation: {
 			minLength: { value: 3, message: `Login can't be smaller 3 symbols` }
-		}
+		},
+		label: "login_placeholder"
 	},
 	{
 		name: "password",
 		type: "password",
 		validation: {
 			minLength: { value: 8, message: `Password can't be smaller 8 symbols` }
-		}
+		},
+		label: "password_placeholder"
 	}
 ];

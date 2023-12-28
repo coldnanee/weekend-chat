@@ -1,3 +1,4 @@
+export { ProfileSettingsProvider } from "./ui";
 export type {
 	TSettingsForm,
 	TSettingsCategoriesItem,
@@ -5,3 +6,4 @@ export type {
 	TSettingsFormItem,
 	TSettingsFormField
 } from "./types";
+export { useProfileSettingsStore } from "./model";

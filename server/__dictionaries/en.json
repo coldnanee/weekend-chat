@@ -1,0 +1,22 @@
+{
+    "chat": {},
+    "home": {},
+    "login": {
+        "title": "Login",
+        "login_placeholder": "Login",
+        "password_placeholder": "Password",
+        "button": "LOGIN",
+        "registration_link": "Registration",
+        "reset_link": "Reset password"
+    },
+    "registration": {
+        "title": "Registration",
+        "login_placeholder": "Login",
+        "password_placeholder": "Password",
+        "button": "Registration",
+        "login_link": "Login"
+    },
+    "reset": {},
+    "settings": {},
+    "support": {}
+}

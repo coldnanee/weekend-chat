@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import { AuthButton, AuthInput, AuthForm } from "@/features/auth";
 
+import { useI18nStore } from "@/features/i18n";
 import { useProfileStore } from "@/entities/profile";
 import { fieldsRegistrationArr } from "./fields";
 
@@ -8,11 +11,12 @@ import cl from "./index.module.scss";
 
 export const RegistrationForm = () => {
 	const { registrationUser } = useProfileStore();
+	const { translate } = useI18nStore();
 
 	return (
 		<AuthForm
 			thunk={registrationUser}
-			title="Registration">
+			title={translate("title")}>
 			{fieldsRegistrationArr.map((field, index) => (
 				<AuthInput
 					{...field}
@@ -24,11 +28,11 @@ export const RegistrationForm = () => {
 					}
 				/>
 			))}
-			<AuthButton className={cl.root__button}>REGISTRATION</AuthButton>
+			<AuthButton className={cl.root__button}>{translate("button")}</AuthButton>
 			<Link
 				className={cl.root__link}
 				href="/login">
-				Login
+				{translate("login_link")}
 			</Link>
 		</AuthForm>
 	);
