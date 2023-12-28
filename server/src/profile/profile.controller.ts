@@ -2,7 +2,7 @@ import type { Request, Response, NextFunction } from "express";
 
 import ProfileService from "./profile.service";
 
-import { getValidationError } from "../libs";
+import { getAccessJwt, getValidationError } from "../libs";
 
 import { ApiError } from "../errors";
 
@@ -45,6 +45,18 @@ class ProfileController {
 			const settings = await ProfileService.getProfileSettings(userId);
 
 			return res.json({ ...settings });
+		} catch (e) {
+			next(e);
+		}
+	}
+
+	async getDictionaries(req: Request, res: Response, next: NextFunction) {
+		try {
+			const userId = getAccessJwt(req);
+
+			const lng = await ProfileService.getDictionaries(userId);
+
+			return res.sendFile(lng);
 		} catch (e) {
 			next(e);
 		}

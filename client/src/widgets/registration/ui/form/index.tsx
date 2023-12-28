@@ -1,7 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import { AuthButton, AuthInput, AuthForm } from "@/features/auth";
 
-import { useI18nStore } from "@/features/i18n/model";
+import { useI18nStore } from "@/features/i18n";
 import { useProfileStore } from "@/entities/profile";
 import { fieldsRegistrationArr } from "./fields";
 

@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 
 import type { RegisterOptions } from "react-hook-form";
-import { useI18nStore } from "@/features/i18n/model";
+import { useI18nStore } from "@/features/i18n"; // eslint-disable-line boundaries/element-types
 import type { TAuthForm, TAuthFormField } from "@/entities/auth";
 
 import cl from "./index.module.scss";

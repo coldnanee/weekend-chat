@@ -7,10 +7,10 @@ import { useI18nStore } from "../../model";
 
 export const I18nProvider = ({ children }: { children: ReactNode }) => {
 	const [isRead, setIsRead] = useState<boolean>(false);
-	const { readDictionary, isDictionaryLoading } = useI18nStore();
+	const { fetchDictionary, isDictionaryLoading } = useI18nStore();
 
 	useEffect(() => {
-		readDictionary();
+		fetchDictionary();
 		setIsRead(true);
 	}, []); // eslint-disable-line
 

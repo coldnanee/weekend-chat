@@ -1,6 +1,6 @@
 import { Login } from "@/widgets/login";
 
-const LoginPage = async () => {
+const LoginPage = () => {
 	return <Login />;
 };
 

@@ -7,6 +7,9 @@ import { ProfileDto } from "../dtos/profile.dto";
 import Settings from "../db/models/SettingsModel";
 import { SettingsDto } from "../dtos/settings.dto";
 
+import path from "path";
+import SettingsModel from "../db/models/SettingsModel";
+
 class ProfileService {
 	async updateProfile(
 		login: string,
@@ -81,6 +84,19 @@ class ProfileService {
 		const settingsDto = new SettingsDto(settings);
 
 		return settingsDto;
+	}
+
+	async getDictionaries(userId: string | null) {
+		const settings = await SettingsModel.findOne({ user: userId });
+
+		const language = settings ? settings.language : "ru";
+
+		const filePath = path.resolve(
+			__dirname,
+			`../../__dictionaries/${language}.json`
+		);
+
+		return filePath;
 	}
 }
 
