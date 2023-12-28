@@ -31,3 +31,13 @@ export type TSettingsCategoriesItem = {
 export type TProfileSettings = {
 	language: string;
 };
+
+export type TLanguageItem = {
+	value: string;
+	label: string;
+};
+
+export type TLanguageSelect = {
+	isShow: boolean;
+	language: string;
+};

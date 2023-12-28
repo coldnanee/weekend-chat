@@ -1,5 +1,5 @@
 .root {
-	@apply flex flex-col items-center relative pb-[10px];
+	@apply flex flex-col items-center relative pb-[10px] self-start;
 	@media (hover: hover) {
 		&:hover .root__menu {
 			@apply opacity-100 block;

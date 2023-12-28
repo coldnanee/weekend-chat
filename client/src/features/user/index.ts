@@ -1,6 +1,1 @@
-export {
-	newOnlineUserHandler,
-	newOfflineUserHandler,
-	blockUserHandler,
-	unBlockUserHandler
-} from "./model";
+export { newOnlineUserHandler, newOfflineUserHandler } from "./model";

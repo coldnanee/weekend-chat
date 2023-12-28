@@ -21,5 +21,10 @@ router.post(
 
 router.get("/settings", checkAuth, controller.getProfileSettings);
 router.get("/dictionaries", controller.getDictionaries);
+router.post("/settings-update", checkAuth, controller.updateProfileSettings);
+router.post("/delete", checkAuth, controller.deleteProfile);
+router.get("/blacklist", checkAuth, controller.getBlacklist);
+router.post("/block", checkAuth, controller.blockUser);
+router.post("/unblock", checkAuth, controller.unblockUser);
 
 export const profile = router;

@@ -1,26 +1,25 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect } from "react";
 
 import { IoIosArrowDown } from "react-icons/io";
-import { useI18nStore } from "@/features/i18n";
-import { useProfileSettingsStore } from "@/entities/settings";
+import { useI18nStore } from "@/features/i18n"; // eslint-disable-line boundaries/element-types
+import { useProfileSettingsStore } from "@/entities/settings"; // eslint-disable-line boundaries/element-types
 import { languagesItemsArr } from "../../model";
 import cl from "./index.module.scss";
 
 export const LanguageSelect = () => {
-	const { settings } = useProfileSettingsStore();
+	const { select, setSelect, settings } = useProfileSettingsStore();
 	const { translate } = useI18nStore();
 
-	const language =
-		(settings &&
-			languagesItemsArr.find((l) => l.value === settings.language)?.label) ||
-		"general_language_english";
+	useEffect(() => {
+		const language =
+			(settings &&
+				languagesItemsArr.find((i) => i.value === settings.language)?.label) ||
+			"general_language_english";
 
-	const [select, setSelect] = useState<{
-		language: string;
-		isShow: boolean;
-	}>({ language: language, isShow: false });
+		setSelect({ isShow: false, language });
+	}, []); // eslint-disable-line
 
 	const rootClassesList = [cl.root__select__list];
 	const rootClassesItem = [

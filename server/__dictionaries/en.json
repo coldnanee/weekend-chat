@@ -30,7 +30,10 @@
         "sessions_none": "No other active sessions!",
         "general_language_title": "Change language",
         "general_language_english": "English",
-        "general_language_russian": "Russian"
+        "general_language_russian": "Russian",
+        "general_delete_profile": "Delete profile",
+        "general_delete_placeholder": "Entry a password",
+        "general_delete_button": "Delete"
     },
     "support": {}
 }

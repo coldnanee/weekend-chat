@@ -10,19 +10,19 @@ import {
 } from "react";
 import type { MutableRefObject } from "react";
 import { HiOutlinePaperAirplane } from "react-icons/hi2";
-import type { TChat } from "@/entities/chat";
 import { useMessagesStore } from "@/entities/message";
 import { useProfileStore } from "@/entities/profile";
+import type { TUser } from "@/entities/user";
 import { useSocketStore } from "@/shared";
 import { useMessageStore } from "../../model";
 import { ChatUserBlock } from "../user-block";
 import cl from "./index.module.scss";
 
 export const ChatInput = ({
-	chat,
+	user,
 	messagesContainer
 }: {
-	chat?: TChat;
+	user: TUser;
 	messagesContainer: MutableRefObject<HTMLElement | null>;
 }) => {
 	const [isStartTyping, setIsStartTyping] = useState<boolean>(false);
@@ -31,7 +31,7 @@ export const ChatInput = ({
 
 	const { profile } = useProfileStore();
 
-	const isUserBlock = chat && profile?.blackList.includes(chat.user._id);
+	const isUserBlock = profile?.blackList.includes(user._id);
 
 	const { message, editMessage, changeMessageBody, messageBody } =
 		useMessageStore();
@@ -48,7 +48,7 @@ export const ChatInput = ({
 
 	const changeMessage = useCallback( // eslint-disable-line
 		debounce(() => {
-			socketEvent("stop-typing", {recipientId: chat?.user._id});
+			socketEvent("stop-typing", {recipientId: user._id});
 			setIsStartTyping(false);
 		}, 500),
 		[]
@@ -57,7 +57,7 @@ export const ChatInput = ({
 	const changeInput = (e: ChangeEvent<HTMLInputElement>) => {
 		if (!isStartTyping) {
 			setIsStartTyping(true);
-			socketEvent("start-typing", { recipientId: chat?.user._id });
+			socketEvent("start-typing", { recipientId: user._id });
 		}
 		messageBody
 			? changeMessageBody({ ...messageBody, text: e.target.value })
@@ -69,11 +69,11 @@ export const ChatInput = ({
 	const sendMessage = async () => {
 		if (message) {
 			socketEvent("send-message", {
-				recipientId: chat?.user._id,
+				recipientId: user._id,
 				message
 			});
 			editMessage("");
-			socketEvent("stop-typing", { recipientId: chat?.user._id });
+			socketEvent("stop-typing", { recipientId: user._id });
 		}
 	};
 
@@ -82,7 +82,7 @@ export const ChatInput = ({
 			socketEvent("edit-message", {
 				messageId: messageBody._id,
 				updateText: messageBody.text,
-				recipientId: chat?.user._id
+				recipientId: user._id
 			});
 			changeMessageBody(null);
 			clearSelectedMessages();
@@ -97,18 +97,18 @@ export const ChatInput = ({
 
 	useEffect(() => {
 		return () => {
-			socketEvent("stop-typing", chat?.user._id);
+			socketEvent("stop-typing", user._id);
 		};
 	}, []); //eslint-disable-line
 
-	if (chat?.user.isBlock) {
+	if (user.isBlock) {
 		return <ChatUserBlock text={"You're blocked by this user"} />;
 	}
 
 	if (isUserBlock) {
 		return (
 			<ChatUserBlock
-				text={`You blocked ${chat.user.login}. Unblock him to send a message.`}
+				text={`You blocked ${user.login}. Unblock him to send a message.`}
 			/>
 		);
 	}

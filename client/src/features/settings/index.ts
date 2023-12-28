@@ -1,2 +1,7 @@
-export { SettingsAvatar, SettingsInput, SettingsSessionsPanel } from "./ui";
+export {
+	SettingsAvatar,
+	SettingsInput,
+	SettingsSessionsPanel,
+	SettingsDeleteProfile
+} from "./ui";
 export { useAvatarStore } from "./model";
