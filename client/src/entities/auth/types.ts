@@ -10,6 +10,7 @@ export type TAuthFormItem = {
 	name: TAuthFormField;
 	type: "text" | "password";
 	validation: RegisterOptions<TAuthForm, TAuthFormField>;
+	label: string;
 };
 
 export type TAuthFormField = "login" | "password";

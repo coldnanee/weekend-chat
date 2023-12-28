@@ -37,6 +37,18 @@ class ProfileController {
 			next(e);
 		}
 	}
+
+	async getProfileSettings(req: Request, res: Response, next: NextFunction) {
+		try {
+			const { userId } = req;
+
+			const settings = await ProfileService.getProfileSettings(userId);
+
+			return res.json({ ...settings });
+		} catch (e) {
+			next(e);
+		}
+	}
 }
 
 export default new ProfileController();

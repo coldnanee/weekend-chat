@@ -1,6 +1,7 @@
 import { useFormContext } from "react-hook-form";
 
 import type { RegisterOptions } from "react-hook-form";
+import { useI18nStore } from "@/features/i18n/model";
 import type { TAuthForm, TAuthFormField } from "@/entities/auth";
 
 import cl from "./index.module.scss";
@@ -9,18 +10,22 @@ export const AuthInput = ({
 	className,
 	type,
 	name,
-	validation
+	validation,
+	label
 }: {
 	type: string;
 	name: TAuthFormField;
 	className?: string;
 	validation: RegisterOptions<TAuthForm, TAuthFormField>;
+	label: string;
 }) => {
 	const {
 		register,
 		formState: { errors },
 		watch
 	} = useFormContext<TAuthForm>();
+
+	const { translate } = useI18nStore();
 
 	const error = errors[name];
 
@@ -44,7 +49,7 @@ export const AuthInput = ({
 						: cl.root__label
 				}
 				htmlFor={`#${name}`}>
-				{name}
+				{translate(label)}
 			</label>
 		</div>
 	);

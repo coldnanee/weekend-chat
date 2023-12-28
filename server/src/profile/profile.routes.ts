@@ -19,4 +19,6 @@ router.post(
 	controller.updateProfile
 );
 
+router.get("/settings", checkAuth, controller.getProfileSettings);
+
 export const profile = router;

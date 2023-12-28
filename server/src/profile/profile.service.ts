@@ -4,6 +4,8 @@ import { ApiError } from "../errors";
 
 import { v2 as cloudinary } from "cloudinary";
 import { ProfileDto } from "../dtos/profile.dto";
+import Settings from "../db/models/SettingsModel";
+import { SettingsDto } from "../dtos/settings.dto";
 
 class ProfileService {
 	async updateProfile(
@@ -67,6 +69,18 @@ class ProfileService {
 		const profile = new ProfileDto(result);
 
 		return profile;
+	}
+
+	async getProfileSettings(userId: string) {
+		const settings = await Settings.findOne({ user: userId });
+
+		if (!settings) {
+			throw ApiError.unAuthorizedError();
+		}
+
+		const settingsDto = new SettingsDto(settings);
+
+		return settingsDto;
 	}
 }
 

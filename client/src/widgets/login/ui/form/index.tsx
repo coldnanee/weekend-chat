@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { AuthButton, AuthInput, AuthForm } from "@/features/auth";
 
+import { useI18nStore } from "@/features/i18n/model";
 import { useProfileStore } from "@/entities/profile";
 import { fieldsLoginArr } from "./fields";
 
@@ -8,11 +9,12 @@ import cl from "./index.module.scss";
 
 export const LoginForm = () => {
 	const { loginUser } = useProfileStore();
+	const { translate } = useI18nStore();
 
 	return (
 		<AuthForm
 			thunk={loginUser}
-			title="Login">
+			title={translate("title")}>
 			{fieldsLoginArr.map((field, index) => (
 				<AuthInput
 					key={field.name}
@@ -22,17 +24,17 @@ export const LoginForm = () => {
 					}
 				/>
 			))}
-			<AuthButton className={cl.root__button}>LOGIN</AuthButton>
+			<AuthButton className={cl.root__button}>{translate("button")}</AuthButton>
 			<div className={cl.root__links}>
 				<Link
 					className={cl.root__link}
 					href="/registration">
-					Registration
+					{translate("registration_link")}
 				</Link>
 				<Link
 					className={cl.root__link}
 					href="/login/reset">
-					Reset password
+					{translate("reset_link")}
 				</Link>
 			</div>
 		</AuthForm>

@@ -22,10 +22,7 @@ export type TUser = {
 
 export type TProfilePayload = Omit<TUser, "password">;
 export type TUserPayload = Omit<TUser, "password" | "chats">;
-export type TTokenPayload = Omit<
-	TUser,
-	"password" | "chats" | "lastOnline" | "avatar" | "email" | "blackList"
->;
+export type TTokenPayload = Pick<TUser, "_id" | "login">;
 
 export type TMessage = {
 	_id: string;
@@ -70,3 +67,9 @@ export type TEmail = {
 };
 
 export type TSocketCbError = (err: { status: number; message: string }) => void;
+
+export type TProfileSettings = {
+	_id: string;
+	language: string;
+	user: Schema.Types.ObjectId;
+};

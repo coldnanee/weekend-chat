@@ -9,7 +9,7 @@ import { useProfileStore } from "../../model";
 export const ProfileProvider = ({ children }: { children: ReactNode }) => {
 	const [isFetched, setIsFetched] = useState<boolean>(false);
 
-	const { isLoading, fetchProfile } = useProfileStore();
+	const { isLoading: isProfileLoading, fetchProfile } = useProfileStore();
 
 	useEffect(() => {
 		const isAuth = getCookie("accessJwt");
@@ -21,5 +21,5 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
 		setIsFetched(true);
 	}, []); // eslint-disable-line
 
-	return <>{!isFetched || isLoading ? <Loader /> : children}</>;
+	return <>{!isFetched || isProfileLoading ? <Loader /> : children}</>;
 };

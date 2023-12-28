@@ -8,6 +8,7 @@ import bcrypt from "bcrypt";
 import TokenService from "../token/token.service";
 import MailerService from "../mailer";
 import { TokenDto } from "../dtos/token.dto";
+import Settings from "../db/models/SettingsModel";
 
 import { v4 as uuid } from "uuid";
 
@@ -63,7 +64,13 @@ class AuthService {
 			password: hashPassword
 		});
 
-		return user.save();
+		const settings = new Settings({
+			user: user._id
+		});
+
+		const saving = Promise.all([user.save(), settings.save()]);
+
+		return saving;
 	}
 
 	async sendResetMessage(email: string) {
