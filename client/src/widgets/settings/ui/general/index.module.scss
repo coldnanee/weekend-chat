@@ -1,0 +1,7 @@
+.root {
+	@apply p-[15px] flex flex-col gap-y-[20px];
+	flex: 1 1 auto;
+	&__body {
+		flex: 1 1 auto;
+	}
+}

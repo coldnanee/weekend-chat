@@ -1,20 +1,14 @@
-import type { ReactNode } from "react";
+import { useI18nStore } from "@/features/i18n";
 import cl from "./index.module.scss";
 
-export const SettingsSaveButton = ({
-	children,
-	onClick,
-	className
-}: {
-	children: ReactNode;
-	onClick?: () => void;
-	className: string;
-}) => {
+export const SettingsSaveButton = ({ onClick }: { onClick?: () => void }) => {
+	const { translate } = useI18nStore();
+
 	return (
 		<button
 			onClick={onClick}
-			className={[cl.root, className].join(" ")}>
-			{children}
+			className={cl.root}>
+			{translate("save_button")}
 		</button>
 	);
 };

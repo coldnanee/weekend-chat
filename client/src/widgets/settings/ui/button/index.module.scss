@@ -4,4 +4,10 @@
 	@media (max-width: 490px) {
 		@apply px-[30px];
 	}
+	@media (min-width: 801px) {
+		@apply self-end;
+	}
+	@media (max-width: 490px) {
+		@apply self-center;
+	}
 }

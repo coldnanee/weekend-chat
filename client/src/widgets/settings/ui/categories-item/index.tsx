@@ -1,3 +1,4 @@
+import { useI18nStore } from "@/features/i18n";
 import type { TSettingsCategoriesItem } from "@/entities/settings";
 import { useSettingsStore } from "../../model";
 import cl from "./index.module.scss";
@@ -7,6 +8,8 @@ export const SettingsCategoriesItem = ({
 }: {
 	category: TSettingsCategoriesItem;
 }) => {
+	const { translate } = useI18nStore();
+
 	const { setActiveChapter, activeChapter, changeVisibilityModal } =
 		useSettingsStore();
 
@@ -22,7 +25,7 @@ export const SettingsCategoriesItem = ({
 			className={activeChapter === label ? rootClasses.join(" ") : cl.root}
 			onClick={onClick}>
 			<Picture />
-			<p className={cl.root__text}>{label}</p>
+			<p className={cl.root__text}>{translate(label)}</p>
 		</li>
 	);
 };

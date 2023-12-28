@@ -1,9 +1,12 @@
+import { useI18nStore } from "@/features/i18n";
 import type { TSession } from "../../types";
 import { SessionItem } from "../item";
 
 import cl from "./index.module.scss";
 
 export const SessionList = ({ sessions }: { sessions: TSession[] }) => {
+	const { translate } = useI18nStore();
+
 	return (
 		<ul className={cl.root}>
 			{sessions.length > 0 ? (
@@ -15,7 +18,7 @@ export const SessionList = ({ sessions }: { sessions: TSession[] }) => {
 				))
 			) : (
 				<div className={cl.root__body}>
-					<h3 className={cl.root__body__title}>No other active sessions!</h3>
+					<h3 className={cl.root__body__title}>{translate("sessions_none")}</h3>
 				</div>
 			)}
 		</ul>

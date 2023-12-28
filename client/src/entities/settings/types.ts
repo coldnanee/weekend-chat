@@ -7,6 +7,7 @@ export type TSettingsFormItem = {
 	type: "text" | "password";
 	validation: RegisterOptions<TSettingsForm, TSettingsFormField>;
 	required: boolean;
+	label: string;
 };
 
 export type TSettingsForm = {

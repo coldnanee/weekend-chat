@@ -1,0 +1,30 @@
+.root {
+	@apply w-[150px] text-[#a9aeba];
+	user-select: none;
+	&__text {
+		@apply mb-[10px];
+	}
+	&__select {
+		@apply relative;
+		&__list {
+			@apply hidden absolute top-full left-0 z-10 w-full;
+			&_visible {
+				@apply block;
+			}
+			&__item {
+				@apply p-[10px] cursor-pointer bg-[#31343a];
+				&_active {
+					@apply bg-[#505258];
+				}
+				&:hover {
+					@apply bg-[#505258];
+				}
+			}
+		}
+		&__language {
+			@apply flex justify-between items-center bg-[#31343a] p-[10px] cursor-pointer;
+			&__text {
+			}
+		}
+	}
+}

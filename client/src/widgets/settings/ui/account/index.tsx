@@ -9,7 +9,6 @@ import { SettingsFieldsList } from "../fields-list";
 import cl from "./index.module.scss";
 export const SettingsAccount = () => {
 	const { updateProfile } = useProfileStore();
-
 	const { handleSubmit } = useFormContext<TSettingsForm>();
 
 	const onSubmit = async (data: TSettingsForm) => {
@@ -29,7 +28,7 @@ export const SettingsAccount = () => {
 				<SettingsAvatar />
 				<SettingsFieldsList />
 			</div>
-			<SettingsSaveButton className={cl.root__button}>Save</SettingsSaveButton>
+			<SettingsSaveButton />
 		</form>
 	);
 };

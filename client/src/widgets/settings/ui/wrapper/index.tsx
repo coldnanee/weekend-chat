@@ -5,6 +5,7 @@ import { IoIosArrowBack } from "react-icons/io";
 import { useSettingsStore } from "../../model";
 import { SettingsAccount } from "../account";
 import { SettingsBlackList } from "../black-list";
+import { SettingsGeneral } from "../general";
 import { SettingsSessions } from "../sessions";
 
 import cl from "./index.module.scss";
@@ -13,12 +14,14 @@ const SettingsBody = () => {
 	const { activeChapter } = useSettingsStore();
 
 	switch (activeChapter) {
-		case "Account":
+		case "categories_account":
 			return <SettingsAccount />;
-		case "Black List":
+		case "categories_black_list":
 			return <SettingsBlackList />;
-		case "Sessions":
+		case "categories_sessions":
 			return <SettingsSessions />;
+		case "categories_general":
+			return <SettingsGeneral />;
 		default:
 			return <></>;
 	}

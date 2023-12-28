@@ -2,6 +2,7 @@ import { getCookie } from "cookies-next";
 import { create } from "zustand";
 
 import { immer } from "zustand/middleware/immer";
+import { useAlertStore } from "@/features/alert";
 import $axios from "@/shared";
 
 type TDictionaryPage = {
@@ -41,9 +42,17 @@ export const useI18nStore = create<TI18nStore>()(
 
 			const activePage = getCookie("activePage") as string;
 
-			return activePage && dictionary && dictionary[activePage]
-				? dictionary[activePage][k]
-				: "";
+			if (!activePage) {
+				useAlertStore.getState().setAlert({
+					type: "error",
+					message: "Dictionaries error. Reload page"
+				});
+				return "";
+			} else {
+				return dictionary && dictionary[activePage]
+					? dictionary[activePage][k]
+					: "";
+			}
 		}
 	}))
 );

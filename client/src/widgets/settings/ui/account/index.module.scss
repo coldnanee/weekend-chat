@@ -1,5 +1,6 @@
 .root {
 	@apply p-[15px] flex flex-col;
+	flex: 1 1 auto;
 	@media (max-width: 800px) {
 		@apply justify-between gap-y-[30px];
 	}
@@ -7,14 +8,6 @@
 		@apply flex gap-x-[30px];
 		@media (max-width: 490px) {
 			@apply flex-col items-center;
-		}
-	}
-	&__button {
-		@media (min-width: 801px) {
-			@apply self-end;
-		}
-		@media (max-width: 490px) {
-			@apply self-center;
 		}
 	}
 }

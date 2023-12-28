@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 import type { RegisterOptions } from "react-hook-form";
 
 import { useFormContext } from "react-hook-form";
+import { useI18nStore } from "@/features/i18n";
 import { useProfileStore } from "@/entities/profile";
 import type { TSettingsForm, TSettingsFormField } from "@/entities/settings";
 
@@ -14,18 +15,22 @@ export const SettingsInput = ({
 	type,
 	name,
 	validation,
-	required
+	required,
+	label
 }: {
 	type: string;
 	name: TSettingsFormField;
 	validation: RegisterOptions<TSettingsForm, TSettingsFormField>;
 	required: boolean;
+	label: string;
 }) => {
 	const {
 		register,
 		formState: { errors },
 		watch
 	} = useFormContext<TSettingsForm>();
+
+	const { translate } = useI18nStore();
 
 	const { profile } = useProfileStore();
 
@@ -73,7 +78,7 @@ export const SettingsInput = ({
 						: cl.root__label
 				}
 				htmlFor={`#${name}`}>
-				{name}
+				{translate(label)}
 			</label>
 		</div>
 	);
