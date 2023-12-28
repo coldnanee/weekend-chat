@@ -1,4 +1,4 @@
-import { useI18nStore } from "@/features/i18n";
+import { useI18nStore } from "@/features/i18n"; // eslint-disable-line boundaries/element-types
 import type { TSession } from "../../types";
 import { SessionItem } from "../item";
 

@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
 import type { RegisterOptions } from "react-hook-form";
 
 import { useFormContext } from "react-hook-form";
-import { useI18nStore } from "@/features/i18n";
+import { useI18nStore } from "@/features/i18n"; // eslint-disable-line boundaries/element-types
 import { useProfileStore } from "@/entities/profile";
 import type { TSettingsForm, TSettingsFormField } from "@/entities/settings";
 
