@@ -1,4 +1,4 @@
-export { ProfileSettingsProvider } from "./ui";
+export { ProfileSettingsProvider, LanguageSelect } from "./ui";
 export type {
 	TSettingsForm,
 	TSettingsCategoriesItem,

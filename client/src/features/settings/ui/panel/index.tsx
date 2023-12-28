@@ -1,6 +1,7 @@
 import { IoMdArrowDropdown } from "react-icons/io";
 import { TbReload } from "react-icons/tb";
 import { TiTick } from "react-icons/ti";
+import { useI18nStore } from "@/features/i18n"; // eslint-disable-line boundaries/element-types
 import { useSettingsSessionStore } from "@/entities/session";
 import cl from "./index.module.scss";
 
@@ -12,6 +13,8 @@ export const SettingsSessionsPanel = () => {
 		killSessions,
 		fetchSessions
 	} = useSettingsSessionStore();
+
+	const { translate } = useI18nStore();
 
 	const isAllSelected = selectedSessions.length === sessions.length;
 
@@ -52,7 +55,7 @@ export const SettingsSessionsPanel = () => {
 					<button
 						className={cl.root__body__delete}
 						onClick={killSessions}>
-						Delete
+						{translate("sessions_delete")}
 					</button>
 				)}
 			</div>

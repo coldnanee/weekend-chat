@@ -6,6 +6,7 @@ import { BsPin as UnpinImage } from "react-icons/bs";
 import { FiMinusCircle } from "react-icons/fi";
 import { MdBlock } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { useBlacklistStore } from "@/features/black-list"; // eslint-disable-line boundaries/element-types
 import type { TChat } from "@/entities/chat";
 import { useProfileStore } from "@/entities/profile";
 import type { TUser } from "@/entities/user";
@@ -27,6 +28,8 @@ export const ChatMenu = ({ chat, user }: { chat?: TChat; user?: TUser }) => {
 	const isUserBlock = chat?.user && profile?.blackList.includes(chat.user._id);
 
 	const rootClasses = [cl.root__body];
+
+	const { blockUser, unblockUser } = useBlacklistStore();
 
 	if (isMenuShow) {
 		rootClasses.push(cl.root__body_visible);
@@ -55,14 +58,6 @@ export const ChatMenu = ({ chat, user }: { chat?: TChat; user?: TUser }) => {
 		socketEvent("unpin-chat", { chatId: chat?._id });
 	};
 
-	const blockUser = () => {
-		socketEvent("block-user", { recipientId: chat?.user._id });
-	};
-
-	const unblockUser = () => {
-		socketEvent("unblock-user", { recipientId: chat?.user._id });
-	};
-
 	const chatOptionsArr: TChatOptionItem[] = [
 		{
 			label: chat?.isPinned ? "Unpin chat" : "Pin chat",
@@ -77,7 +72,11 @@ export const ChatMenu = ({ chat, user }: { chat?: TChat; user?: TUser }) => {
 		{
 			label: isUserBlock ? "Unblock user" : "Block user",
 			Picture: isUserBlock ? FiMinusCircle : MdBlock,
-			cb: isUserBlock ? unblockUser : blockUser
+			cb: isUserBlock
+				? () => unblockUser(chat.user._id)
+				: () => {
+						if (chat?.user) blockUser(chat?.user);
+				} // prettier-ignore
 		}
 	];
 

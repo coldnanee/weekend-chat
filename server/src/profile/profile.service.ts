@@ -9,6 +9,7 @@ import { SettingsDto } from "../dtos/settings.dto";
 
 import path from "path";
 import SettingsModel from "../db/models/SettingsModel";
+import { UserDto } from "../dtos/user.dto";
 
 class ProfileService {
 	async updateProfile(
@@ -86,10 +87,22 @@ class ProfileService {
 		return settingsDto;
 	}
 
+	async updateProfileSettings(userId: string, language: string) {
+		const settings = await Settings.findOne({ user: userId });
+
+		if (!settings) {
+			throw ApiError.unAuthorizedError();
+		}
+
+		settings.language = language;
+
+		await settings.save();
+	}
+
 	async getDictionaries(userId: string | null) {
 		const settings = await SettingsModel.findOne({ user: userId });
 
-		const language = settings ? settings.language : "ru";
+		const language = settings ? settings.language : "en";
 
 		const filePath = path.resolve(
 			__dirname,
@@ -97,6 +110,60 @@ class ProfileService {
 		);
 
 		return filePath;
+	}
+
+	async getBlacklist(userId: string) {
+		const user = await UserModel.findById(userId);
+
+		if (!user) {
+			throw ApiError.unAuthorizedError();
+		}
+
+		const usersFromBlacklist = await UserModel.find({
+			_id: { $in: user.blackList }
+		});
+
+		const usersDto = usersFromBlacklist.map((u) => new UserDto(u));
+
+		return usersDto;
+	}
+
+	async deleteProfile(userId: string, password: string) {
+		const user = await UserModel.findById(userId);
+
+		if (!user) {
+			throw ApiError.unAuthorizedError();
+		}
+
+		const isPasswordValid = await bcrypt.compare(password, user.password); // eslint-disable-line
+	}
+
+	async blockUser(userId: string, user: string) {
+		const profile = await UserModel.findById(userId);
+
+		if (!profile) {
+			throw ApiError.unAuthorizedError();
+		}
+
+		if (!profile.blackList.includes(user)) {
+			profile.blackList.push(user);
+		}
+
+		await profile.save();
+	}
+
+	async unblockUser(userId: string, user: string) {
+		const profile = await UserModel.findById(userId);
+
+		if (!profile) {
+			throw ApiError.unAuthorizedError();
+		}
+
+		const filteredList = profile.blackList.filter((u) => u !== user);
+
+		profile.blackList = filteredList;
+
+		await profile.save();
 	}
 }
 

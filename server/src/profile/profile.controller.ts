@@ -50,6 +50,20 @@ class ProfileController {
 		}
 	}
 
+	async updateProfileSettings(req: Request, res: Response, next: NextFunction) {
+		try {
+			const { userId } = req;
+
+			const { language } = req.body as { language: string };
+
+			await ProfileService.updateProfileSettings(userId, language);
+
+			return res.status(200).send();
+		} catch (e) {
+			next(e);
+		}
+	}
+
 	async getDictionaries(req: Request, res: Response, next: NextFunction) {
 		try {
 			const userId = getAccessJwt(req);
@@ -57,6 +71,58 @@ class ProfileController {
 			const lng = await ProfileService.getDictionaries(userId);
 
 			return res.sendFile(lng);
+		} catch (e) {
+			next(e);
+		}
+	}
+
+	async deleteProfile(req: Request, res: Response, next: NextFunction) {
+		try {
+			const { userId } = req;
+
+			const { password } = req.body as { password: string };
+
+			await ProfileService.deleteProfile(userId, password);
+		} catch (e) {
+			next(e);
+		}
+	}
+
+	async getBlacklist(req: Request, res: Response, next: NextFunction) {
+		try {
+			const { userId } = req;
+
+			const users = await ProfileService.getBlacklist(userId);
+
+			return res.json(users);
+		} catch (e) {
+			next(e);
+		}
+	}
+
+	async blockUser(req: Request, res: Response, next: NextFunction) {
+		try {
+			const { userId } = req;
+
+			const { user } = req.body as { user: string };
+
+			await ProfileService.blockUser(userId, user);
+
+			res.status(200).send();
+		} catch (e) {
+			next(e);
+		}
+	}
+
+	async unblockUser(req: Request, res: Response, next: NextFunction) {
+		try {
+			const { userId } = req;
+
+			const { user } = req.body as { user: string };
+
+			await ProfileService.unblockUser(userId, user);
+
+			res.status(200).send();
 		} catch (e) {
 			next(e);
 		}

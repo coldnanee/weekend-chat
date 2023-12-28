@@ -1,0 +1,10 @@
+.root {
+	@apply text-[#a9aeba] flex justify-between items-center text-[16px];
+	&__body {
+		@apply flex items-center gap-x-[20px];
+		&__login {
+		}
+	}
+	&__delete {
+	}
+}

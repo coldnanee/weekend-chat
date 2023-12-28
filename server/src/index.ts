@@ -11,9 +11,7 @@ import {
 	logoutHandler,
 	editMessageHandler,
 	pinChatHandler,
-	unpinChatHandler,
-	blockUserHandler,
-	unblockUserHandler
+	unpinChatHandler
 } from "./socket";
 
 import express from "express";
@@ -110,8 +108,6 @@ const start = async () => {
 			editMessageHandler(io, socket, usersSessions); // ?
 			pinChatHandler(io, socket, usersSessions);
 			unpinChatHandler(io, socket, usersSessions);
-			blockUserHandler(io, socket, usersSessions);
-			unblockUserHandler(io, socket, usersSessions);
 		});
 
 		await connectDB();

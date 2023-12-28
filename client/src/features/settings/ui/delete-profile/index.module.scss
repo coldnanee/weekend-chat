@@ -1,0 +1,17 @@
+.root {
+	&__button {
+		@apply self-start text-[#d43e51] text-[16px] mb-[10px];
+	}
+	&__input {
+		@apply flex gap-x-[10px];
+		&__body {
+			@apply block bg-[#31343a] p-[8px] w-[200px] text-[#a9aeba];
+			&::placeholder {
+				@apply text-[#5c5e5e];
+			}
+		}
+		&__button {
+			@apply text-[#a9aeba] bg-[#31343a] px-[10px];
+		}
+	}
+}

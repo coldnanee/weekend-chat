@@ -8,5 +8,3 @@ export { logoutHandler } from "./logout";
 export { editMessageHandler } from "./editMessage";
 export { pinChatHandler } from "./pinChat";
 export { unpinChatHandler } from "./unpinChat";
-export { blockUserHandler } from "./blockUser";
-export { unblockUserHandler } from "./unblockUser";

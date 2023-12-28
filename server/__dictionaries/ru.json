@@ -17,6 +17,23 @@
         "login_link": "Логин"
     },
     "reset": {},
-    "settings": {},
+    "settings": {
+        "categories_account": "Аккаунт",
+        "categories_sessions": "Сессии",
+        "categories_general": "Основное",
+        "categories_black_list": "Черный список",
+        "save_button": "Сохранить",
+        "account_login_placeholder": "Логин",
+        "account_password_placeholder": "Пароль",
+        "account_email_placeholder": "Почта",
+        "sessions_delete": "Удалить",
+        "sessions_none": "Нет активных сессий",
+        "general_language_title": "Изменить язык",
+        "general_language_english": "Английский",
+        "general_language_russian": "Русский",
+        "general_delete_profile": "Удалить профиль",
+        "general_delete_placeholder": "Введите пароль",
+        "general_delete_button": "Удалить"
+    },
     "support": {}
 }

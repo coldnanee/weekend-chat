@@ -74,7 +74,7 @@ export const Chat = () => {
 				messagesContainer={messagesContainer}
 			/>
 			<ChatInput
-				chat={chat}
+				user={user}
 				messagesContainer={messagesContainer}
 			/>
 		</div>
