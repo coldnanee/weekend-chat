@@ -3,7 +3,7 @@
 import { useState, useEffect, type ReactNode } from "react";
 
 import { Loader } from "@/shared";
-import { useI18nStore } from "../../model";
+import { useI18nStore } from "../../lib";
 
 export const I18nProvider = ({ children }: { children: ReactNode }) => {
 	const [isRead, setIsRead] = useState<boolean>(false);

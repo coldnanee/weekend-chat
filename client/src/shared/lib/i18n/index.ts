@@ -7,3 +7,5 @@ type Ti18n = {
 	defaultLanguage: string;
 	languages: Readonly<string[]>;
 };
+
+export { useI18nStore } from "./store";

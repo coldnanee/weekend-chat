@@ -1,6 +1,6 @@
 "use client";
 
-import { useI18nStore } from "@/features/i18n"; // eslint-disable-line boundaries/element-types
+import { useI18nStore } from "@/shared";
 import type { TUser } from "../../types";
 import { ChatUser } from "../item";
 

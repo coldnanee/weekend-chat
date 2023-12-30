@@ -1,6 +1,6 @@
 "use client";
 
-import { useI18nStore } from "@/features/i18n";
+import { useI18nStore } from "@/shared";
 
 export const Home = () => {
 	const { translate } = useI18nStore();

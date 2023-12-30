@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { AuthButton, AuthInput, AuthForm } from "@/features/auth";
 
-import { useI18nStore } from "@/features/i18n";
 import { useProfileStore } from "@/entities/profile";
+import { useI18nStore } from "@/shared";
 import { fieldsLoginArr } from "./fields";
 
 import cl from "./index.module.scss";

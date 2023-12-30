@@ -4,10 +4,10 @@ import { useParams } from "next/navigation";
 
 import { useEffect, useState, type MutableRefObject } from "react";
 
-import { useI18nStore } from "@/features/i18n"; // eslint-disable-line boundaries/element-types
 import { type TChat } from "@/entities/chat"; // eslint-disable-line boundaries/element-types
-
 import { useOnlineUsersStore } from "@/entities/user"; // eslint-disable-line boundaries/element-types
+import { useI18nStore } from "@/shared";
+
 import { ChatMessage } from "../item";
 import { StartChat } from "../start-chat";
 import cl from "./index.module.scss";

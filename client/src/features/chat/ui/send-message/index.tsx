@@ -10,10 +10,10 @@ import {
 } from "react";
 import type { MutableRefObject } from "react";
 import { HiOutlinePaperAirplane } from "react-icons/hi2";
-import { useI18nStore } from "@/features/i18n"; // eslint-disable-line boundaries/element-types
 import { useMessagesStore } from "@/entities/message";
 import { useProfileStore } from "@/entities/profile";
 import type { TUser } from "@/entities/user";
+import { useI18nStore } from "@/shared";
 import { useSocketStore } from "@/shared";
 import { useMessageStore } from "../../model";
 import { ChatUserBlock } from "../user-block";

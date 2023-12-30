@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { useI18nStore } from "@/features/i18n"; // eslint-disable-line boundaries/element-types
+import { useI18nStore } from "@/shared";
 import { Loader } from "@/shared";
 import { useResetPasswordStore } from "../../model";
 import cl from "./index.module.scss";

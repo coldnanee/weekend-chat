@@ -2,7 +2,7 @@ import debounce from "lodash.debounce";
 import { type ChangeEvent, useState, useCallback } from "react";
 import { CiSearch } from "react-icons/ci";
 import { RxCross2 } from "react-icons/rx";
-import { useI18nStore } from "@/features/i18n";
+import { useI18nStore } from "@/shared";
 import cl from "./index.module.scss";
 
 export const ChatsSearch = ({

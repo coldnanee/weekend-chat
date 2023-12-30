@@ -1,8 +1,8 @@
 import { IoMdArrowDropdown } from "react-icons/io";
 import { TbReload } from "react-icons/tb";
 import { TiTick } from "react-icons/ti";
-import { useI18nStore } from "@/features/i18n"; // eslint-disable-line boundaries/element-types
 import { useSettingsSessionStore } from "@/entities/session";
+import { useI18nStore } from "@/shared";
 import cl from "./index.module.scss";
 
 export const SettingsSessionsPanel = () => {

@@ -1,9 +1,9 @@
 import { RxCross2 } from "react-icons/rx";
 
-import { useI18nStore } from "@/features/i18n"; // eslint-disable-line boundaries/element-types
 import type { TChat } from "@/entities/chat";
 import { useMessagesStore } from "@/entities/message";
 import { useProfileStore } from "@/entities/profile";
+import { useI18nStore } from "@/shared";
 import { useSocketStore } from "@/shared";
 import { useMessageStore } from "../../model";
 import cl from "./index.module.scss";

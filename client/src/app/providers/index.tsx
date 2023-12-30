@@ -3,11 +3,11 @@
 import type { ReactNode } from "react";
 
 import { Alert } from "@/features/alert";
-import { I18nProvider } from "@/features/i18n";
 import { ChatsProvider } from "@/entities/chat";
 
 import { ProfileProvider } from "@/entities/profile";
 import { ProfileSettingsProvider } from "@/entities/settings";
+import { I18nProvider } from "@/shared";
 import { SocketProvider } from "@/shared";
 
 import { SocketHandlers } from "@/shared";

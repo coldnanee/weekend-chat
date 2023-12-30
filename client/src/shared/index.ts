@@ -3,7 +3,14 @@ export {
 	default,
 	ReactQueryProvider,
 	i18n,
-	getFormattedIsoDate
+	getFormattedIsoDate,
+	useI18nStore
 } from "./lib";
 export { useSocketStore } from "./model";
-export { Loader, DefaultAvatar, SocketProvider, SocketHandlers } from "./ui";
+export {
+	Loader,
+	DefaultAvatar,
+	SocketProvider,
+	SocketHandlers,
+	I18nProvider
+} from "./ui";
