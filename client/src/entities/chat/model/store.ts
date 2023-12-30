@@ -2,13 +2,13 @@ import type { AxiosError } from "axios";
 import { create } from "zustand";
 
 import { immer } from "zustand/middleware/immer";
+import { useAlertStore } from "@/features/alert";
 import { type TMessage, useMessagesStore } from "@/entities/message"; // eslint-disable-line boundaries/element-types
 import $axios from "@/shared";
 import type { TChat } from "../types";
 
 type TChatsStore = {
 	chats: TChat[];
-	error: null | string;
 	isLoading: boolean;
 	fetchChats: (login: string) => void; // eslint-disable-line no-unused-vars
 	deleteChat: (chatId: string) => void; // eslint-disable-line no-unused-vars
@@ -29,7 +29,6 @@ export const useChatsStore = create<TChatsStore>()(
 		isLoading: false,
 		fetchChats: async (chat) => {
 			useChatsStore.setState((state) => {
-				state.error = null;
 				state.isLoading = true;
 			});
 			try {
@@ -47,11 +46,8 @@ export const useChatsStore = create<TChatsStore>()(
 				const err = e as AxiosError<{ message: string }>;
 				const message = err.response?.data.message || "fetch chats error";
 				if (err.response?.status !== 401) {
-					alert(message);
+					useAlertStore.getState().setAlert({ type: "error", message });
 				}
-				useChatsStore.setState((state) => {
-					state.error = message;
-				});
 			}
 		},
 		deleteChat: (chatId) =>

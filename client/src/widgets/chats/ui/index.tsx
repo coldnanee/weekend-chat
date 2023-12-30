@@ -1,6 +1,8 @@
 "use client";
 
+import { AxiosError } from "axios";
 import { useState, useEffect, useRef } from "react";
+import { useAlertStore } from "@/features/alert";
 import { ChatList, useChatsStore } from "@/entities/chat";
 import { ChatUsers, useChatUsersQuery } from "@/entities/user";
 import cl from "./index.module.scss";
@@ -30,6 +32,11 @@ export const Chats = () => {
 	}, []);
 
 	if (error) {
+		const err = error as AxiosError<{ message: string }>;
+		useAlertStore.getState().setAlert({
+			type: "error",
+			message: err.response?.data.message || "fetch chats error"
+		});
 		alert(error);
 		return <></>;
 	}

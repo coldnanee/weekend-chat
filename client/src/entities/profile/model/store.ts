@@ -2,6 +2,7 @@ import type { AxiosError } from "axios";
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
+import { useAlertStore } from "@/features/alert";
 import type { TAuthForm } from "@/entities/auth"; // eslint-disable-line boundaries/element-types
 import type { TSettingsProfile } from "@/entities/settings"; // eslint-disable-line boundaries/element-types
 import $axios from "@/shared";
@@ -11,7 +12,6 @@ import { TProfile } from "../types";
 type TProfileStore = {
 	profile: TProfile | null;
 	isLoading: boolean;
-	error: null | string;
 	removeProfileAvatar: () => void;
 	fetchProfile: () => Promise<void>;
 	logoutUser: () => void;
@@ -27,17 +27,15 @@ const handleProfileStoreError = (e: unknown) => {
 
 	const message = err.response?.data.message || "Unexpected error";
 	useProfileStore.setState((state) => {
-		state.error = message;
 		state.isLoading = false;
 	});
 	if (err.response?.status !== 401) {
-		alert(message);
+		useAlertStore.getState().setAlert({ type: "error", message });
 	}
 };
 
 const preFetchFn = () =>
 	useProfileStore.setState((state) => {
-		state.error = null;
 		state.isLoading = true;
 	});
 

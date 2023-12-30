@@ -4,12 +4,14 @@ import { useEffect, useState, useRef, type MouseEvent } from "react";
 import { useFormContext } from "react-hook-form";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { TfiReload } from "react-icons/tfi";
+import { useAlertStore } from "@/features/alert";
 import { useProfileStore } from "@/entities/profile";
 import { TSettingsForm } from "@/entities/settings";
 import { DefaultAvatar } from "@/shared";
 
 import { useAvatarStore } from "../../model";
 import { TSettingsAvatarMenuItem } from "../../types";
+
 import { SettingsAvatarMenuItem } from "../avatar-menu-item";
 
 import cl from "./index.module.scss";
@@ -71,8 +73,9 @@ export const SettingsAvatar = () => {
 				setMenuShow(false);
 			}
 		} catch (e) {
+			const message = e as string;
 			setMenuShow(false);
-			alert(e);
+			useAlertStore.getState().setAlert({ type: "error", message });
 		}
 	}, [watchedImage]); //eslint-disable-line
 
