@@ -41,7 +41,9 @@ export const AuthInput = ({
 				required
 				id={`#${name}`}
 			/>
-			{error && <p className={cl.root__error}>{error.message}</p>}
+			{error && error.message && (
+				<p className={cl.root__error}>{translate(error.message)}</p>
+			)}
 			<label
 				className={
 					inputValue

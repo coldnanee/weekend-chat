@@ -1,22 +1,42 @@
 {
-    "chat": {},
-    "home": {},
+    "chat": {
+        "chat_say_hi": "Поздоровайся с:",
+        "chat_typing": "печатает",
+        "chat_messages_panel_title": "Сообщения",
+        "chat_messages_panel_edit": "Изменить",
+        "chat_messages_panel_delete": "Удалить",
+        "chat_send_message_placeholder": "Напишите сообщение...",
+        "chat_user_not_found": "Пользователь не найден"
+    },
+    "home": {
+        "title": "Главная"
+    },
     "login": {
         "title": "Логин",
         "login_placeholder": "Логин",
         "password_placeholder": "Пароль",
         "button": "ЛОГИН",
         "registration_link": "Регистрация",
-        "reset_link": "Сбросить пароль"
+        "reset_link": "Сбросить пароль",
+        "send_link_title": "Получить сброс-ссылку",
+        "send_link_button": "Отправить ссылку",
+        "send_link_link": "Логин",
+        "send_link_placeholder": "Почта",
+        "check_email_title": "Ссылка отправлена. Проверьте почту!",
+        "check_email_link": "Логин",
+        "login_length_error": "Логин не может быть меньше 3 символов",
+        "password_length_error": "Пароль не может быть меньше 8 символов",
+        "blacklist_unblock": "Разблокировать"
     },
     "registration": {
         "title": "Регистрация",
         "login_placeholder": "Логин",
         "password_placeholder": "Пароль",
         "button": "Регистрация",
-        "login_link": "Логин"
+        "login_link": "Логин",
+        "login_length_error": "Логин не может быть меньше 3 символов",
+        "password_length_error": "Пароль не может быть меньше 8 символов"
     },
-    "reset": {},
     "settings": {
         "categories_account": "Аккаунт",
         "categories_sessions": "Сессии",
@@ -33,7 +53,23 @@
         "general_language_russian": "Русский",
         "general_delete_profile": "Удалить профиль",
         "general_delete_placeholder": "Введите пароль",
-        "general_delete_button": "Удалить"
+        "general_delete_button": "Удалить",
+        "settings_input_login_error": "Логин не может быть меньше 3 символов",
+        "settings_input_password_error": "Пароль не может быть меньше 8 символов"
     },
-    "support": {}
+    "support": {
+        "support_title": "Поддержка"
+    },
+    "other": {
+        "aside_all_chats": "Чаты",
+        "aside_support": "Поддержка",
+        "aside_logout": "Выйти",
+        "aside_settings": "Настройки",
+        "chats_search_placeholder": "Поиск",
+        "aside_chats_users": "Пользователи",
+        "aside_chats_chats": "Чаты",
+        "aside_chats_typing": "печатает...",
+        "aside_chats_you": "Вы: ",
+        "page_not_found": "404, страница не найдена."
+    }
 }

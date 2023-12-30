@@ -1,9 +1,9 @@
-import { Socket } from "socket.io-client";
-
 import { useOnlineUsersStore } from "@/entities/user";
 
-export const newOfflineUserHandler = (socket: Socket) => {
-	socket.on("new-offline-user", (users: string[]) => {
+import { useSocketStore } from "@/shared";
+
+export const newOfflineUserHandler = () => {
+	useSocketStore.getState().socket.on("new-offline-user", (users: string[]) => {
 		const offlineUser = useOnlineUsersStore
 			.getState()
 			.users.find((u) => !users.includes(u));

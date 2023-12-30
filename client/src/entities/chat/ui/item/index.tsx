@@ -1,8 +1,11 @@
+"use client";
+
 import Image from "next/image";
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
+import { useI18nStore } from "@/features/i18n"; // eslint-disable-line boundaries/element-types
 import { useProfileStore } from "@/entities/profile"; // eslint-disable-line boundaries/element-types
 
 import { useOnlineUsersStore } from "@/entities/user"; // eslint-disable-line boundaries/element-types
@@ -17,7 +20,7 @@ import { useSocketStore } from "@/shared"; // eslint-disable-line import/order
 
 export const ChatItem = ({ chat }: { chat: TChat }) => {
 	const { socket } = useSocketStore();
-
+	const { translate } = useI18nStore();
 	const [isTyping, setIsTyping] = useState<boolean>(false);
 
 	const params = useParams<{ login: string }>();
@@ -71,10 +74,10 @@ export const ChatItem = ({ chat }: { chat: TChat }) => {
 						<h4 className={cl.root__body__chat__name}>{chat.user.login}</h4>
 						<div className={cl.root__body__chat__message}>
 							{isTyping ? (
-								"typing..."
+								translate("aside_chats_typing", true)
 							) : chatBody.user === profile?._id ? (
 								<>
-									<span>You: </span>
+									<span>{translate("aside_chats_you", true)}</span>
 									<p>{getSlicedMessage(chatBody.text, true)}</p>
 								</>
 							) : (

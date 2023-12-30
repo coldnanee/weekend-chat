@@ -27,14 +27,14 @@ export const ImagesList = () => {
 					<li>
 						<SettingsMenuItem
 							Picture={MdLogout}
-							text="Logout"
+							text="aside_logout"
 							cb={logoutUser}
 						/>
 					</li>
 				</ul>
 				<SettingsMenuItem
 					Picture={IoMdSettings}
-					text="Settings"
+					text="aside_settings"
 					link="/settings"
 				/>
 			</nav>

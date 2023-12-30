@@ -1,9 +1,10 @@
-import type { Socket } from "socket.io-client";
-
 import { useChatsStore } from "@/entities/chat";
+import { useSocketStore } from "@/shared";
 
-export const deleteChatHandler = (socket: Socket) => {
-	socket.on("delete-chat-client", ({ chatId }: { chatId: string }) => {
-		useChatsStore.getState().deleteChat(chatId);
-	});
+export const deleteChatHandler = () => {
+	useSocketStore
+		.getState()
+		.socket.on("delete-chat-client", ({ chatId }: { chatId: string }) => {
+			useChatsStore.getState().deleteChat(chatId);
+		});
 };

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import type { IconType } from "react-icons";
+import { useI18nStore } from "@/features/i18n";
 import cl from "./index.module.scss";
 
 export const SettingsMenuItem = ({
@@ -15,19 +16,21 @@ export const SettingsMenuItem = ({
 	link?: string;
 	text: string;
 }) => {
+	const { translate } = useI18nStore();
+
 	return cb ? (
 		<div
 			onClick={cb}
 			className={[cl.root, cl.root_click].join(" ")}>
 			<Picture />
-			<p className={cl.root__text}>{text}</p>
+			<p className={cl.root__text}>{translate(text, true)}</p>
 		</div>
 	) : (
 		<Link
 			href={link}
 			className={cl.root}>
 			<Picture />
-			<p className={cl.root__text}>{text}</p>
+			<p className={cl.root__text}>{translate(text, true)}</p>
 		</Link>
 	);
 };

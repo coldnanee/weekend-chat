@@ -1,7 +1,7 @@
 .root {
-	@apply flex flex-col items-center relative pt-[10px];
+	@apply flex flex-col items-center relative pt-[10px] w-[200px];
 	&__input {
-		@apply bg-transparent border-b border-[#a9aeba] border-solid p-[5px] w-[200px] relative z-10;
+		@apply bg-transparent border-b border-[#a9aeba] border-solid p-[5px] w-full relative z-10;
 		&:focus + .root__label {
 			@apply top-0 text-[#a9aeba] left-0 opacity-100;
 		}

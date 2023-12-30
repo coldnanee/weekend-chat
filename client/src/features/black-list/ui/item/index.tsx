@@ -1,3 +1,4 @@
+import { useI18nStore } from "@/features/i18n"; // eslint-disable-line boundaries/element-types
 import type { TUser } from "@/entities/user";
 import { DefaultAvatar } from "@/shared";
 import { useBlacklistStore } from "../../model";
@@ -5,6 +6,8 @@ import cl from "./index.module.scss";
 
 export const BlacklistItem = ({ user }: { user: TUser }) => {
 	const { unblockUser } = useBlacklistStore();
+
+	const { translate } = useI18nStore();
 
 	return (
 		<li className={cl.root}>
@@ -21,7 +24,7 @@ export const BlacklistItem = ({ user }: { user: TUser }) => {
 			<button
 				onClick={() => unblockUser(user._id)}
 				className={cl.root__delete}>
-				Unblock
+				{translate("blacklist_unblock")}
 			</button>
 		</li>
 	);

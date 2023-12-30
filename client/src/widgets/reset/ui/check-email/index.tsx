@@ -2,11 +2,14 @@
 
 import Link from "next/link";
 import { CiMail } from "react-icons/ci";
+import { useI18nStore } from "@/features/i18n";
 import { useResetPasswordStore } from "@/features/reset";
 import cl from "./index.module.scss";
 
 export const ResetCheckEmail = () => {
 	const { clearEmail } = useResetPasswordStore();
+
+	const { translate } = useI18nStore();
 
 	return (
 		<div className={cl.root}>
@@ -15,12 +18,12 @@ export const ResetCheckEmail = () => {
 				size="70px"
 				color="#a9aeba"
 			/>
-			<h1 className={cl.root__title}>Link send. Check email!</h1>
+			<h1 className={cl.root__title}>{translate("check_email_title")}</h1>
 			<Link
 				onClick={clearEmail}
 				href="/login"
 				className={cl.root__link}>
-				Go Login!
+				{translate("check_email_link")}
 			</Link>
 		</div>
 	);

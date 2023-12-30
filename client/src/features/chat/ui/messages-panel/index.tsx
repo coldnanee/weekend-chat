@@ -1,5 +1,6 @@
 import { RxCross2 } from "react-icons/rx";
 
+import { useI18nStore } from "@/features/i18n"; // eslint-disable-line boundaries/element-types
 import type { TChat } from "@/entities/chat";
 import { useMessagesStore } from "@/entities/message";
 import { useProfileStore } from "@/entities/profile";
@@ -9,6 +10,8 @@ import cl from "./index.module.scss";
 
 export const ChatMessagesPanel = ({ chat }: { chat?: TChat }) => {
 	const { selectedMessages, clearSelectedMessages } = useMessagesStore();
+
+	const { translate } = useI18nStore();
 
 	const { changeMessageBody, changeIsEdit } = useMessageStore();
 	const { profile } = useProfileStore();
@@ -41,7 +44,7 @@ export const ChatMessagesPanel = ({ chat }: { chat?: TChat }) => {
 					/>
 					<div className={cl.root__body__info__text}>
 						<span>{selectedMessages.length}</span>
-						<p>Messages</p>
+						<p>{translate("chat_messages_panel_title")}</p>
 					</div>
 				</div>
 				<div className={cl.root__body__buttons}>
@@ -49,13 +52,13 @@ export const ChatMessagesPanel = ({ chat }: { chat?: TChat }) => {
 						<button
 							className={cl.root__body__buttons__button}
 							onClick={changeMessage}>
-							Edit
+							{translate("chat_messages_panel_edit")}
 						</button>
 					)}
 					<button
 						className={cl.root__body__buttons__button}
 						onClick={deleteMessages}>
-						Delete
+						{translate("chat_messages_panel_edit")}
 					</button>
 				</div>
 			</div>

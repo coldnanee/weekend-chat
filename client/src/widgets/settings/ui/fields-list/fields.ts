@@ -5,7 +5,7 @@ export const fieldsSettingsArr: TSettingsFormItem[] = [
 		name: "login",
 		type: "text",
 		validation: {
-			minLength: { value: 3, message: `Login can't be smaller 3 symbols` }
+			minLength: { value: 3, message: "settings_input_login_error" }
 		},
 		required: true,
 		label: "account_login_placeholder"
@@ -14,7 +14,7 @@ export const fieldsSettingsArr: TSettingsFormItem[] = [
 		name: "password",
 		type: "password",
 		validation: {
-			minLength: { value: 8, message: `Password can't be smaller 8 symbols` }
+			minLength: { value: 8, message: "settings_input_password_error" }
 		},
 		required: false,
 		label: "account_password_placeholder"

@@ -10,19 +10,24 @@ import { ProfileProvider } from "@/entities/profile";
 import { ProfileSettingsProvider } from "@/entities/settings";
 import { SocketProvider } from "@/shared";
 
+import { SocketHandlers } from "@/shared";
+
 export const Providers = ({ children }: { children: ReactNode }) => {
 	return (
-		<ProfileProvider>
-			<ProfileSettingsProvider>
-				<I18nProvider>
-					<SocketProvider>
+		<>
+			<Alert />
+			<ProfileProvider>
+				<ProfileSettingsProvider>
+					<I18nProvider>
 						<ChatsProvider>
-							<Alert />
-							{children}
+							<SocketProvider>
+								<SocketHandlers />
+								{children}
+							</SocketProvider>
 						</ChatsProvider>
-					</SocketProvider>
-				</I18nProvider>
-			</ProfileSettingsProvider>
-		</ProfileProvider>
+					</I18nProvider>
+				</ProfileSettingsProvider>
+			</ProfileProvider>
+		</>
 	);
 };

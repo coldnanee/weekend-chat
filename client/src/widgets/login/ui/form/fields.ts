@@ -6,7 +6,7 @@ export const fieldsLoginArr: TAuthFormItem[] = [
 		label: "login_placeholder",
 		type: "text",
 		validation: {
-			minLength: { value: 3, message: `Login can't be smaller 3 symbols` }
+			minLength: { value: 3, message: "login_length_error" }
 		}
 	},
 	{
@@ -14,7 +14,7 @@ export const fieldsLoginArr: TAuthFormItem[] = [
 		type: "password",
 		label: "password_placeholder",
 		validation: {
-			minLength: { value: 8, message: `Password can't be smaller 8 symbols` }
+			minLength: { value: 8, message: "password_length_error" }
 		}
 	}
 ];
