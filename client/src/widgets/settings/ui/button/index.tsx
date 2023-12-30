@@ -1,4 +1,4 @@
-import { useI18nStore } from "@/features/i18n";
+import { useI18nStore } from "@/shared";
 import cl from "./index.module.scss";
 
 export const SettingsSaveButton = ({ onClick }: { onClick?: () => void }) => {

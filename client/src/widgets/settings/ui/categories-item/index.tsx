@@ -1,5 +1,5 @@
-import { useI18nStore } from "@/features/i18n";
 import type { TSettingsCategoriesItem } from "@/entities/settings";
+import { useI18nStore } from "@/shared";
 import { useSettingsStore } from "../../model";
 import cl from "./index.module.scss";
 

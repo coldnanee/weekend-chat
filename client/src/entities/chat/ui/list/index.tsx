@@ -1,4 +1,4 @@
-import { useI18nStore } from "@/features/i18n"; // eslint-disable-line boundaries/element-types
+import { useI18nStore } from "@/shared";
 import type { TChat } from "../..";
 
 import { ChatSkeleton } from "../..";

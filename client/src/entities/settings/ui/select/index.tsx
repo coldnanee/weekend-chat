@@ -3,8 +3,8 @@
 import { useEffect } from "react";
 
 import { IoIosArrowDown } from "react-icons/io";
-import { useI18nStore } from "@/features/i18n"; // eslint-disable-line boundaries/element-types
 import { useProfileSettingsStore } from "@/entities/settings"; // eslint-disable-line boundaries/element-types
+import { useI18nStore } from "@/shared";
 import { languagesItemsArr } from "../../model";
 import cl from "./index.module.scss";
 

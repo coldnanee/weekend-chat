@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { CiMail } from "react-icons/ci";
-import { useI18nStore } from "@/features/i18n";
 import { useResetPasswordStore } from "@/features/reset";
+import { useI18nStore } from "@/shared";
 import cl from "./index.module.scss";
 
 export const ResetCheckEmail = () => {

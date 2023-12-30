@@ -1,5 +1,5 @@
-import { useI18nStore } from "@/features/i18n"; // eslint-disable-line boundaries/element-types
 import type { TUser } from "@/entities/user";
+import { useI18nStore } from "@/shared";
 import { DefaultAvatar } from "@/shared";
 import { useBlacklistStore } from "../../model";
 import cl from "./index.module.scss";

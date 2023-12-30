@@ -5,10 +5,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
-import { useI18nStore } from "@/features/i18n"; // eslint-disable-line boundaries/element-types
 import { useProfileStore } from "@/entities/profile"; // eslint-disable-line boundaries/element-types
-
 import { useOnlineUsersStore } from "@/entities/user"; // eslint-disable-line boundaries/element-types
+import { useI18nStore } from "@/shared";
+
 import { DefaultAvatar } from "@/shared";
 import { getFormattedIsoDate } from "@/shared";
 import { getSlicedMessage } from "../../lib";
