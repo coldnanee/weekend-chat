@@ -26,7 +26,6 @@
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.0.1",
-    "husky": "^8.0.3",
     "nodemon": "^3.0.1",
     "prettier": "^3.0.3",
     "ts-node": "^10.9.1",
@@ -48,10 +47,5 @@
     "socket.io": "^4.7.2",
     "uuid": "^9.0.1",
     "winston": "^3.10.0"
-  },
-  "husky": {
-    "hooks": {
-      "pre-push": "if [ $(git rev-parse --abbrev-ref HEAD) = 'deploy' ]; then npm run lint; fi"
-    }
   }
 }

@@ -5,5 +5,3 @@ export type TProfile = Omit<TUser, "isBlock"> & {
 	email: string;
 	blackList: string[];
 };
-
-type TTestEslint = {};
