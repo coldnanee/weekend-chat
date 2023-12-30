@@ -1,9 +1,8 @@
-import type { Socket } from "socket.io-client";
-
 import { useProfileStore } from "@/entities/profile";
+import { useSocketStore } from "@/shared";
 
-export const logoutHandler = (socket: Socket) => {
-	socket.on("logout-client", () => {
+export const logoutHandler = () => {
+	useSocketStore.getState().socket.on("logout-client", () => {
 		useProfileStore.getState().logoutUser();
 	});
 };

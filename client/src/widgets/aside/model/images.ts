@@ -5,12 +5,12 @@ import type { TAsideImage } from "../types";
 
 export const asideImagesDataArr: TAsideImage[] = [
 	{
-		text: "All chats",
+		text: "aside_all_chats",
 		Picture: BsChatLeftTextFill,
 		link: "/"
 	},
 	{
-		text: "Support",
+		text: "aside_support",
 		Picture: FaQuestion,
 		link: "/support"
 	}

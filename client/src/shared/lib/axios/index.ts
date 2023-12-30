@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { refreshToken } from "../refreshToken";
+import { refreshToken } from "../../model";
 
 const $axios = axios.create({
 	withCredentials: true,

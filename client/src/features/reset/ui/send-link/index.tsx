@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useForm } from "react-hook-form";
+import { useI18nStore } from "@/features/i18n"; // eslint-disable-line boundaries/element-types
 import { Loader } from "@/shared";
 import { useResetPasswordStore } from "../../model";
 import cl from "./index.module.scss";
@@ -12,6 +13,8 @@ type TSendResetLinkForm = {
 
 export const SendResetLink = () => {
 	const { sendLink, isLinkLoading } = useResetPasswordStore();
+
+	const { translate } = useI18nStore();
 
 	const {
 		register,
@@ -34,7 +37,7 @@ export const SendResetLink = () => {
 				<Loader className={cl.root__loader} />
 			) : (
 				<>
-					<h1 className={cl.root__title}>Send reset link:</h1>
+					<h1 className={cl.root__title}>{translate("send_link_title")}</h1>
 					<div className={cl.root__input}>
 						<input
 							autoComplete="off"
@@ -54,14 +57,16 @@ export const SendResetLink = () => {
 									: cl.root__input__label
 							}
 							htmlFor="email">
-							Email
+							{translate("send_link_placeholder")}
 						</label>
 					</div>
-					<button className={cl.root__button}>Send link</button>
+					<button className={cl.root__button}>
+						{translate("send_link_button")}
+					</button>
 					<Link
 						href="/login"
 						className={cl.root__link}>
-						Login
+						{translate("send_link_link")}
 					</Link>
 				</>
 			)}

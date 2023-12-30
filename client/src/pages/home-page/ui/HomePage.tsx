@@ -1,11 +1,12 @@
-import { Layout } from "@/layout";
+import { Home } from "@/widgets/home";
+import { Layout } from "@/layout"; // eslint-disable-line import/order
 
 import "./HomePage.scss";
 
 const HomePage = () => {
 	return (
 		<Layout className="home-page-layout">
-			<h1>Home</h1>
+			<Home />
 		</Layout>
 	);
 };

@@ -25,14 +25,14 @@ export const AdaptiveIconsList = () => {
 					<li>
 						<SettingsMenuItem
 							Picture={MdLogout}
-							text="Logout"
+							text="aside_logout"
 							cb={logoutUser}
 						/>
 					</li>
 					<li>
 						<SettingsMenuItem
 							Picture={IoMdSettings}
-							text="Settings"
+							text="aside_settings"
 							link="/settings"
 						/>
 					</li>

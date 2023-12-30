@@ -50,9 +50,6 @@ export const ChatMessage = ({
 				}>
 				<p className={cl.root__message__text}>{message.text}</p>
 				<div className={cl.root__message__info}>
-					{message.isUpdated && (
-						<p className={cl.root__message__info__updated}>edit</p>
-					)}
 					<p className={cl.root__message__info__date}>
 						{getFormattedIsoDate(message.date)}
 					</p>

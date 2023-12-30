@@ -2,6 +2,7 @@ import debounce from "lodash.debounce";
 import { type ChangeEvent, useState, useCallback } from "react";
 import { CiSearch } from "react-icons/ci";
 import { RxCross2 } from "react-icons/rx";
+import { useI18nStore } from "@/features/i18n";
 import cl from "./index.module.scss";
 
 export const ChatsSearch = ({
@@ -30,13 +31,15 @@ export const ChatsSearch = ({
 		setValue("");
 	};
 
+	const { translate } = useI18nStore();
+
 	return (
 		<div className={cl.root}>
 			<input
 				value={value}
 				onChange={handler}
 				className={cl.root__input}
-				placeholder="Search"
+				placeholder={translate("chats_search_placeholder")}
 			/>
 			<CiSearch
 				className={cl.root__search}

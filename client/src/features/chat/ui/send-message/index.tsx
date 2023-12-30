@@ -10,6 +10,7 @@ import {
 } from "react";
 import type { MutableRefObject } from "react";
 import { HiOutlinePaperAirplane } from "react-icons/hi2";
+import { useI18nStore } from "@/features/i18n"; // eslint-disable-line boundaries/element-types
 import { useMessagesStore } from "@/entities/message";
 import { useProfileStore } from "@/entities/profile";
 import type { TUser } from "@/entities/user";
@@ -25,6 +26,8 @@ export const ChatInput = ({
 	user: TUser;
 	messagesContainer: MutableRefObject<HTMLElement | null>;
 }) => {
+	const { translate } = useI18nStore();
+
 	const [isStartTyping, setIsStartTyping] = useState<boolean>(false);
 
 	const { socketEvent } = useSocketStore();
@@ -68,6 +71,7 @@ export const ChatInput = ({
 
 	const sendMessage = async () => {
 		if (message) {
+			console.log(profile?._id, user._id); // eslint-disable-line
 			socketEvent("send-message", {
 				recipientId: user._id,
 				message
@@ -121,7 +125,7 @@ export const ChatInput = ({
 					onChange={changeInput}
 					onKeyDown={handlePressEnter}
 					className={cl.root__wrapper__input}
-					placeholder="Write a message..."
+					placeholder={translate("chat_send_message_placeholder")}
 					value={messageBody ? messageBody.text : message}
 					type="text"
 				/>

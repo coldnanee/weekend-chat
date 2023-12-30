@@ -1,5 +1,7 @@
+import { Support } from "@/widgets/support";
+
 const SupportPage = () => {
-	return <h1>Support</h1>;
+	return <Support />;
 };
 
 export default SupportPage;

@@ -102,7 +102,7 @@ class ProfileService {
 	async getDictionaries(userId: string | null) {
 		const settings = await SettingsModel.findOne({ user: userId });
 
-		const language = settings ? settings.language : "en";
+		const language = settings ? settings.language : "ru";
 
 		const filePath = path.resolve(
 			__dirname,

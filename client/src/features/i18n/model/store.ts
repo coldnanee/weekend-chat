@@ -17,7 +17,7 @@ type TI18nStore = {
 	dictionary: TDictionary | null;
 	fetchDictionary: () => void;
 	isDictionaryLoading: boolean;
-	translate: (key: string) => string; // eslint-disable-line no-unused-vars
+	translate: (key: string, isOther?: boolean) => string; // eslint-disable-line no-unused-vars
 };
 
 export const useI18nStore = create<TI18nStore>()(
@@ -37,10 +37,14 @@ export const useI18nStore = create<TI18nStore>()(
 				set({ isDictionaryLoading: false });
 			}
 		},
-		translate: (k) => {
+		translate: (k, isOther = false) => {
 			const { dictionary } = get();
 
 			const activePage = getCookie("activePage") as string;
+
+			if (isOther && dictionary) {
+				return dictionary["other"][k];
+			}
 
 			if (!activePage) {
 				useAlertStore.getState().setAlert({

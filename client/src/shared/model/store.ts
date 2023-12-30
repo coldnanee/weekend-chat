@@ -4,7 +4,7 @@ import { type Socket, io } from "socket.io-client";
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { useAlertStore } from "@/features/alert"; // eslint-disable-line boundaries/element-types
-import { refreshToken } from "../lib";
+import { refreshToken } from "../model";
 
 type TSocketEvent = {
 	name: string;

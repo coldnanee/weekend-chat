@@ -1,3 +1,4 @@
+import { useI18nStore } from "@/features/i18n"; // eslint-disable-line boundaries/element-types
 import type { TChat } from "../..";
 
 import { ChatSkeleton } from "../..";
@@ -13,6 +14,8 @@ export const ChatList = ({
 	isLoading: boolean;
 	login: string;
 }) => {
+	const { translate } = useI18nStore();
+
 	if (!chats) {
 		return <></>;
 	}
@@ -20,7 +23,7 @@ export const ChatList = ({
 	return (
 		<section className={cl.root}>
 			{isLoading && login && chats.length > 0 && (
-				<h2 className={cl.root__title}>Chats:</h2>
+				<h2 className={cl.root__title}>{translate("aside_chats_chats")}</h2>
 			)}
 			{/* prettier-ignore */}
 			<ul className={cl.root__body}>

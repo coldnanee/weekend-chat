@@ -46,7 +46,6 @@ export const ChatMenu = ({ chat, user }: { chat?: TChat; user?: TUser }) => {
 
 	const showConfirmWindow = () => {
 		const result = confirm("Do you want to delete the chat?");
-
 		if (result) deleteChat();
 	};
 
