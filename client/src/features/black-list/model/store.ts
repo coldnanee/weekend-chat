@@ -2,10 +2,10 @@ import type { AxiosError } from "axios";
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
-import { useAlertStore } from "@/features/alert"; // eslint-disable-line boundaries/element-types
 import { useProfileStore } from "@/entities/profile";
 
 import type { TUser } from "@/entities/user";
+import { useAlertStore } from "@/shared";
 import $axios from "@/shared";
 
 type TBlackListStore = {

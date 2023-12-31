@@ -2,7 +2,7 @@ import type { AxiosError } from "axios";
 import { create } from "zustand";
 
 import { immer } from "zustand/middleware/immer";
-import { useAlertStore } from "@/features/alert";
+import { useAlertStore } from "@/shared";
 import $axios from "@/shared";
 
 type TResetPasswordStore = {

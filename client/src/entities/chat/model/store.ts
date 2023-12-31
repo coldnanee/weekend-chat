@@ -2,8 +2,8 @@ import type { AxiosError } from "axios";
 import { create } from "zustand";
 
 import { immer } from "zustand/middleware/immer";
-import { useAlertStore } from "@/features/alert";
 import { type TMessage, useMessagesStore } from "@/entities/message"; // eslint-disable-line boundaries/element-types
+import { useAlertStore } from "@/shared";
 import $axios from "@/shared";
 import type { TChat } from "../types";
 

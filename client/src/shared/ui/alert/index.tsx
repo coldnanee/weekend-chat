@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { BiSolidErrorCircle } from "react-icons/bi";
 import { IoMdCheckmarkCircle } from "react-icons/io";
 
-import { useAlertStore } from "../model";
+import { useAlertStore } from "../../lib";
 import cl from "./index.module.scss";
 
 export const Alert = () => {

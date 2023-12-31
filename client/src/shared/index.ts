@@ -4,7 +4,8 @@ export {
 	ReactQueryProvider,
 	i18n,
 	getFormattedIsoDate,
-	useI18nStore
+	useI18nStore,
+	useAlertStore
 } from "./lib";
 export { useSocketStore } from "./model";
 export {
@@ -12,5 +13,6 @@ export {
 	DefaultAvatar,
 	SocketProvider,
 	SocketHandlers,
-	I18nProvider
+	I18nProvider,
+	Alert
 } from "./ui";

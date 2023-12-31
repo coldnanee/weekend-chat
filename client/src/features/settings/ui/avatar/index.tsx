@@ -4,9 +4,9 @@ import { useEffect, useState, useRef, type MouseEvent } from "react";
 import { useFormContext } from "react-hook-form";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { TfiReload } from "react-icons/tfi";
-import { useAlertStore } from "@/features/alert";
 import { useProfileStore } from "@/entities/profile";
 import { TSettingsForm } from "@/entities/settings";
+import { useAlertStore } from "@/shared";
 import { DefaultAvatar } from "@/shared";
 
 import { useAvatarStore } from "../../model";

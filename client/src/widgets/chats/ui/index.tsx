@@ -2,9 +2,9 @@
 
 import { AxiosError } from "axios";
 import { useState, useEffect, useRef } from "react";
-import { useAlertStore } from "@/features/alert";
 import { ChatList, useChatsStore } from "@/entities/chat";
 import { ChatUsers, useChatUsersQuery } from "@/entities/user";
+import { useAlertStore } from "@/shared";
 import cl from "./index.module.scss";
 import { ChatsSearch } from "./search";
 

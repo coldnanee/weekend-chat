@@ -1,5 +1,5 @@
-import { useAlertStore } from "@/features/alert";
 import type { TUser } from "@/entities/user";
+import { useAlertStore } from "@/shared";
 import $axios from "@/shared";
 
 export const fetchUsersByLogin = async (login: string) => {

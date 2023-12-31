@@ -2,9 +2,9 @@ import type { AxiosError } from "axios";
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
-import { useAlertStore } from "@/features/alert";
 import type { TAuthForm } from "@/entities/auth"; // eslint-disable-line boundaries/element-types
 import type { TSettingsProfile } from "@/entities/settings"; // eslint-disable-line boundaries/element-types
+import { useAlertStore } from "@/shared";
 import $axios from "@/shared";
 import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { TProfile } from "../types";
