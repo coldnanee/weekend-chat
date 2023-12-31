@@ -1,11 +1,13 @@
-export const getFormattedIsoDate = (dateFromMsg: string): string => {
+export const getFormattedIsoDate = (
+	dateFromMsg: string
+): { isTranslate: boolean; label: string; count?: number } => {
 	const specifiedDate = new Date(dateFromMsg);
 	const dateNow = new Date();
 
 	const dateRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,3})?Z?$/;
 
 	if (!dateRegex.test(dateFromMsg)) {
-		return "";
+		return { isTranslate: false, label: "" };
 	}
 
 	const timeDifference = dateNow.getTime() - specifiedDate.getTime();
@@ -29,16 +31,20 @@ export const getFormattedIsoDate = (dateFromMsg: string): string => {
 
 	switch (daysDifference) {
 		case 0:
-			return getTime();
+			return { isTranslate: false, label: getTime() };
 		case 1:
-			return "yesterday";
+			return { isTranslate: true, label: "user_seen_yesterday" };
 		case 7:
-			return "1w.";
+			return { isTranslate: true, label: "user_seen_week", count: 1 };
 	}
 
 	if (daysDifference < 7) {
-		return `${daysDifference}d.`;
+		return { isTranslate: true, count: daysDifference, label: "user_seen_day" };
 	}
 
-	return `${Math.floor(daysDifference / 7)}w.`;
+	return {
+		isTranslate: true,
+		label: "user_seen_week",
+		count: Math.floor(daysDifference / 7)
+	};
 };

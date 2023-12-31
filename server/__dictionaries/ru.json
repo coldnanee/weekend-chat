@@ -70,6 +70,13 @@
         "aside_chats_chats": "Чаты",
         "aside_chats_typing": "печатает...",
         "aside_chats_you": "Вы: ",
-        "page_not_found": "404, страница не найдена."
+        "page_not_found": "404, страница не найдена.",
+        "user_seen_yesterday": "вчера",
+        "user_seen_week": "н",
+        "user_seen_day": "д",
+        "user_seen_online": "онлайн",
+        "user_last_seen": "был в",
+        "user_last_seen_non_in": "был",
+        "user_seen_recently": "был недавно"
     }
 }

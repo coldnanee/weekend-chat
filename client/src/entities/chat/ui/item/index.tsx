@@ -37,7 +37,11 @@ export const ChatItem = ({ chat }: { chat: TChat }) => {
 
 	const isActive = params?.login === chat.user.login;
 
-	const messageDate = getFormattedIsoDate(chatBody.date);
+	const { label, isTranslate, count } = getFormattedIsoDate(chatBody.date);
+
+	const messageDate = isTranslate
+		? `${count || ""}${translate(label, true)}`
+		: label;
 
 	socket.on("start-typing-client", (user: string) => {
 		if (chat.user._id === user) {

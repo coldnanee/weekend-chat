@@ -11,13 +11,11 @@
       "pre-push": "cd client && npm run lint-client && cd ../server && npm run lint-server"
     }
   },
-  "dependencies": {
-    "husky": "^8.0.3"
-  },
-  "devDependencies": {
-    "husky": "^8.0.0"
-  },
   "scripts": {
     "prepare": "husky install"
+  },
+  "devDependencies": {
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0"
   }
 }
