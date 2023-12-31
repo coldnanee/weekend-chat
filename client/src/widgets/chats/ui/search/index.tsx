@@ -39,7 +39,7 @@ export const ChatsSearch = ({
 				value={value}
 				onChange={handler}
 				className={cl.root__input}
-				placeholder={translate("chats_search_placeholder")}
+				placeholder={translate("chats_search_placeholder", true)}
 			/>
 			<CiSearch
 				className={cl.root__search}

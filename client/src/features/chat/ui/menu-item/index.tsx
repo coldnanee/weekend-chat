@@ -9,7 +9,7 @@ export const ChatMenuItem = ({
 }) => {
 	return (
 		<li
-			onClick={() => cb}
+			onClick={() => cb()}
 			className={cl.root}>
 			<Picture
 				className={cl.root__image}

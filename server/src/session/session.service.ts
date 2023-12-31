@@ -34,12 +34,38 @@ class SessionService {
 		usersSessions: Map<string, string[]>,
 		event: { name: string; data: unknown }
 	) {
+		if (event.name === "send-message-client") {
+			console.log("my:", sessions); // eslint-disable-line no-console
+			console.log("users:", usersSessions); // eslint-disable-line no-console
+		}
+
 		sessions.map((s) => {
 			const sessionSocketId = usersSessions.get(s._id.toString());
+
 			if (sessionSocketId) {
+				if (event.name === "send-message-client") {
+					console.log("session socket id", sessionSocketId); // eslint-disable-line no-console
+				}
+
 				io.to(sessionSocketId).emit(event.name, event.data);
 			}
 		});
+
+		// eslint-disable-next-line no-console
+		console.log(`/ 
+		/
+		/
+		/
+		/
+		/
+		/
+		/
+		/
+		/
+		/
+		/
+		/
+		`);
 	}
 }
 

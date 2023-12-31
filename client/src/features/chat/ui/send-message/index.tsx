@@ -71,7 +71,6 @@ export const ChatInput = ({
 
 	const sendMessage = async () => {
 		if (message) {
-			console.log(profile?._id, user._id); // eslint-disable-line
 			socketEvent("send-message", {
 				recipientId: user._id,
 				message
