@@ -1,5 +1,5 @@
 {
-    "*.ts": [
-        "npm run build"
+    "src/**/*.ts": [
+        "npm run lint"
     ]
 }

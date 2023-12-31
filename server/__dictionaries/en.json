@@ -1,6 +1,6 @@
 {
     "chat": {
-        "chat_say_hi": "Say hi to:",
+        "chat_say_hi": "Say hi to",
         "chat_typing": "is typing",
         "chat_messages_panel_title": "Messages",
         "chat_messages_panel_edit": "Edit",
