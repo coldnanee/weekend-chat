@@ -4,8 +4,6 @@ import { connectionQueryWrapper } from "../../libs";
 
 import UserModel from "../../db/models/UserModel";
 
-import { getIsoDate } from "../../libs";
-
 export const disconnectHandler = (
 	io: Server,
 	socket: Socket,
@@ -23,7 +21,7 @@ export const disconnectHandler = (
 				return;
 			}
 
-			profile.lastOnline = getIsoDate();
+			profile.lastOnline = new Date().toISOString();
 
 			await profile.save();
 
