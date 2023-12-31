@@ -2,7 +2,7 @@ import { getCookie } from "cookies-next";
 import { create } from "zustand";
 
 import { immer } from "zustand/middleware/immer";
-import { useAlertStore } from "@/features/alert"; // eslint-disable-line boundaries/element-types
+import { useAlertStore } from "@/shared";
 import $axios from "@/shared";
 
 type TDictionaryPage = {
@@ -31,7 +31,9 @@ export const useI18nStore = create<TI18nStore>()(
 
 				set({ dictionary: data });
 			} catch (e) {
-				alert("Dictionary loading error");
+				useAlertStore
+					.getState()
+					.setAlert({ type: "error", message: "Dictionary loading error" });
 				window && window.location.reload();
 			} finally {
 				set({ isDictionaryLoading: false });

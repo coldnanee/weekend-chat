@@ -6,10 +6,12 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { TfiReload } from "react-icons/tfi";
 import { useProfileStore } from "@/entities/profile";
 import { TSettingsForm } from "@/entities/settings";
+import { useAlertStore } from "@/shared";
 import { DefaultAvatar } from "@/shared";
 
 import { useAvatarStore } from "../../model";
 import { TSettingsAvatarMenuItem } from "../../types";
+
 import { SettingsAvatarMenuItem } from "../avatar-menu-item";
 
 import cl from "./index.module.scss";
@@ -71,8 +73,9 @@ export const SettingsAvatar = () => {
 				setMenuShow(false);
 			}
 		} catch (e) {
+			const message = e as string;
 			setMenuShow(false);
-			alert(e);
+			useAlertStore.getState().setAlert({ type: "error", message });
 		}
 	}, [watchedImage]); //eslint-disable-line
 

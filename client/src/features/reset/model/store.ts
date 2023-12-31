@@ -2,6 +2,7 @@ import type { AxiosError } from "axios";
 import { create } from "zustand";
 
 import { immer } from "zustand/middleware/immer";
+import { useAlertStore } from "@/shared";
 import $axios from "@/shared";
 
 type TResetPasswordStore = {
@@ -29,7 +30,7 @@ export const useResetPasswordStore = create<TResetPasswordStore>()(
 				const err = e as AxiosError<{ message: string }>;
 				const message = err.response?.data.message || "";
 				set({ sendLinkError: message });
-				alert(message);
+				useAlertStore.getState().setAlert({ type: "error", message });
 			} finally {
 				set({ isLinkLoading: false });
 			}

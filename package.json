@@ -1,0 +1,23 @@
+{
+  "name": "weekend-chat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "husky": {
+    "hooks": {
+      "pre-push": "cd client && npm run lint-client && cd ../server && npm run lint-server"
+    }
+  },
+  "dependencies": {
+    "husky": "^8.0.3"
+  },
+  "devDependencies": {
+    "husky": "^8.0.0"
+  },
+  "scripts": {
+    "prepare": "husky install"
+  }
+}

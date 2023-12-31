@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
-import type { TAlert } from "../types";
+import type { TAlert } from "./types";
 
 type TAlertStore = {
 	alert: TAlert;
