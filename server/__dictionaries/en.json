@@ -70,6 +70,13 @@
         "aside_chats_chats": "Chats",
         "aside_chats_typing": "typing...",
         "aside_chats_you": "You: ",
-        "page_not_found": "404, page not found."
+        "page_not_found": "404, page not found.",
+        "user_seen_yesterday": "yesterday",
+        "user_seen_week": "w",
+        "user_seen_day": "d",
+        "user_seen_online": "online",
+        "user_last_seen": "last seen",
+        "user_last_seen_non_in": "last seen",
+        "user_seen_recently": "last seen recently"
     }
 }

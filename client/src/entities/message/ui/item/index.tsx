@@ -1,5 +1,8 @@
+"use client";
+
 import { useProfileStore } from "@/entities/profile"; // eslint-disable-line boundaries/element-types
 import type { TUser } from "@/entities/user"; // eslint-disable-line boundaries/element-types
+import { useI18nStore } from "@/shared";
 
 import { DefaultAvatar } from "@/shared";
 
@@ -15,6 +18,7 @@ export const ChatMessage = ({
 	message: TMessage;
 	user: TUser;
 }) => {
+	const { translate } = useI18nStore();
 	const { profile } = useProfileStore();
 
 	const { selectedMessages, toggleMessage } = useMessagesStore();
@@ -22,6 +26,12 @@ export const ChatMessage = ({
 	const isMyMessage = user._id !== message.user;
 
 	const rootClasses = [cl.root];
+
+	const { label, isTranslate, count } = getFormattedIsoDate(message.date);
+
+	const messageDate = isTranslate
+		? `${count || ""}${translate(label, true)}`
+		: label;
 
 	if (isMyMessage) {
 		rootClasses.push(cl.root_my);
@@ -50,9 +60,7 @@ export const ChatMessage = ({
 				}>
 				<p className={cl.root__message__text}>{message.text}</p>
 				<div className={cl.root__message__info}>
-					<p className={cl.root__message__info__date}>
-						{getFormattedIsoDate(message.date)}
-					</p>
+					<p className={cl.root__message__info__date}>{messageDate}</p>
 				</div>
 			</div>
 		</li>
