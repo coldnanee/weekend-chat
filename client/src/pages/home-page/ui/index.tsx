@@ -1,5 +1,14 @@
-import { lazy } from "react";
+import { Home } from "@/widgets/home";
+import { Layout } from "@/layout"; // eslint-disable-line import/order
 
-const HomePage = lazy(() => import("./HomePage"));
+import "./index.scss";
+
+const HomePage = () => {
+	return (
+		<Layout className="home-page-layout">
+			<Home />
+		</Layout>
+	);
+};
 
 export default HomePage;

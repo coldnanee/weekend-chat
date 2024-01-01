@@ -15,5 +15,8 @@
         "alwaysTryTypes": true
       }
     }
+  },
+  "env": {
+    "jest": true
   }
 }

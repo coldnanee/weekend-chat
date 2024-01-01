@@ -1,5 +1,7 @@
-import { lazy } from "react";
+import { ResetPassword } from "@/widgets/reset";
 
-const ResetPage = lazy(() => import("./ResetPage"));
+const ResetPage = () => {
+	return <ResetPassword />;
+};
 
 export default ResetPage;

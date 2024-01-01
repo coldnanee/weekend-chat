@@ -1,5 +1,7 @@
-import { lazy } from "react";
+import { Support } from "@/widgets/support";
 
-const SupportPage = lazy(() => import("./SupportPage"));
+const SupportPage = () => {
+	return <Support />;
+};
 
 export default SupportPage;

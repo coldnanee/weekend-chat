@@ -1,5 +1,6 @@
-import { lazy } from "react";
+import { Registration } from "@/widgets/registration";
 
-const RegistrationPage = lazy(() => import("./RegistrationPage"));
-
+const RegistrationPage = () => {
+	return <Registration />;
+};
 export default RegistrationPage;

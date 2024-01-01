@@ -1,5 +1,7 @@
-import { lazy } from "react";
+import { Settings } from "@/widgets/settings";
 
-const SettingsPage = lazy(() => import("./SettingsPage"));
+const SettingsPage = () => {
+	return <Settings />;
+};
 
 export default SettingsPage;

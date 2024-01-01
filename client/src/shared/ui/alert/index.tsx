@@ -12,9 +12,11 @@ export const Alert = () => {
 
 	useEffect(() => {
 		if (alert) {
-			setTimeout(() => {
+			const timeout = setTimeout(() => {
 				setAlert(null);
 			}, 5000);
+
+			return () => clearTimeout(timeout);
 		}
 	}, [alert]); // eslint-disable-line react-hooks/exhaustive-deps
 
