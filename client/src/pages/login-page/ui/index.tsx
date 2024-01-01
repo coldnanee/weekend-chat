@@ -1,5 +1,7 @@
-import { lazy } from "react";
+import { Login } from "@/widgets/login";
 
-const LoginPage = lazy(() => import("./LoginPage"));
+const LoginPage = () => {
+	return <Login />;
+};
 
 export default LoginPage;
