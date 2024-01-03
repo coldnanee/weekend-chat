@@ -9,7 +9,7 @@
     "dev": "nodemon",
     "prettier:fix": "prettier --write \"**/*.{js,ts}\"",
     "lint": "eslint .",
-    "test": "JWT_ACCESS_SECRET=563468 JWT_REFRESH_SECRET=4y80323 jest"
+    "test": "jest"
   },
   "keywords": [],
   "author": "",

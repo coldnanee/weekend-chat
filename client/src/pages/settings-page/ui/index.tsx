@@ -1,7 +1,5 @@
-import { Settings } from "@/widgets/settings";
+import dynamic from "next/dynamic";
 
-const SettingsPage = () => {
-	return <Settings />;
-};
+const LazySettingsPage = dynamic(() => import("./SettingsPage"));
 
-export default SettingsPage;
+export default LazySettingsPage;

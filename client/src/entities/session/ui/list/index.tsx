@@ -7,6 +7,10 @@ import cl from "./index.module.scss";
 export const SessionList = ({ sessions }: { sessions: TSession[] }) => {
 	const { translate } = useI18nStore();
 
+	if (sessions.length === 0) {
+		return <></>;
+	}
+
 	return (
 		<ul className={cl.root}>
 			{sessions.length > 0 ? (

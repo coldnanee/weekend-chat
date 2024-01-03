@@ -6,14 +6,15 @@ const createJestConfig = nextJest({
 	dir: "./"
 });
 
-const config: Config = {
+const configJest: Config = {
 	clearMocks: true,
-	coverageProvider: "v8",
-	testEnvironment: "jsdom",
+	testEnvironment: "jest-environment-jsdom",
 	moduleNameMapper: {
 		"^@/(.*)$": "<rootDir>/src/$1",
 		"^@/pages/(.*)$": "<rootDir>/src/pages/$1"
-	}
+	},
+	setupFiles: ["<rootDir>/src/shared/lib/jest/setup.ts"],
+	preset: "ts-jest"
 };
 
-export default createJestConfig(config);
+export default createJestConfig(configJest);

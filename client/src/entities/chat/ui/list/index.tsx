@@ -20,6 +20,10 @@ export const ChatList = ({
 		return <></>;
 	}
 
+	if (chats.length === 0) {
+		return <></>;
+	}
+
 	return (
 		<section className={cl.root}>
 			{isLoading && login && chats.length > 0 && (

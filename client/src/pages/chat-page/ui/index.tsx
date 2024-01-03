@@ -1,16 +1,5 @@
-import { Chat } from "@/widgets/chat"; // eslint-disable-line import/order
-import { Layout } from "@/layout"; // eslint-disable-line import/order
+import dynamic from "next/dynamic";
 
-import "./index.scss";
+const LazyChatPage = dynamic(() => import("./ChatPage"));
 
-const ChatPage = () => {
-	return (
-		<div className="chats-page-layout">
-			<Layout>
-				<Chat />
-			</Layout>
-		</div>
-	);
-};
-
-export default ChatPage;
+export default LazyChatPage;

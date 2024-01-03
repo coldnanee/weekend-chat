@@ -11,6 +11,6 @@ export const fetchUserByLogin = async (login: string) => {
 		return data;
 	} catch (e) {
 		const err = e as AxiosError<{ message: string }>;
-		return err.response?.data.message;
+		return err.response?.data.message || "ERROR";
 	}
 };
