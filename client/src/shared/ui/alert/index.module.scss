@@ -1,12 +1,15 @@
 .root {
-	@apply absolute left-[15px] z-20 bg-[#414347];
+	@apply absolute left-[15px] z-20;
 	@media (min-width: 581px) {
 		@apply bottom-[15px];
 	}
 	&__body {
 		@apply flex p-[15px] rounded-[10px] items-center gap-x-[10px];
 		&__text {
-			@apply text-[#a9aeba] text-[16px] max-w-[200px];
+			@apply text-[#fff] text-[16px] max-w-[200px];
+		}
+		&__icon {
+			@apply cursor-pointer;
 		}
 	}
 	@media (max-width: 580px) {

@@ -1,9 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
-import { BiSolidErrorCircle } from "react-icons/bi";
-import { IoMdCheckmarkCircle } from "react-icons/io";
 
+import { RxCross2 } from "react-icons/rx";
 import { useAlertStore } from "../../lib";
 import cl from "./index.module.scss";
 
@@ -14,7 +13,7 @@ export const Alert = () => {
 		if (alert) {
 			const timeout = setTimeout(() => {
 				setAlert(null);
-			}, 5000);
+			}, 4000);
 
 			return () => clearTimeout(timeout);
 		}
@@ -27,22 +26,23 @@ export const Alert = () => {
 	return (
 		<div
 			className={cl.root}
-			onClick={() => setAlert(null)}>
+			style={{
+				backgroundColor: alert.type === "error" ? "#FF5555" : "#43b525"
+			}}
+			onClick={() => setAlert(null)}
+			data-testid="alert">
 			<div className={cl.root__body}>
-				{alert.type === "error" ? (
-					<BiSolidErrorCircle
-						className={cl.root__body__icon}
-						size="20px"
-						color="#d43e51"
-					/>
-				) : (
-					<IoMdCheckmarkCircle
-						className={cl.root__body__icon}
-						size="20px"
-						color="#43b525"
-					/>
-				)}
-				<p className={cl.root__body__text}>{alert.message}</p>
+				<p
+					data-testid="alert-message"
+					className={cl.root__body__text}>
+					{alert.message}
+				</p>
+				<RxCross2
+					data-testid="alert-icon"
+					color="#fff"
+					size="20px"
+					className={cl.root__body__icon}
+				/>
 			</div>
 		</div>
 	);

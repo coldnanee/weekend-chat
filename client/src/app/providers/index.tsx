@@ -14,7 +14,7 @@ import { SocketHandlers } from "@/shared";
 
 export const Providers = ({ children }: { children: ReactNode }) => {
 	return (
-		<>
+		<div data-testid="providers">
 			<Alert />
 			<ProfileProvider>
 				<ProfileSettingsProvider>
@@ -28,6 +28,6 @@ export const Providers = ({ children }: { children: ReactNode }) => {
 					</I18nProvider>
 				</ProfileSettingsProvider>
 			</ProfileProvider>
-		</>
+		</div>
 	);
 };

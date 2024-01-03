@@ -4,3 +4,4 @@ export { DefaultAvatar } from "./default-avatar";
 export { SocketProvider } from "./socket";
 export { SocketHandlers } from "./socket-handlers";
 export { Alert } from "./alert";
+export { ReactQueryProvider } from "./react-query";
