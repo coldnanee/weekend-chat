@@ -1,14 +1,5 @@
-import { Home } from "@/widgets/home";
-import { Layout } from "@/layout"; // eslint-disable-line import/order
+import dynamic from "next/dynamic";
 
-import "./index.scss";
+const LazyHomePage = dynamic(() => import("./HomePage"));
 
-const HomePage = () => {
-	return (
-		<Layout className="home-page-layout">
-			<Home />
-		</Layout>
-	);
-};
-
-export default HomePage;
+export default LazyHomePage;

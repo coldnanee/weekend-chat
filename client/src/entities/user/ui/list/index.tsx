@@ -13,6 +13,10 @@ export const ChatUsers = ({ users }: { users?: TUser[] | null }) => {
 		return <></>;
 	}
 
+	if (users.length === 0) {
+		return <></>;
+	}
+
 	return (
 		<section className={cl.root}>
 			{users.length > 0 && (

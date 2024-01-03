@@ -1,7 +1,5 @@
 "use client";
 
-import { useParams } from "next/navigation";
-
 import { useEffect, useState, type MutableRefObject } from "react";
 
 import { type TChat } from "@/entities/chat"; // eslint-disable-line boundaries/element-types
@@ -20,8 +18,6 @@ export const ChatMessages = ({
 	chat?: TChat;
 	messagesContainer: MutableRefObject<HTMLElement | null>;
 }) => {
-	const params = useParams<{ login: string }>();
-
 	const { translate } = useI18nStore();
 
 	const { users } = useOnlineUsersStore();
@@ -41,7 +37,7 @@ export const ChatMessages = ({
 	}, [chat]); //eslint-disable-line
 
 	if (!chat) {
-		return <StartChat name={params?.login || ""} />;
+		return <StartChat />;
 	}
 
 	socket.on("start-typing-client", ({ userId }: { userId: string }) => {

@@ -1,7 +1,5 @@
-import { ResetPassword } from "@/widgets/reset";
+import dynamic from "next/dynamic";
 
-const ResetPage = () => {
-	return <ResetPassword />;
-};
+const LazyResetPage = dynamic(() => import("./ResetPage"));
 
-export default ResetPage;
+export default LazyResetPage;

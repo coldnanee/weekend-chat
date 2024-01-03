@@ -8,8 +8,11 @@ export const fetchUserByLogin = async (login: string) => {
 		const { data } = await $axios.get<TUser>("chats/user", {
 			params: { login }
 		});
+		console.log(data);
 		return data;
 	} catch (e) {
+		console.log(e);
+
 		const err = e as AxiosError<{ message: string }>;
 		return err.response?.data.message;
 	}

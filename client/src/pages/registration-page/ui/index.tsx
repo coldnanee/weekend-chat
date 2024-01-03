@@ -1,6 +1,5 @@
-import { Registration } from "@/widgets/registration";
+import dynamic from "next/dynamic";
 
-const RegistrationPage = () => {
-	return <Registration />;
-};
-export default RegistrationPage;
+const LazyRegistrationPage = dynamic(() => import("./RegistrationPage"));
+
+export default LazyRegistrationPage;

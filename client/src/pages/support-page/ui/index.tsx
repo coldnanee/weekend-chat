@@ -1,7 +1,5 @@
-import { Support } from "@/widgets/support";
+import dynamic from "next/dynamic";
 
-const SupportPage = () => {
-	return <Support />;
-};
+const LazySupportPage = dynamic(() => import("./SupportPage"));
 
-export default SupportPage;
+export default LazySupportPage;

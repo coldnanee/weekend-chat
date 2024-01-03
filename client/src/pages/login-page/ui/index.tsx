@@ -1,7 +1,5 @@
-import { Login } from "@/widgets/login";
+import dynamic from "next/dynamic";
 
-const LoginPage = () => {
-	return <Login />;
-};
+const LazyLoginPage = dynamic(() => import("./LoginPage"));
 
-export default LoginPage;
+export default LazyLoginPage;

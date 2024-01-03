@@ -59,16 +59,6 @@ export const ChatMenu = ({ chat, user }: { chat?: TChat; user?: TUser }) => {
 
 	const chatOptionsArr: TChatOptionItem[] = [
 		{
-			label: chat?.isPinned ? "Unpin chat" : "Pin chat",
-			Picture: chat?.isPinned ? PinImage : UnpinImage,
-			cb: chat?.isPinned ? unpinChat : pinChat
-		},
-		{
-			label: "Delete chat",
-			Picture: RiDeleteBin6Line,
-			cb: showConfirmWindow
-		},
-		{
 			label: isUserBlock ? "Unblock user" : "Block user",
 			Picture: isUserBlock ? FiMinusCircle : MdBlock,
 			cb: isUserBlock
@@ -78,6 +68,19 @@ export const ChatMenu = ({ chat, user }: { chat?: TChat; user?: TUser }) => {
 				} // prettier-ignore
 		}
 	];
+
+	if (chat?.messages && chat?.messages.length > 0) {
+		chatOptionsArr.push({
+			label: chat?.isPinned ? "Unpin chat" : "Pin chat",
+			Picture: chat?.isPinned ? PinImage : UnpinImage,
+			cb: chat?.isPinned ? unpinChat : pinChat
+		});
+		chatOptionsArr.push({
+			label: "Delete chat",
+			Picture: RiDeleteBin6Line,
+			cb: showConfirmWindow
+		});
+	}
 
 	const toggleShowMenu = (e: MouseEvent<HTMLButtonElement>) => {
 		if (!isTouchDevice.current) {
@@ -99,16 +102,14 @@ export const ChatMenu = ({ chat, user }: { chat?: TChat; user?: TUser }) => {
 					alt={user?.login || ""}
 				/>
 			</button>
-			{chat?.messages && chat?.messages.length > 0 && (
-				<ul className={rootClasses.join(" ")}>
-					{chatOptionsArr.map((i) => (
-						<ChatMenuItem
-							item={i}
-							key={i.label}
-						/>
-					))}
-				</ul>
-			)}
+			<ul className={rootClasses.join(" ")}>
+				{chatOptionsArr.map((i) => (
+					<ChatMenuItem
+						item={i}
+						key={i.label}
+					/>
+				))}
+			</ul>
 		</div>
 	);
 };
