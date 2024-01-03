@@ -6,7 +6,7 @@ describe("LoginPage", () => {
 	test("render", async () => {
 		// render(<LazyLoginPage />);
 		// await waitFor(() => {
-		// 	expect(screen.getByTestId("login-page")).toBeInTheDocument();
+		//expect(screen.getByTestId("login-page")).toBeInTheDocument();
 		// });
 	});
 });

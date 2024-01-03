@@ -1,12 +1,12 @@
 import "@testing-library/jest-dom";
 import { render, screen, waitFor } from "@testing-library/react";
-import LazyResetPage from "./ui";
+import LazyHomePage from "@/pages/home-page";
 
-describe("ResetPage", () => {
+describe("HomePage", () => {
 	test("render", async () => {
-		render(<LazyResetPage />);
+		render(<LazyHomePage />);
 		await waitFor(() => {
-			expect(screen.getByTestId("reset-page")).toBeInTheDocument();
+			expect(screen.getByTestId("home-page")).toBeInTheDocument();
 		});
 	});
 });

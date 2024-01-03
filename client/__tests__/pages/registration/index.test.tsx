@@ -6,7 +6,7 @@ describe("RegistrationPage", () => {
 	test("render", async () => {
 		// render(<LazyRegistrationPage />);
 		// await waitFor(() => {
-		// 	expect(screen.getByTestId("registration-page")).toBeInTheDocument();
+		// 		expect(screen.getByTestId("registration-page")).toBeInTheDocument();
 		// });
 	});
 });

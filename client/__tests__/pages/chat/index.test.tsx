@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 import { render, screen, waitFor } from "@testing-library/react";
-import LazyChatPage from "./ui";
+import LazyChatPage from "@/pages/chat-page";
 
 describe("ChatPage", () => {
 	test("render", async () => {

@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 import { render, screen, waitFor } from "@testing-library/react";
-import LazySupportPage from "./ui";
+import LazySupportPage from "@/pages/support-page";
 
 describe("SupportPage", () => {
 	test("render", async () => {
