@@ -1,6 +1,5 @@
 {
     "chat": {
-        "chat_say_hi": "Поздоровайся с",
         "chat_typing": "печатает",
         "chat_messages_panel_title": "Сообщения",
         "chat_messages_panel_edit": "Изменить",
