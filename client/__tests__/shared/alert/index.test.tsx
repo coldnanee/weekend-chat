@@ -1,19 +1,20 @@
 import "@testing-library/jest-dom";
 import { screen, render, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-
+import { act } from "react-dom/test-utils";
 import { Alert, useAlertStore } from "@/shared";
 
 describe("Alert", () => {
 	afterEach(async () => {
-		await waitFor(() => {
+		act(() => {
 			useAlertStore.getState().setAlert(null);
 		});
 	});
+
 	test("render", async () => {
 		render(<Alert />);
 		expect(screen.queryByTestId("alert")).not.toBeInTheDocument();
-		await waitFor(() => {
+		act(() => {
 			useAlertStore
 				.getState()
 				.setAlert({ message: "test", type: "successfully" });
@@ -25,7 +26,7 @@ describe("Alert", () => {
 	test("close by click", async () => {
 		render(<Alert />);
 		expect(screen.queryByTestId("alert")).not.toBeInTheDocument();
-		await waitFor(() => {
+		act(() => {
 			useAlertStore
 				.getState()
 				.setAlert({ message: "test", type: "successfully" });
@@ -38,7 +39,7 @@ describe("Alert", () => {
 
 	test("check message from store into alert", async () => {
 		render(<Alert />);
-		await waitFor(() => {
+		act(() => {
 			useAlertStore
 				.getState()
 				.setAlert({ type: "successfully", message: "TEST_MESSAGE" });
@@ -49,7 +50,7 @@ describe("Alert", () => {
 	test("check color by type", async () => {
 		render(<Alert />);
 		expect(screen.queryByTestId("alert")).not.toBeInTheDocument();
-		await waitFor(() => {
+		act(() => {
 			useAlertStore
 				.getState()
 				.setAlert({ type: "successfully", message: "message" });
@@ -59,7 +60,7 @@ describe("Alert", () => {
 			"background-color: rgb(67, 181, 37)"
 		);
 
-		await waitFor(() => {
+		act(() => {
 			useAlertStore.getState().setAlert({ type: "error", message: "error" });
 		});
 		expect(screen.getByTestId("alert")).toHaveStyle(
@@ -68,25 +69,20 @@ describe("Alert", () => {
 	});
 
 	test("check timeout close alert", async () => {
+		jest.useFakeTimers();
 		render(<Alert />);
-		// expect(screen.queryByTestId("alert")).not.toBeInTheDocument();
-		// await waitFor(() => {
-		// 	useAlertStore.getState().setAlert({ type: "error", message: "timer" });
-		// });
+		expect(screen.queryByTestId("alert")).not.toBeInTheDocument();
+		act(() => {
+			useAlertStore.getState().setAlert({ type: "error", message: "timer" });
+		});
 
-		// jest.advanceTimersByTime(5000);
+		expect(screen.getByTestId("alert")).toBeInTheDocument();
+		act(() => {
+			jest.advanceTimersByTime(5000);
+		});
 
-		// expect(screen.queryByTestId("alert")).not.toBeInTheDocument();
-		// await waitFor(() => {
-		// 	useAlertStore.getState().setAlert({ type: "error", message: "timer" });
-		// });
-
-		// expect(screen.getByTestId("alert")).toBeInTheDocument();
-
-		// act(() => {
-		// 	jest.advanceTimersByTime(5000); // "Перемотка" времени вперед на 5000 миллисекунд
-		// });
-
-		// expect(screen.queryByTestId("alert")).not.toBeInTheDocument();
+		await waitFor(() => {
+			expect(screen.queryByTestId("alert")).not.toBeInTheDocument();
+		});
 	});
 });
