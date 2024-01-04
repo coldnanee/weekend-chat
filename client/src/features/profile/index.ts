@@ -1,1 +1,1 @@
-export { logoutHandler } from "./model";
+export { ProfileSocketEvents } from "./model";

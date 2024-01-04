@@ -9,3 +9,7 @@
 		@apply hidden;
 	}
 }
+
+[data-testid="home-page"] {
+	@apply h-full;
+}

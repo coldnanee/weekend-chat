@@ -19,6 +19,7 @@ export const DefaultAvatar = ({
 }) => {
 	return (
 		<Image
+			data-testid="default-avatar"
 			className={[className, cl.root].join(" ")}
 			src={src || AvatarImage}
 			width={width}

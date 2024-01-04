@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DefaultAvatar render 1`] = `
+<img
+  alt="image"
+  class=" root"
+  data-nimg="1"
+  data-testid="default-avatar"
+  decoding="async"
+  fetchpriority="high"
+  height="40"
+  src="/_next/image?url=%2Fimg.jpg&w=96&q=75"
+  srcset="/_next/image?url=%2Fimg.jpg&w=48&q=75 1x, /_next/image?url=%2Fimg.jpg&w=96&q=75 2x"
+  style="color: transparent; width: 40px; height: 40px;"
+  width="40"
+/>
+`;
