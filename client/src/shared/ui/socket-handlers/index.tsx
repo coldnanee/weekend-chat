@@ -24,5 +24,5 @@ export const SocketHandlers = () => {
 	pinChatHandler();
 	unpinChatHandler();
 
-	return <></>;
+	return <div data-testid="socket-handlers"></div>;
 };

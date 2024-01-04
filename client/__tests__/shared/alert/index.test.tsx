@@ -21,6 +21,7 @@ describe("Alert", () => {
 		});
 
 		expect(screen.getByTestId("alert")).toBeInTheDocument();
+		expect(screen.getByTestId("alert")).toMatchSnapshot();
 	});
 
 	test("close by click", async () => {
