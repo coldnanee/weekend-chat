@@ -12,4 +12,8 @@ describe("Loader", () => {
 		render(<Loader className="test-class" />);
 		expect(screen.getByTestId("loader")).toHaveClass("test-class");
 	});
+	test("snapshot", () => {
+		render(<Loader />);
+		expect(screen.getByTestId("loader")).toMatchSnapshot();
+	});
 });

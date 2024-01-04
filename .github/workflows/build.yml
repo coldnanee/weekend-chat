@@ -59,6 +59,9 @@ jobs:
         - name: linting
           run: npm run lint
 
+        - name: test
+          run: npm run test
+
     client_build:
         runs-on: ubuntu-latest
         needs: [client_ci]

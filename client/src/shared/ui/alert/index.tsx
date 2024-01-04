@@ -13,7 +13,7 @@ export const Alert = () => {
 		if (alert) {
 			const timeout = setTimeout(() => {
 				setAlert(null);
-			}, 4000);
+			}, 5000);
 
 			return () => clearTimeout(timeout);
 		}

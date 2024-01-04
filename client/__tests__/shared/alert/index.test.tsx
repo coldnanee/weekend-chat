@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom";
-import { screen, render, waitFor, act } from "@testing-library/react";
+import { screen, render, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { Alert, useAlertStore } from "@/shared";
@@ -66,8 +66,6 @@ describe("Alert", () => {
 			"background-color: rgb(255, 85, 85)"
 		);
 	});
-
-	jest.useFakeTimers();
 
 	test("check timeout close alert", async () => {
 		render(<Alert />);
