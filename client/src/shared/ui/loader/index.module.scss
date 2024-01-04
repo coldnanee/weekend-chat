@@ -1,6 +1,6 @@
 .root {
-    @apply bg-[#131313] flex min-h-full justify-center items-center;
-    &__loader {
-        @apply animate-spin;
-    }
+	@apply bg-[#131313] flex min-h-full justify-center items-center;
+	&__loader {
+		@apply animate-spin;
+	}
 }

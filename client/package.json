@@ -31,6 +31,7 @@
     "@feature-sliced/eslint-config": "^0.1.0-beta.6",
     "@testing-library/jest-dom": "^6.1.6",
     "@testing-library/react": "^14.1.2",
+    "@testing-library/user-event": "^14.5.2",
     "@types/jest": "^29.5.11",
     "@types/lodash.debounce": "^4.0.9",
     "@types/node": "^20",

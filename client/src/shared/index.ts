@@ -1,7 +1,6 @@
 export {
 	createMetadata,
 	default,
-	ReactQueryProvider,
 	i18n,
 	getFormattedIsoDate,
 	useI18nStore,
@@ -11,6 +10,7 @@ export { useSocketStore } from "./model";
 export {
 	Loader,
 	DefaultAvatar,
+	ReactQueryProvider,
 	SocketProvider,
 	SocketHandlers,
 	I18nProvider,
