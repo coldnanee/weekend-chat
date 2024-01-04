@@ -11,6 +11,7 @@ import { I18nProvider } from "@/shared";
 import { SocketProvider } from "@/shared";
 
 import { SocketHandlers } from "@/shared";
+import "./index.scss";
 
 export const Providers = ({ children }: { children: ReactNode }) => {
 	return (

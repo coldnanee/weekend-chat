@@ -1,11 +1,15 @@
 .chats-page-layout .layout-chats {
-    @media (max-width: 800px) {
-        @apply hidden;
-    }
+	@media (max-width: 800px) {
+		@apply hidden;
+	}
 }
 
 .chats-page-layout .layout-aside {
-    @media (max-width: 580px) {
-        @apply hidden;
-    }
+	@media (max-width: 580px) {
+		@apply hidden;
+	}
+}
+
+[data-testid="chat-page"] {
+	@apply h-full;
 }

@@ -5,14 +5,4 @@ export {
 	ChatMessagesPanel
 } from "./ui";
 
-export {
-	newChatHandler,
-	deleteChatHandler,
-	deleteMessageHandler,
-	getMessageHandler,
-	sendMessageHandler,
-	editMessageHandler,
-	useMessageStore,
-	pinChatHandler,
-	unpinChatHandler
-} from "./model";
+export { ChatSocketEvents, useMessageStore } from "./model";

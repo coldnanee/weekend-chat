@@ -1,1 +1,1 @@
-export { logoutHandler } from "./logoutHandler";
+export { ProfileSocketEvents } from "./socket-events";

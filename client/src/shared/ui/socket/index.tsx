@@ -16,5 +16,5 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 		}
 	}, []); //eslint-disable-line
 
-	return <>{children}</>;
+	return <div data-testid="socket-provider">{children}</div>;
 };

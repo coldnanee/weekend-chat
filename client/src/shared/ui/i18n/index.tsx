@@ -14,5 +14,9 @@ export const I18nProvider = ({ children }: { children: ReactNode }) => {
 		setIsRead(true);
 	}, []); // eslint-disable-line
 
-	return <>{!isRead || isDictionaryLoading ? <Loader /> : children}</>;
+	return (
+		<div data-testid="i18n-provider">
+			{!isRead || isDictionaryLoading ? <Loader /> : children}
+		</div>
+	);
 };

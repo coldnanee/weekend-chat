@@ -1,2 +1,1 @@
-export { newOnlineUserHandler } from "./newOnlineUserHandler";
-export { newOfflineUserHandler } from "./newOfflineUserHandler";
+export { UserSocketEvents } from "./socket-events";
