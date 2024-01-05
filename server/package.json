@@ -9,7 +9,7 @@
     "dev": "nodemon",
     "prettier:fix": "prettier --write \"**/*.{js,ts}\"",
     "lint": "eslint .",
-    "test": "jest"
+    "test": "jest --passWithNoTests"
   },
   "keywords": [],
   "author": "",
