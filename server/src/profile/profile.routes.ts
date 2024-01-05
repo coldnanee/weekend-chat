@@ -22,7 +22,16 @@ router.post(
 router.get("/settings", checkAuth, controller.getProfileSettings);
 router.get("/dictionaries", controller.getDictionaries);
 router.post("/settings-update", checkAuth, controller.updateProfileSettings);
-router.post("/delete", checkAuth, controller.deleteProfile);
+router.post(
+	"/delete",
+	[
+		checkAuth,
+		body("password")
+			.isLength({ min: 8 })
+			.withMessage(`Password can't be smaller than 8 symbols`)
+	],
+	controller.deleteProfile
+);
 router.get("/blacklist", checkAuth, controller.getBlacklist);
 router.post("/block", checkAuth, controller.blockUser);
 router.post("/unblock", checkAuth, controller.unblockUser);

@@ -23,14 +23,14 @@ export const SettingsMenuItem = ({
 			onClick={cb}
 			className={[cl.root, cl.root_click].join(" ")}>
 			<Picture />
-			<p className={cl.root__text}>{translate(text, true)}</p>
+			<p className={cl.root__text}>{translate("other", text)}</p>
 		</div>
 	) : (
 		<Link
 			href={link}
 			className={cl.root}>
 			<Picture />
-			<p className={cl.root__text}>{translate(text, true)}</p>
+			<p className={cl.root__text}>{translate("other", text)}</p>
 		</Link>
 	);
 };

@@ -5,25 +5,25 @@ export const fieldsSettingsArr: TSettingsFormItem[] = [
 		name: "login",
 		type: "text",
 		validation: {
-			minLength: { value: 3, message: "settings_input_login_error" }
+			minLength: { value: 3, message: "login_length_error" }
 		},
 		required: true,
-		label: "account_login_placeholder"
+		label: "login_placeholder"
 	},
 	{
 		name: "password",
 		type: "password",
 		validation: {
-			minLength: { value: 8, message: "settings_input_password_error" }
+			minLength: { value: 8, message: "password_length_error" }
 		},
 		required: false,
-		label: "account_password_placeholder"
+		label: "password_placeholder"
 	},
 	{
 		name: "email",
 		type: "text",
 		validation: {},
 		required: true,
-		label: "account_email_placeholder"
+		label: "email_placeholder"
 	}
 ];

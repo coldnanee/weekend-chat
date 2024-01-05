@@ -24,7 +24,7 @@ export const BlacklistItem = ({ user }: { user: TUser }) => {
 			<button
 				onClick={() => unblockUser(user._id)}
 				className={cl.root__delete}>
-				{translate("blacklist_unblock")}
+				{translate("settings", "blacklist_unblock")}
 			</button>
 		</li>
 	);

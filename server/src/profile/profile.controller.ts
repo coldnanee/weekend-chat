@@ -56,6 +56,10 @@ class ProfileController {
 
 			const { language } = req.body as { language: string };
 
+			if (!language) {
+				ApiError.badRequestError("Language is empty");
+			}
+
 			await ProfileService.updateProfileSettings(userId, language);
 
 			return res.status(200).send();
@@ -106,6 +110,10 @@ class ProfileController {
 
 			const { user } = req.body as { user: string };
 
+			if (!user) {
+				throw ApiError.badRequestError("UserId is empty");
+			}
+
 			await ProfileService.blockUser(userId, user);
 
 			res.status(200).send();
@@ -119,6 +127,10 @@ class ProfileController {
 			const { userId } = req;
 
 			const { user } = req.body as { user: string };
+
+			if (!user) {
+				throw ApiError.badRequestError("UserId is empty");
+			}
 
 			await ProfileService.unblockUser(userId, user);
 

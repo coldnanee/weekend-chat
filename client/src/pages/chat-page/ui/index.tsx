@@ -1,5 +1,9 @@
 import dynamic from "next/dynamic";
 
-const LazyChatPage = dynamic(() => import("./ChatPage"));
+import { DynamicPagesLoader } from "@/shared";
+
+const LazyChatPage = dynamic(() => import("./ChatPage"), {
+	loading: () => <DynamicPagesLoader />
+});
 
 export default LazyChatPage;

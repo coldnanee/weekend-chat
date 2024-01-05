@@ -22,18 +22,14 @@
         "send_link_link": "Login",
         "send_link_placeholder": "Email",
         "check_email_title": "Link send. Check email!",
-        "check_email_link": "Go Login!",
-        "login_length_error": "Login can't be smaller 3 symbols",
-        "password_length_error": "Password can't be smaller 8 symbols"
+        "check_email_link": "Go Login!"
     },
     "registration": {
         "title": "Registration",
         "login_placeholder": "Login",
         "password_placeholder": "Password",
         "button": "Registration",
-        "login_link": "Login",
-        "login_length_error": "Login can't be smaller 3 symbols",
-        "password_length_error": "Password can't be smaller 8 symbols"
+        "login_link": "Login"
     },
     "settings": {
         "categories_account": "Account",
@@ -52,9 +48,7 @@
         "general_delete_profile": "Delete profile",
         "general_delete_placeholder": "Entry a password",
         "general_delete_button": "Delete",
-        "blacklist_unblock": "Unblock",
-        "settings_input_login_error": "Login can't be smaller 3 symbols",
-        "settings_input_password_error": "Password can't be smaller 8 symbols"
+        "blacklist_unblock": "Unblock"
     },
     "support": {
         "support_title": "Support"
@@ -76,6 +70,11 @@
         "user_seen_online": "online",
         "user_last_seen": "last seen",
         "user_last_seen_non_in": "last seen",
-        "user_seen_recently": "last seen recently"
+        "user_seen_recently": "last seen recently",
+        "login_length_error": "Login can't be smaller 3 symbols",
+        "password_length_error": "Password can't be smaller 8 symbols",
+        "email_placeholder": "Email",
+        "login_placeholder": "Login",
+        "password_placeholder": "Password"
     }
 }

@@ -1,5 +1,9 @@
 import dynamic from "next/dynamic";
 
-const LazyHomePage = dynamic(() => import("./HomePage"));
+import { DynamicPagesLoader } from "@/shared";
+
+const LazyHomePage = dynamic(() => import("./HomePage"), {
+	loading: () => <DynamicPagesLoader />
+});
 
 export default LazyHomePage;

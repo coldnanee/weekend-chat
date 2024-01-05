@@ -18,12 +18,14 @@ export const ResetCheckEmail = () => {
 				size="70px"
 				color="#a9aeba"
 			/>
-			<h1 className={cl.root__title}>{translate("check_email_title")}</h1>
+			<h1 className={cl.root__title}>
+				{translate("login", "check_email_title")}
+			</h1>
 			<Link
 				onClick={clearEmail}
 				href="/login"
 				className={cl.root__link}>
-				{translate("check_email_link")}
+				{translate("login", "check_email_link")}
 			</Link>
 		</div>
 	);

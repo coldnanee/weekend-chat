@@ -44,7 +44,7 @@ export const ChatMessagesPanel = ({ chat }: { chat?: TChat }) => {
 					/>
 					<div className={cl.root__body__info__text}>
 						<span>{selectedMessages.length}</span>
-						<p>{translate("chat_messages_panel_title")}</p>
+						<p>{translate("chat", "chat_messages_panel_title")}</p>
 					</div>
 				</div>
 				<div className={cl.root__body__buttons}>
@@ -52,13 +52,13 @@ export const ChatMessagesPanel = ({ chat }: { chat?: TChat }) => {
 						<button
 							className={cl.root__body__buttons__button}
 							onClick={changeMessage}>
-							{translate("chat_messages_panel_edit")}
+							{translate("chat", "chat_messages_panel_edit")}
 						</button>
 					)}
 					<button
 						className={cl.root__body__buttons__button}
 						onClick={deleteMessages}>
-						{translate("chat_messages_panel_edit")}
+						{translate("chat", "chat_messages_panel_edit")}
 					</button>
 				</div>
 			</div>

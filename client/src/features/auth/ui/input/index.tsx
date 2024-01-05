@@ -42,7 +42,7 @@ export const AuthInput = ({
 				id={`#${name}`}
 			/>
 			{error && error.message && (
-				<p className={cl.root__error}>{translate(error.message)}</p>
+				<p className={cl.root__error}>{translate("other", error.message)}</p>
 			)}
 			<label
 				className={
@@ -51,7 +51,7 @@ export const AuthInput = ({
 						: cl.root__label
 				}
 				htmlFor={`#${name}`}>
-				{translate(label)}
+				{translate("other", label)}
 			</label>
 		</div>
 	);

@@ -20,7 +20,9 @@ export const ChatUsers = ({ users }: { users?: TUser[] | null }) => {
 	return (
 		<section className={cl.root}>
 			{users.length > 0 && (
-				<h2 className={cl.root__title}>{translate("aside_chats_users")}</h2>
+				<h2 className={cl.root__title}>
+					{translate("other", "aside_chats_users")}
+				</h2>
 			)}
 			<ul className={cl.root__body}>
 				{users.map((user) => (

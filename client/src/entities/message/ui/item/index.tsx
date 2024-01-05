@@ -30,7 +30,7 @@ export const ChatMessage = ({
 	const { label, isTranslate, count } = getFormattedIsoDate(message.date);
 
 	const messageDate = isTranslate
-		? `${count || ""}${translate(label, true)}`
+		? `${count || ""}${translate("other", label)}`
 		: label;
 
 	if (isMyMessage) {

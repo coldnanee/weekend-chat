@@ -1,5 +1,9 @@
 import dynamic from "next/dynamic";
 
-const LazySupportPage = dynamic(() => import("./SupportPage"));
+import { DynamicPagesLoader } from "@/shared";
+
+const LazySupportPage = dynamic(() => import("./SupportPage"), {
+	loading: () => <DynamicPagesLoader />
+});
 
 export default LazySupportPage;

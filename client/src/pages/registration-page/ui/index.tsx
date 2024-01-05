@@ -1,5 +1,9 @@
 import dynamic from "next/dynamic";
 
-const LazyRegistrationPage = dynamic(() => import("./RegistrationPage"));
+import { DynamicPagesLoader } from "@/shared";
+
+const LazyRegistrationPage = dynamic(() => import("./RegistrationPage"), {
+	loading: () => <DynamicPagesLoader />
+});
 
 export default LazyRegistrationPage;

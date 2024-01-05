@@ -1,5 +1,9 @@
 import dynamic from "next/dynamic";
 
-const LazyResetPage = dynamic(() => import("./ResetPage"));
+import { DynamicPagesLoader } from "@/shared";
+
+const LazyResetPage = dynamic(() => import("./ResetPage"), {
+	loading: () => <DynamicPagesLoader />
+});
 
 export default LazyResetPage;

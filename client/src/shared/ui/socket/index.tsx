@@ -4,6 +4,8 @@ import { getCookie } from "cookies-next";
 
 import { type ReactNode, useEffect } from "react";
 
+import "./index.scss";
+
 import { useSocketStore } from "../../model";
 
 export const SocketProvider = ({ children }: { children: ReactNode }) => {

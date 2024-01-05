@@ -1,4 +1,3 @@
-import { getCookie } from "cookies-next";
 import { create } from "zustand";
 
 import { immer } from "zustand/middleware/immer";
@@ -17,7 +16,7 @@ type TI18nStore = {
 	dictionary: TDictionary | null;
 	fetchDictionary: () => void;
 	isDictionaryLoading: boolean;
-	translate: (key: string, isOther?: boolean) => string; // eslint-disable-line no-unused-vars
+	translate: (ctx: string, key: string) => string; // eslint-disable-line no-unused-vars
 };
 
 export const useI18nStore = create<TI18nStore>()(
@@ -39,26 +38,14 @@ export const useI18nStore = create<TI18nStore>()(
 				set({ isDictionaryLoading: false });
 			}
 		},
-		translate: (k, isOther = false) => {
+		translate: (ctx, key) => {
 			const { dictionary } = get();
 
-			const activePage = getCookie("activePage") as string;
-
-			if (isOther && dictionary) {
-				return dictionary["other"][k];
+			if (dictionary && dictionary[ctx] && dictionary[ctx][key]) {
+				return dictionary[ctx][key];
 			}
 
-			if (!activePage) {
-				useAlertStore.getState().setAlert({
-					type: "error",
-					message: "Dictionaries error. Reload page"
-				});
-				return "";
-			} else {
-				return dictionary && dictionary[activePage]
-					? dictionary[activePage][k]
-					: "";
-			}
+			return "";
 		}
 	}))
 );
