@@ -4,14 +4,15 @@ import { immer } from "zustand/middleware/immer";
 
 import { useProfileStore } from "@/entities/profile";
 
+import { TUser } from "@/entities/user";
 import { useAlertStore } from "@/shared";
 import $axios from "@/shared";
 
 type TBlackListStore = {
-	users: string[];
+	users: TUser[];
 	fetchBlackList: () => void;
 	isBlacklistLoading: boolean;
-	blockUser: (u: string) => void; // eslint-disable-line no-unused-vars
+	blockUser: (u: TUser) => void; // eslint-disable-line no-unused-vars
 	unblockUser: (u: string) => void; // eslint-disable-line no-unused-vars
 };
 
@@ -22,7 +23,7 @@ export const useBlacklistStore = create<TBlackListStore>()(
 		fetchBlackList: async () => {
 			useBlacklistStore.setState({ isBlacklistLoading: true });
 			try {
-				const { data } = await $axios.get<string[]>("/profile/blacklist");
+				const { data } = await $axios.get<TUser[]>("/profile/blacklist");
 				set({ users: data });
 			} catch (e) {
 				const err = e as AxiosError<{ message: string }>;
@@ -43,7 +44,7 @@ export const useBlacklistStore = create<TBlackListStore>()(
 
 				if (status == 200) {
 					useProfileStore.getState().toggleBlacklist(user);
-					const filteredUsers = get().users.filter((u) => u !== user);
+					const filteredUsers = get().users.filter((u) => u._id !== user);
 					set({ users: filteredUsers });
 				}
 			} catch (e) {
@@ -64,7 +65,7 @@ export const useBlacklistStore = create<TBlackListStore>()(
 				});
 
 				if (status == 200) {
-					useProfileStore.getState().toggleBlacklist(u);
+					useProfileStore.getState().toggleBlacklist(u._id);
 					const updatedUsers = [...get().users, u];
 					set({ users: updatedUsers });
 				}

@@ -9,6 +9,7 @@ import { SettingsDto } from "../dtos/settings.dto";
 
 import path from "path";
 import SettingsModel from "../db/models/SettingsModel";
+import { UserDto } from "../dtos/user.dto";
 
 class ProfileService {
 	async updateProfile(
@@ -122,7 +123,7 @@ class ProfileService {
 			_id: { $in: user.blackList }
 		});
 
-		const usersDto = usersFromBlacklist.map((u) => u._id);
+		const usersDto = usersFromBlacklist.map((u) => new UserDto(u));
 
 		return usersDto;
 	}

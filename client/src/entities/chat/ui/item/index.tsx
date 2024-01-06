@@ -4,7 +4,7 @@ import Image from "next/image";
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { useProfileStore } from "@/entities/profile"; // eslint-disable-line boundaries/element-types
 import { useOnlineUsersStore } from "@/entities/user"; // eslint-disable-line boundaries/element-types
 import { useI18nStore } from "@/shared";
@@ -44,6 +44,11 @@ export const ChatItem = ({ chat }: { chat: TChat }) => {
 		: label;
 
 	socket.on("start-typing-client", (data: { userId: string }) => {
+		console.log(
+			profile?.blackList,
+			data.userId,
+			profile?.blackList.includes(data.userId)
+		);
 		if (
 			chat.user._id === data.userId &&
 			!profile?.blackList.includes(data.userId)

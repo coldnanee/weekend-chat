@@ -64,7 +64,7 @@ export const ChatMenu = ({ chat, user }: { chat?: TChat; user?: TUser }) => {
 			cb: isUserBlock
 				? () => unblockUser(user._id)
 				: () => {
-						if (user) blockUser(user._id);
+						if (user) blockUser(user);
 				} // prettier-ignore
 		}
 	];

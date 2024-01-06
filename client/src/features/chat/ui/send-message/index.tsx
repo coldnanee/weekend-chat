@@ -104,6 +104,8 @@ export const ChatInput = ({
 		};
 	}, []); //eslint-disable-line
 
+	console.log(isUserBlock);
+
 	if (isUserBlock) {
 		return (
 			<ChatUserBlock
