@@ -73,7 +73,7 @@ export const ChatMessages = ({
 				))}
 			</ul>
 			<p className={rootTypingClasses.join(" ")}>
-				{chat.user.login} {translate("chat_typing")}
+				{chat.user.login} {translate("chat", "chat_typing")}
 				<span> . . .</span>
 			</p>
 		</section>

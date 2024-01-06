@@ -22,19 +22,14 @@
         "send_link_link": "Логин",
         "send_link_placeholder": "Почта",
         "check_email_title": "Ссылка отправлена. Проверьте почту!",
-        "check_email_link": "Логин",
-        "login_length_error": "Логин не может быть меньше 3 символов",
-        "password_length_error": "Пароль не может быть меньше 8 символов",
-        "blacklist_unblock": "Разблокировать"
+        "check_email_link": "Логин"
     },
     "registration": {
         "title": "Регистрация",
         "login_placeholder": "Логин",
         "password_placeholder": "Пароль",
         "button": "Регистрация",
-        "login_link": "Логин",
-        "login_length_error": "Логин не может быть меньше 3 символов",
-        "password_length_error": "Пароль не может быть меньше 8 символов"
+        "login_link": "Логин"
     },
     "settings": {
         "categories_account": "Аккаунт",
@@ -53,8 +48,7 @@
         "general_delete_profile": "Удалить профиль",
         "general_delete_placeholder": "Введите пароль",
         "general_delete_button": "Удалить",
-        "settings_input_login_error": "Логин не может быть меньше 3 символов",
-        "settings_input_password_error": "Пароль не может быть меньше 8 символов"
+        "blacklist_unblock": "Unblock"
     },
     "support": {
         "support_title": "Поддержка"
@@ -76,6 +70,8 @@
         "user_seen_online": "онлайн",
         "user_last_seen": "был в",
         "user_last_seen_non_in": "был",
-        "user_seen_recently": "был недавно"
+        "user_seen_recently": "был недавно",
+        "login_length_error": "Login can't be smaller 3 symbols",
+        "password_length_error": "Password can't be smaller 8 symbols"
     }
 }

@@ -29,7 +29,10 @@ export const ChatInfo = ({ user, chat }: { user: TUser; chat?: TChat }) => {
 					<p className={cl.root__body__adaptive__name}>{user.login}</p>
 					<ChatUserOnlineStatus user={user} />
 				</div>
-				<ChatMenu chat={chat} />
+				<ChatMenu
+					chat={chat}
+					user={user}
+				/>
 			</div>
 		</div>
 	);

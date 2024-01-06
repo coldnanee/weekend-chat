@@ -16,7 +16,7 @@ export const RegistrationForm = () => {
 	return (
 		<AuthForm
 			thunk={registrationUser}
-			title={translate("title")}>
+			title={translate("registration", "title")}>
 			{fieldsRegistrationArr.map((field, index) => (
 				<AuthInput
 					{...field}
@@ -28,11 +28,13 @@ export const RegistrationForm = () => {
 					}
 				/>
 			))}
-			<AuthButton className={cl.root__button}>{translate("button")}</AuthButton>
+			<AuthButton className={cl.root__button}>
+				{translate("registration", "button")}
+			</AuthButton>
 			<Link
 				className={cl.root__link}
 				href="/login">
-				{translate("login_link")}
+				{translate("registration", "login_link")}
 			</Link>
 		</AuthForm>
 	);

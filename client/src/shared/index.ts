@@ -14,5 +14,6 @@ export {
 	SocketProvider,
 	SocketHandlers,
 	I18nProvider,
-	Alert
+	Alert,
+	DynamicPagesLoader
 } from "./ui";

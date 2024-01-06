@@ -2,6 +2,8 @@
 
 import { useState, useEffect, type ReactNode } from "react";
 
+import "./index.scss";
+
 import { Loader } from "@/shared";
 import { useI18nStore } from "../../lib";
 

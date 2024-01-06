@@ -6,7 +6,9 @@ export const UserNotFound = () => {
 
 	return (
 		<section className={cl.root}>
-			<p className={cl.root__text}>{translate("chat_user_not_found")}</p>
+			<p className={cl.root__text}>
+				{translate("chat", "chat_user_not_found")}
+			</p>
 		</section>
 	);
 };

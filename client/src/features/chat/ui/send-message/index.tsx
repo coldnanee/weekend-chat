@@ -104,9 +104,7 @@ export const ChatInput = ({
 		};
 	}, []); //eslint-disable-line
 
-	if (user.isBlock) {
-		return <ChatUserBlock text={"You're blocked by this user"} />;
-	}
+	console.log(isUserBlock);
 
 	if (isUserBlock) {
 		return (
@@ -114,6 +112,10 @@ export const ChatInput = ({
 				text={`You blocked ${user.login}. Unblock him to send a message.`}
 			/>
 		);
+	}
+
+	if (user.isBlock) {
+		return <ChatUserBlock text={"You're blocked by this user"} />;
 	}
 
 	return (
@@ -124,7 +126,7 @@ export const ChatInput = ({
 					onChange={changeInput}
 					onKeyDown={handlePressEnter}
 					className={cl.root__wrapper__input}
-					placeholder={translate("chat_send_message_placeholder")}
+					placeholder={translate("chat", "chat_send_message_placeholder")}
 					value={messageBody ? messageBody.text : message}
 					type="text"
 				/>

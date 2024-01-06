@@ -25,7 +25,7 @@ export const ChatMenu = ({ chat, user }: { chat?: TChat; user?: TUser }) => {
 
 	const isTouchDevice = useRef<number | boolean>(false);
 
-	const isUserBlock = chat?.user && profile?.blackList.includes(chat.user._id);
+	const isUserBlock = user && profile?.blackList.includes(user?._id);
 
 	const rootClasses = [cl.root__body];
 
@@ -62,9 +62,9 @@ export const ChatMenu = ({ chat, user }: { chat?: TChat; user?: TUser }) => {
 			label: isUserBlock ? "Unblock user" : "Block user",
 			Picture: isUserBlock ? FiMinusCircle : MdBlock,
 			cb: isUserBlock
-				? () => unblockUser(chat.user._id)
+				? () => unblockUser(user._id)
 				: () => {
-						if (chat?.user) blockUser(chat?.user);
+						if (user) blockUser(user);
 				} // prettier-ignore
 		}
 	];

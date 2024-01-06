@@ -19,12 +19,12 @@ export const SettingsDeleteProfile = () => {
 			<button
 				onClick={() => setIsShow(!isShow)}
 				className={cl.root__button}>
-				{translate("general_delete_profile")}
+				{translate("settings", "general_delete_profile")}
 			</button>
 			{isShow && (
 				<div className={cl.root__input}>
 					<input
-						placeholder={translate("general_delete_placeholder")}
+						placeholder={translate("settings", "general_delete_placeholder")}
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
 						className={cl.root__input__body}
@@ -34,7 +34,7 @@ export const SettingsDeleteProfile = () => {
 					<button
 						className={cl.root__input__button}
 						onClick={deleteProfile}>
-						{translate("general_delete_button")}
+						{translate("settings", "general_delete_button")}
 					</button>
 				</div>
 			)}

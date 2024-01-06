@@ -25,7 +25,7 @@ export const SettingsCategoriesItem = ({
 			className={activeChapter === label ? rootClasses.join(" ") : cl.root}
 			onClick={onClick}>
 			<Picture />
-			<p className={cl.root__text}>{translate(label)}</p>
+			<p className={cl.root__text}>{translate("settings", label)}</p>
 		</li>
 	);
 };

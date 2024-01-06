@@ -22,7 +22,9 @@ export const SessionList = ({ sessions }: { sessions: TSession[] }) => {
 				))
 			) : (
 				<div className={cl.root__body}>
-					<h3 className={cl.root__body__title}>{translate("sessions_none")}</h3>
+					<h3 className={cl.root__body__title}>
+						{translate("settings", "sessions_none")}
+					</h3>
 				</div>
 			)}
 		</ul>

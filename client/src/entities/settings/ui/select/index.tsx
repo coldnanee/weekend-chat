@@ -33,7 +33,9 @@ export const LanguageSelect = () => {
 
 	return (
 		<div className={cl.root}>
-			<p className={cl.root__text}>{translate("general_language_title")}</p>
+			<p className={cl.root__text}>
+				{translate("settings", "general_language_title")}
+			</p>
 			<div
 				role="select"
 				className={cl.root__select}>
@@ -41,7 +43,7 @@ export const LanguageSelect = () => {
 					className={cl.root__select__language}
 					onClick={() => setSelect({ ...select, isShow: !select.isShow })}>
 					<p className={cl.root__select__language__text}>
-						{translate(select.language)}
+						{translate("settings", select.language)}
 					</p>
 					<IoIosArrowDown
 						className={cl.root__select__language__icon}
@@ -59,7 +61,7 @@ export const LanguageSelect = () => {
 									? rootClassesItem.join(" ")
 									: cl.root__select__list__item
 							}>
-							<p>{translate(label)}</p>
+							<p>{translate("settings", label)}</p>
 						</li>
 					))}
 				</ul>

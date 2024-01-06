@@ -1,5 +1,9 @@
 import dynamic from "next/dynamic";
 
-const LazyLoginPage = dynamic(() => import("./LoginPage"));
+import { DynamicPagesLoader } from "@/shared";
+
+const LazyLoginPage = dynamic(() => import("./LoginPage"), {
+	loading: () => <DynamicPagesLoader />
+});
 
 export default LazyLoginPage;

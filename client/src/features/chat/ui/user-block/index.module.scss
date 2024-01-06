@@ -1,5 +1,5 @@
 .root {
-	@apply h-[41px] bg-[#202329] text-[#a9aeba] flex justify-center items-center absolute bottom-0 right-0 w-full;
+	@apply min-h-[41px] bg-[#202329] text-[#a9aeba] flex justify-center items-center;
 	&__body {
 		@apply flex justify-center items-center gap-x-[10px];
 		&__icon {

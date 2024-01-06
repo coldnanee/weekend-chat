@@ -8,7 +8,7 @@ export const SettingsSaveButton = ({ onClick }: { onClick?: () => void }) => {
 		<button
 			onClick={onClick}
 			className={cl.root}>
-			{translate("save_button")}
+			{translate("settings", "save_button")}
 		</button>
 	);
 };

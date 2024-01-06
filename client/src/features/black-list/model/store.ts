@@ -4,7 +4,7 @@ import { immer } from "zustand/middleware/immer";
 
 import { useProfileStore } from "@/entities/profile";
 
-import type { TUser } from "@/entities/user";
+import { TUser } from "@/entities/user";
 import { useAlertStore } from "@/shared";
 import $axios from "@/shared";
 

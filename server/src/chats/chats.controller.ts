@@ -1,5 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 
+import { getValidationError } from "../libs";
 import ChatsService from "./chats.service";
 
 class ChatsController {
@@ -19,6 +20,7 @@ class ChatsController {
 
 	async getUserInfo(req: Request, res: Response, next: NextFunction) {
 		try {
+			getValidationError(req);
 			const { login } = req.query as { login: string };
 
 			const { userId } = req;

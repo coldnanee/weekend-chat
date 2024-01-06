@@ -68,6 +68,10 @@ class AuthController {
 		try {
 			const { email } = req.body as { email: string };
 
+			if (!email) {
+				throw ApiError.badRequestError("Email is empty");
+			}
+
 			const isSend = await AuthService.sendResetMessage(email);
 
 			if (!isSend) {

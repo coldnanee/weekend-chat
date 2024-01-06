@@ -40,17 +40,25 @@ export const ChatItem = ({ chat }: { chat: TChat }) => {
 	const { label, isTranslate, count } = getFormattedIsoDate(chatBody.date);
 
 	const messageDate = isTranslate
-		? `${count || ""}${translate(label, true)}`
+		? `${count || ""}${translate("other", label)}`
 		: label;
 
-	socket.on("start-typing-client", (user: string) => {
-		if (chat.user._id === user) {
+	socket.on("start-typing-client", (data: { userId: string }) => {
+		console.log(
+			profile?.blackList,
+			data.userId,
+			profile?.blackList.includes(data.userId)
+		);
+		if (
+			chat.user._id === data.userId &&
+			!profile?.blackList.includes(data.userId)
+		) {
 			setIsTyping(true);
 		}
 	});
 
-	socket.on("stop-typing-client", (user: string) => {
-		if (chat.user._id === user) {
+	socket.on("stop-typing-client", (data: { userId: string }) => {
+		if (chat.user._id === data.userId) {
 			setIsTyping(false);
 		}
 	});
@@ -78,10 +86,10 @@ export const ChatItem = ({ chat }: { chat: TChat }) => {
 						<h4 className={cl.root__body__chat__name}>{chat.user.login}</h4>
 						<div className={cl.root__body__chat__message}>
 							{isTyping ? (
-								translate("aside_chats_typing", true)
+								translate("other", "aside_chats_typing")
 							) : chatBody.user === profile?._id ? (
 								<>
-									<span>{translate("aside_chats_you", true)}</span>
+									<span>{translate("other", "aside_chats_you")}</span>
 									<p>{getSlicedMessage(chatBody.text, true)}</p>
 								</>
 							) : (

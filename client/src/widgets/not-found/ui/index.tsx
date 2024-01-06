@@ -9,7 +9,9 @@ export const NotFound = () => {
 	return (
 		<section className={cl.root}>
 			<div className={cl.root__body}>
-				<h3 className={cl.root__body__title}>{translate("page_not_found")}</h3>
+				<h3 className={cl.root__body__title}>
+					{translate("other", "page_not_found")}
+				</h3>
 			</div>
 		</section>
 	);

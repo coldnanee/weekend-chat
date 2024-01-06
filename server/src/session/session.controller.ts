@@ -1,6 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
 
 import SessionService from "./session.service";
+import { ApiError } from "../errors";
 
 class SessionController {
 	async getSessions(req: Request, res: Response, next: NextFunction) {
@@ -20,6 +21,10 @@ class SessionController {
 	async killSessions(req: Request, res: Response, next: NextFunction) {
 		try {
 			const { sessions } = req.query as { sessions: string };
+
+			if (!sessions) {
+				throw ApiError.badRequestError("You did not specify the session");
+			}
 
 			await SessionService.killSessions(sessions.split("-"));
 

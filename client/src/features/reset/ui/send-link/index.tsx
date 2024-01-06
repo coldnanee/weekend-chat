@@ -37,7 +37,9 @@ export const SendResetLink = () => {
 				<Loader className={cl.root__loader} />
 			) : (
 				<>
-					<h1 className={cl.root__title}>{translate("send_link_title")}</h1>
+					<h1 className={cl.root__title}>
+						{translate("login", "send_link_title")}
+					</h1>
 					<div className={cl.root__input}>
 						<input
 							autoComplete="off"
@@ -57,16 +59,16 @@ export const SendResetLink = () => {
 									: cl.root__input__label
 							}
 							htmlFor="email">
-							{translate("send_link_placeholder")}
+							{translate("login", "send_link_placeholder")}
 						</label>
 					</div>
 					<button className={cl.root__button}>
-						{translate("send_link_button")}
+						{translate("login", "send_link_button")}
 					</button>
 					<Link
 						href="/login"
 						className={cl.root__link}>
-						{translate("send_link_link")}
+						{translate("login", "send_link_link")}
 					</Link>
 				</>
 			)}

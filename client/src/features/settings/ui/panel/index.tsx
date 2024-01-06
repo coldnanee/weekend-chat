@@ -55,7 +55,7 @@ export const SettingsSessionsPanel = () => {
 					<button
 						className={cl.root__body__delete}
 						onClick={killSessions}>
-						{translate("sessions_delete")}
+						{translate("settings", "sessions_delete")}
 					</button>
 				)}
 			</div>

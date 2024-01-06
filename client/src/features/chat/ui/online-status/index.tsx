@@ -26,7 +26,7 @@ export const ChatUserOnlineStatus = ({
 	const { label, isTranslate, count } = getFormattedIsoDate(user.lastOnline);
 
 	const messageDate = isTranslate
-		? `${count || ""}${translate(label, true)}`
+		? `${count || ""}${translate("other", label)}`
 		: label;
 
 	useEffect(() => {
@@ -48,7 +48,7 @@ export const ChatUserOnlineStatus = ({
 		<div className={[cl.root, className].join(" ")}>
 			{isOnline && <span className={cl.root__icon_online} />}
 			{/* prettier-ignore */}
-			<p>{isOnline ? translate("user_seen_online", true) : (user.lastOnline ? `${translate(label === "user_seen_yesterday" ? "user_last_seen_non_in" : "user_last_seen", true)} ${messageDate}` : translate("user_seen_recently", true))}</p>
+			<p>{isOnline ? translate("other", "user_seen_online") : (user.lastOnline ? `${translate("other", label === "user_seen_yesterday" ? "user_last_seen_non_in" : "user_last_seen")} ${messageDate}` : translate("other","user_seen_recently"))}</p>
 		</div>
 	);
 };
