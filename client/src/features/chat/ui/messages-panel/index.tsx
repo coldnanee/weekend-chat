@@ -58,7 +58,7 @@ export const ChatMessagesPanel = ({ chat }: { chat?: TChat }) => {
 					<button
 						className={cl.root__body__buttons__button}
 						onClick={deleteMessages}>
-						{translate("chat", "chat_messages_panel_edit")}
+						{translate("chat", "chat_messages_panel_delete")}
 					</button>
 				</div>
 			</div>
